@@ -1,0 +1,481 @@
+body {
+    /* background-color: hwb(218 27% 58%); */
+    color: darkgrey
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+main .form-check {
+    margin: 5px 0 0 5px;
+    display: flex;
+    align-items: center;
+}
+
+
+
+
+
+main .form-check:hover {
+        background-color: rgba(109, 113, 113, 0.23);
+        color: aqua
+    }
+
+main .search-page {
+    width: 100%;
+    font-size: 18px;
+}
+
+
+main .search-page-title {
+    margin: 20px;
+    color: #9099a1;
+}
+
+
+main .search-body {
+    width: 100%;
+    display: flex;
+    background-color: #141e2a55;
+    padding: 20px;
+}
+
+main .search-box {
+    width: 30%;
+}
+
+    main .search-box .form-check {
+        padding: 5px 0 5px 1.5em;
+    }
+
+main .search-box-hamber .form-check {
+    padding: 10px 0 10px 1.5em;
+}
+
+main .accordion-item.range {
+    text-align: center;
+    padding: 0 10px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+
+main .form-check-input {
+    width: 15px;
+    height: 15px;
+    margin-left: 5px;
+    margin-top: 0;
+    background-color: #203145;
+    border: 1.5px solid #738895;
+}
+
+main .price-range {
+    font-size: 12px;
+    color: #9fbbcb;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+main .form-check-label {
+    color: #9fbbcb;
+    margin-left: 12px;
+    font-size: 12px;
+}
+
+main .form-control {
+    width: 95%;
+    margin: auto;
+    margin-bottom: 15px;
+    font-size: 12px;
+    background-color: #203145;
+    border: none;
+}
+
+    main .form-control::placeholder {
+        color: #fff;
+    }
+
+main .navbar.hamber {
+    position: fixed;
+    top: 90px;
+    right: -18px;
+    display: block;
+    width: 50px;
+    height: 50px;
+    background-image: linear-gradient(to right, #1f6dcc 30%, rgb(188, 184, 210) 100%);
+    border-radius: 25px;
+    z-index: 6;
+}
+
+main .navbar {
+    --bs-navbar-toggler-focus-width: none;
+}
+
+    main .navbar.hamber {
+        box-shadow: -2px 0px 10px white;
+    }
+
+
+main .navbar-toggler {
+    border: none;
+    transform: translateX(-15px);
+}
+
+main .offcanvas-body {
+    background-color: #141e2a55;
+}
+
+
+main .search-info {
+    width: 100%;
+}
+
+main .gamelist {
+    width: 100%;
+    background-color: #123;
+    font-size: 13px;
+    padding-right: 7px;
+}
+
+
+main .search-area {
+    padding: 10px;
+    display: flex;
+    background-color: #0e161e;
+    margin-bottom: 10px;
+    flex-direction: column-reverse;
+    gap: 5px;
+    font-size: 12px;
+}
+
+main .col-5.aa {
+    width: 100%;
+    display: flex;
+    margin-bottom: 5px;
+}
+
+
+
+main .col-5.bb {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+main .search-area input {
+    border: none;
+    padding: 5px 5px;
+    color: #fff;
+}
+
+
+main .discount {
+    background-color: aquamarine;
+    color: #141e2a;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    color: #beee11;
+    background-color: #4c6b22;
+    padding: 0 3px;
+    margin: 5px;
+}
+
+
+
+main .discount-price {
+    font-size: 15px;
+    color: #beee11;
+}
+
+
+main .dropdown {
+    display: flex;
+    align-items: center;
+}
+
+    main .dropdown span {
+        color: #4c6c8c;
+    }
+
+    main .dropdown > select {
+        width: 120px;
+        background-color: #203145;
+        font-size: 12px;
+        color: rgb(67, 172, 252);
+        border: none;
+        border-radius: 0;
+    }
+
+
+
+        main .dropdown > select:focus {
+            box-shadow: none;
+            background-color: #203145;
+        }
+
+main .search-keyword {
+    display: flex;
+    align-items: center;
+}
+
+    main .search-keyword .input {
+        margin-bottom: 10px;
+        margin-left: 5px;
+        background-color: #203145;
+        color: #fff;
+        text-shadow: -1px -1px 0px rgba(0, 0, 0, 0.4);
+    }
+
+
+
+main .navbar.hamber a,
+main .search-page-title a,
+main .search-background a {
+    text-decoration: none;
+    color: darkgrey;
+}
+
+
+
+
+
+
+main .rule {
+    width: 90%;
+    height: 2px;
+    background-color: rgba(109, 113, 113, 0.23);
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+main .search-box .card-header {
+    background-color: rgb(43, 46, 80);
+}
+
+
+
+
+
+main .accordion-game-search {
+    margin-top: 20px;
+    border: 1px solid rgba(109, 113, 113, 0.23);
+    font-size: 13px;
+}
+
+    main .accordion-game-search:nth-of-type(1) {
+        margin-top: 0;
+    }
+
+
+
+main .game-price {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    justify-content: center;
+    right: 20px;
+}
+
+main .price-area {
+    display: flex;
+}
+
+main .game-name {
+    color: #c7d5e0;
+    margin: 0 10px;
+}
+
+main .search-box {
+    display: none;
+}
+
+
+
+
+main .original-price {
+    position: relative;
+    font-size: 10px;
+}
+
+    main .original-price::before {
+        content: '';
+        left: 0px;
+        right: 0px;
+        position: absolute;
+        top: 50%;
+        border-bottom: 1.5px solid #738895;
+        transform: skewY(-8deg);
+        box-shadow: 0 0 2px black;
+    }
+
+
+main .game-card-header.accordion-button {
+    background-color: rgba(109, 113, 113, 0.23);
+    color: #fff;
+}
+
+
+main .game-card-header {
+    padding: 10px;
+    background-color: rgba(109, 113, 113, 0.23);
+    color: #fff;
+    font-size: 13px;
+}
+
+main #aaa {
+    background-color: #203145;
+    border: 1px solid #000;
+    box-shadow: 1px 1px 0px rgba(103, 193, 245, 0.15);
+}
+
+main .btn-secondary {
+    color: rgb(67, 172, 252);
+    background-color: #203145;
+    border: none;
+    border-radius: 0;
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+main .offcanvas.offcanvas-end {
+    background-color: #203145;
+}
+
+ooffcanvas .show {
+    width: 100px;
+}
+
+main .dropdown-toggle::after {
+    color: #fff;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    bottom: 0;
+}
+
+@media screen and (min-width:992px) {
+
+    main .search-page-title {
+        max-width: 960px;
+        font-size: 24px;
+        margin: auto;
+    }
+
+    main .search-page {
+        max-width: 960px;
+        margin: auto;
+    }
+
+
+
+
+    main .search-info {
+        width: 100%;
+        margin-right: 10px;
+        padding: 0;
+    }
+
+    main .search-box {
+        width: 40%;
+        display: block;
+    }
+
+    main .navbar.hamber {
+        display: none;
+    }
+
+
+
+    main .search-area {
+        display: flex;
+        font-size: 12px;
+        margin-bottom: 10px;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+
+
+
+        main .search-area .input {
+            width: 70%;
+        }
+
+        main .search-area input {
+            background-color: rgba(81, 93, 103, 0.974);
+        }
+
+
+    main .col-5.aa {
+        width: 50%;
+        display: flex;
+        /* justify-content: start; */
+    }
+
+    main .col-5.bb {
+        width: 50%;
+        display: flex;
+        /* justify-content: stretch; */
+    }
+}
+
+@media screen and (min-width:768px) {
+    main .search-page {
+        max-width: 960px;
+    }
+
+    main .game-price.col-5 {
+        margin-left: 80px;
+    }
+
+    main .game-name.col-5 {
+        margin-left: 10px;
+    }
+
+    main .start-date.col-6 {
+        margin-left: 10px;
+        color: #4c6c8c;
+    }
+
+    main .search-info.col-5 {
+        width: 100%;
+        margin-right: 10px;
+    }
+
+    main .search-area {
+        display: flex;
+        margin-bottom: 10px;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+
+
+    main .col-5.aa {
+        width: 50%;
+        display: flex;
+        margin: 3px 0;
+        justify-content: flex-start;
+    }
+
+    main .col-5.bb {
+        width: 50%;
+        display: flex;
+        margin: 3px 0;
+    }
+
+    main .dropdown {
+    }
+
+    main .btn-secondary {
+        margin-left: 5px;
+        font-size: 12px;
+    }
+}

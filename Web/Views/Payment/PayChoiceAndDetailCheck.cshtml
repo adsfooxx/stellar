@@ -1,0 +1,154 @@
+﻿@using Newtonsoft.Json
+@using Web.ViewModels.Payment
+@model PayChoiceAndDetailCheckViewModel
+@{
+    ViewData["Title"] = "交易訂單建立及覆核";
+}
+@section topCSS{
+    <link href="~/css/Payment/payment.css" rel="stylesheet" asp-append-version="true" />
+}
+
+<div id="app_payment">
+            <div class="container process_box">
+                
+                 <div class="process">
+                        <div class="check" :class="step[0]">付款資訊</div>
+                        <template v-if="pay_status >1">
+                            <div class="check" :class="step[1]">複核 + 購買</div>
+                        </template>
+                </div>
+            </div>
+            <div class="container pay">
+                <div class="pay-func ">
+                    <!-- 我是第一步(付款資訊) -->
+                     <template v-if="pay_status==1"> 
+                        <div class="title">付款方式</div>
+                        <div class="content">
+                            <div class="pay-choice">
+                                <label for="choice" class="form-label">請選擇付款方式</label>
+                        <select id="choice" class=" col form-select "  v-model="paymethod" >
+                            <option selected value="LINE Pay">LINE Pay</option>
+                            <option value="綠界支付">綠界支付</option>
+                        </select>
+                            </div>
+
+                            <p>
+                                您將可以在下訂單前複合訂單內容。
+                            </p>
+                            <div class="btn-box"><button class="btn continue btn-success" v-on:click="change_status">繼續</button></div>
+                        </div>
+                     </template> 
+                    <!-- 我是第二步 複合+購買-->
+                    <template v-if="pay_status==2">
+                @foreach(var product in Model.ShoppingCart)
+                {
+                    <div class="game-data">
+                        <div class="pic "><img src=@product.ProductImageUrl></div>
+                        <div class="game-info ">
+                            <div class="name">@product.ProductName</div>
+                            <div class="platform ">
+                                <img src="~/img/Product/ProductPage/icon_platform_win.png"
+                                     alt="">
+                            </div>
+                        </div>
+                        <div class="price">
+                            <span class="currency">NT</span>
+                            <span class="tag">$</span>
+                            <span class="dollar">@product.PriceToString</span>
+                        </div>
+                    </div>
+                }
+
+                        <div class="pay-total">
+                            <div class="subtotal d-flex ">
+                                <div class="text">小計：</div>
+                                <ul>
+                                    <!-- maybe很多筆 -->
+                            @foreach (var product in Model.ShoppingCart){
+                                    <li class="price">
+                                        <span class="currency">NT</span>
+                                        <span class="tag">$</span>
+                                    <span class="dollar">@product.PriceToString</span>
+                                    </li>
+                            }
+                                </ul>
+                            </div>
+                            <hr>
+                            <div class="total">
+                                <div class="text">總計：</div>
+                                <!-- maybe很多筆 -->
+                                <div class="price">
+                                    <span class="currency">NT</span>
+                                    <span class="tag">$</span>
+                            <span class="dollar">@Model.TotalToString</span>
+                                </div>
+                            </div>
+                            <p>所有價格均包含增值稅(如適用)</p>
+                        </div>
+                        <div class="content">
+                            <div class="pay-check">
+                                <div class="row-name pay-method">付款方式</div>
+                                <div class="row-value pay-method">@Html.Raw("{{paymethod}}")</div>
+                                <div class="row-name account">Stellar帳戶：</div>
+                                <div class="row-value account">@Model.Account</div>
+                            </div>
+                            <hr>
+                    @using (Html.BeginForm("PayChoiceAndDetailCheck", "Payment", FormMethod.Post))
+                    {
+                        @Html.HiddenFor(m => m.UserId)
+                        @Html.HiddenFor(m=>m.Account)
+                        @Html.HiddenFor(m=>m.Total)
+                        @Html.HiddenFor(m => m.ProductNameListJson)
+                        @Html.HiddenFor(m => m.ShoppingCartJson)
+                        <div class="btn-box">
+
+                            <button type="button"
+                                    v-if="paymethod === 'LINE Pay'"
+                                    class="logbtn btn btn-primary btn-lg"
+                                    v-on:click="handleSubmit">
+                                繼續
+                            </button>
+
+                            <button type="submit"
+                                    v-else
+                                    class="logbtn btn btn-primary btn-lg">
+                                繼續
+                            </button>
+                        </div>
+
+
+                    }
+                        </div>
+                        <p class="checkmail">確認通知將傳送至您的電子信箱</p>
+                    </template>
+
+                </div>
+                <div class="pay-choice-text ">
+                    <div class="box">
+                        <!-- 第一步驟的 -->
+                        <template v-if="pay_status==1">
+                            <div class="title">付款方式：</div>
+                            <div class="text">我們接受下列付款方式：</div>
+                            <div class="icon">
+                                <img src="~/img/payment/linePay.webp" alt="">
+                                <img src="~/img/payment/third-party-payment.png" alt="">
+                            </div>
+                        </template>
+                        <!-- 第二步驟的 -->
+                        <template v-if="pay_status==2">
+                            <div class="title">在 Stellar 上購物</div>
+                            <p>完成本次交易後，將會從您的付款方式扣除交易金額，且您會收到一封確認您已購買的電子郵件訊息。</p>
+                        </template>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+
+@section endJS{
+
+    <script src="~/js/Payment/payment.js" asp-append-version="true"></script>
+  @*     <script src="~/js/LinePay/LinePay.js" asp-append-version="true"></script> *@
+ 
+}
+

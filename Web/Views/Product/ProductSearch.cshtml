@@ -1,0 +1,527 @@
+﻿@using Web.ViewModels.Product
+@model ProductSearchVM
+@section topCSS {
+
+    <link href="~/css/Product/ProductSearch.css" rel="stylesheet">
+    <link href="~/css/Partial/StoreNavbar.css" rel="stylesheet">
+}
+
+@await Component.InvokeAsync("StoreNavbar", new { Section = "_StoreNavbar" })
+
+
+
+<nav class="navbar hamber">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
+                aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
+             aria-labelledby="offcanvasDarkNavbarLabel">
+            <a href="#"></a>
+            <div class="offcanvas-body">
+                <div class="search-box-hamber">
+
+                    <div class="accordion-game-search" id="accordion_game_price">
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="game-card-header accordion-button collapsed-" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapse_price" aria-expanded="true"
+                                        aria-controls="collapse_price">
+                                    依價格縮小範圍
+                                </button>
+                            </h2>
+                            <div id="collapse_price" class="accordion-collapse collapse show"
+                                 data-bs-parent="#accordion_price">
+                                <div class="accordion-body">
+                                    <div class="price-range">
+                                        <input type="range" class="form-range" id="customRange1">
+                                        <label for="customRange1" class="form-label">低於NT$150</label>
+
+                                    </div>
+                                    <div class="rule"></div>
+
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="pricecheck_hb1">
+
+                                        <label class="form-check-label" for="pricecheck_hb1">
+                                            特別優惠
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="pricecheck_hb2">
+                                        <label class="form-check-label" for="pricecheck_hb2">
+                                            隱藏免費遊玩項目
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="accordion-game-search" id="accordion_game_mark">
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="game-card-header accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapse_mark" aria-expanded="false"
+                                        aria-controls="collapse_mark">
+                                    依標籤縮小範圍
+                                </button>
+                            </h2>
+                            <div id="collapse_mark" class="accordion-collapse collapse show"
+                                 data-bs-parent="#accordion_mark">
+                                <div class="accordion-body">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="markcheck_hb1">
+                                        <label class="form-check-label" for="markcheck_hb1">
+                                            單人
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value=""
+                                               id="markcheck_hbmarkcheck_hbmarkcheck_hb2">
+                                        <label class="form-check-label" for="markcheck_hbmarkcheck_hbmarkcheck_hb2">
+                                            模擬
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value=""
+                                               id="markcheck_hbmarkcheck_hb3">
+                                        <label class="form-check-label" for="markcheck_hbmarkcheck_hb3">
+                                            冒險
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="markcheck_hb4">
+                                        <label class="form-check-label" for="markcheck_hb4">
+                                            休閒
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="markcheck_hb5">
+                                        <label class="form-check-label" for="markcheck_hb5">
+                                            2D
+                                        </label>
+                                    </div>
+                                    <div class="search-keyword">
+                                        <input type="text" class="input" placeholder="搜尋更多標籤">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="accordion-game-search" id="accordion_game_player">
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="game-card-header accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapse_player" aria-expanded="false"
+                                        aria-controls="collapse_player">
+                                    依玩家人數縮小範圍
+                                </button>
+                            </h2>
+                            <div id="collapse_player" class="accordion-collapse collapse show"
+                                 data-bs-parent="#accordion_player">
+                                <div class="accordion-body">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="playercheck_hb1">
+                                        <label class="form-check-label" for="playercheck_hb1">
+                                            單人
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value=""
+                                               id="playercheck_hb2playercheck_hb2">
+                                        <label classplayercheck_hb2playercheck_hb3="form-check-label"
+                                               for="playercheck_hb2playercheck_hb2">
+                                            多人
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="playercheck_hb3">
+                                        <label class="form-check-label" for="playercheck_hb3">
+                                            玩家對戰
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="playercheck_hb4">
+                                        <label class="formplayercheck_hb4-check-label" for="playercheck_hb4">
+                                            線上玩家對戰
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="playercheck_hb5">
+                                        <label class="form-check-label" for="playercheck_hb5">
+                                            區域網路玩家對戰
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="playercheck_hb6">
+                                        <label class="form-check-label" for="playercheck_hb6">
+                                            共享或分割螢幕對戰
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value=""
+                                               id="playercheck_hbplayercheck_hb7">
+                                        <label class="form-check-label" for="playercheck_hbplayercheck_hb7">
+                                            合作
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="playercheck_hb8">
+                                        <label class="form-check-label" for="playercheck_hb8">
+                                            線上合作
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="playercheck_hb9">
+                                        <label class="form-check-label" for="playercheck_hb9">
+                                            區域網路合作
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="playercheck_hb10">
+                                        <label class="form-check-label" for="playercheck_hb10">
+                                            共享或分割螢幕合作
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="playercheck_hb11">
+                                        <label class="form-check-label" for="playercheck_hb11">
+                                            共享或分割螢幕
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="playercheck_hb12">
+                                        <label class="form-check-label" for="playercheck_hb12">
+                                            跨平台多人連線
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</nav>
+
+<div class="search-page-title mb-3">
+    全部產品
+    <!-- <label for="" class="menu-btn"></label> -->
+</div>
+<div class="search-background">
+    <div class="search-page" id="search-in">
+        <div class="search-body">
+            <div class="search-info mb-3">
+                <div class="search-area">
+                    <div class="search-keyword">
+                        <input type="text" id="aaa" placeholder="輸入搜尋詞彙或標籤">
+                        <button type="submit" class="btn btn-secondary">搜尋</button>
+                    </div>
+                    <div class="dropdown">
+                        <span>排序依據</span>
+                        <select class=" ms-2 form-select" aria-label="Default select">
+                            <option selected>相關性</option>
+                            <option>發行日期</option>
+                            <option>名稱</option>
+                            <option>最低價格</option>
+                            <option>最高價格</option>
+                            <option>使用者評論</option>
+
+                        </select>
+
+
+                    </div>
+                </div>
+                <section>
+                    <a href="#">
+                        @* <div class="gamelist">
+                            @foreach (var p in Model.products)
+                            {
+                                <div class="row mt-2">
+                                    <div class="col-5 aa">
+                                        <div class="game-img">
+                                            <img src="@p.ProductImg" alt="" width="113px" height="45px">
+                                        </div>
+                                        <div class="game-name">
+                                            @p.ProductName
+                                            <img src="~/img/Product/Search/Windows.png" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="col-5 bb">
+                                        <div class="start-date col-6">
+                                            @p.Startdate
+                                            <!-- 根據 CommentType 的值顯示對應的圖片 -->
+                                            @{
+
+                                                // 獲取 CommentType 值
+                                                var commentType = ViewData["CommentType"] as int?;
+                                            
+                                            string commentImgUrl;
+                                            switch (p.CommentType)
+                                            {
+                                            case 1:
+                                            commentImgUrl = "https://localhost:7196/img/Product/Search/Good.png";
+                                            break;
+                                            case 2:
+                                            commentImgUrl = "https://localhost:7196/img/Product/Search/medium.png";
+                                            break;
+                                            case 3:
+                                            commentImgUrl = "https://localhost:7196/img/Product/Search/ungood.png";
+                                            break;
+                                            case 4:
+                                            default:
+                                            commentImgUrl = "https://localhost:7196/img/Product/Search/Unknown.png";
+                                            break;
+                                            }
+                                            }
+
+                                            <img src="@commentImgUrl" alt="Comment Image" />
+
+                                        </div>
+
+
+                                        <div class="price-area">
+                                            @if (p.DiscountPercent != null)
+                                            {
+                                                <div class="discount">
+                                                    @p.DiscountPercent
+                                                </div>
+                                                <div class="game-price">
+                                                    <div class="original-price">
+                                                        NT$&nbsp;<span>@p.OriginalPrice.ToString("F2")</span>
+                                                    </div>
+                                                    <div class="discount-price">
+                                                        $&nbsp;<span>@p.SalesPrice</span>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="game-price">
+                                                    <span>NT$&nbsp;@p.OriginalPrice.ToString("F2")</span>
+                                                </div>
+                                            }
+                                        </div>
+
+                                    </div>
+                                </div>
+                            }
+                        </div> *@
+                    </a>
+                </section>
+
+
+            </div>
+            <div class="search-box">
+
+                <div class="accordion-game-search" id="accordion_game_price">
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="game-card-header accordion-button collapsed-" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapse_price" aria-expanded="true"
+                                    aria-controls="collapse_price">
+                                依價格縮小範圍
+                            </button>
+                        </h2>
+                        <div id="collapse_price" class="accordion-collapse collapse show"
+                             data-bs-parent="#accordion_game_price">
+                            <div class="accordion-body">
+                                <div class="price-range">
+                                    <input type="range" class="form-range" id="customRange1">
+                                    <label for="customRange1" class="form-label">低於NT$150</label>
+
+                                </div>
+                                <div class="rule"></div>
+
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="pricecheck1">
+                                    <label class="form-check-label" for="pricecheck1">
+                                        特別優惠
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="pricecheck2">
+                                    <label class="form-check-label" for="pricecheck2">
+                                        隱藏免費遊玩項目
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="accordion-game-search" id="accordion_game_mark">
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="game-card-header accordion-button collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapse_mark" aria-expanded="false"
+                                    aria-controls="collapse_mark">
+                                依標籤縮小範圍
+                            </button>
+                        </h2>
+                        <div id="collapse_mark" class="accordion-collapse collapse show"
+                             data-bs-parent="#accordion_mark">
+                            <div class="accordion-body">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="markcheck1">
+                                    <label class="form-check-label" for="markcheck1">
+                                        單人
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="markcheck2">
+                                    <label class="form-check-label" for="markcheck2">
+                                        模擬
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="markcheck3">
+                                    <label class="form-check-label" for="markcheck3">
+                                        冒險
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="markcheck4">
+                                    <label class="form-check-label" for="markcheck4">
+                                        休閒
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="markcheck5">
+                                    <label class="form-check-label" for="markcheck5">
+                                        2D
+                                    </label>
+                                </div>
+                                <div class="search-keyword">
+                                    <input type="text" class="input" placeholder="搜尋更多標籤">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="accordion-game-search" id="accordion_game_player">
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="game-card-header accordion-button collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapse_player" aria-expanded="false"
+                                    aria-controls="collapse_player">
+                                依玩家人數縮小範圍
+                            </button>
+                        </h2>
+                        <div id="collapse_player" class="accordion-collapse collapse show"
+                             data-bs-parent="#accordion_player">
+                            <div class="accordion-body">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="playercheck1">
+                                    <label class="form-check-label" for="playercheck1">
+                                        單人
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="playercheck2">
+                                    <label class="form-check-label" for="playercheck2">
+                                        多人
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="playercheck3">
+                                    <label class="form-check-label" for="playercheck3">
+                                        玩家對戰
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="playercheck4">
+                                    <label class="form-check-label" for="playercheck4">
+                                        線上玩家對戰
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="playercheck5">
+                                    <label class="form-check-label" for="playercheck5">
+                                        區域網路玩家對戰
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="playercheck6">
+                                    <label class="form-check-label" for="playercheck6">
+                                        共享/分割螢幕玩家對戰
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="playercheck7">
+                                    <label class="form-check-label" for="playercheck7">
+                                        合作
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="playercheck8">
+                                    <label class="form-check-label" for="playercheck8">
+                                        線上合作
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="playercheck9">
+                                    <label class="form-check-label" for="playercheck9">
+                                        區域網路對戰
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="playercheck10">
+                                    <label class="form-check-label" for="playercheck10">
+                                        共享/分割螢幕對戰
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="playercheck11">
+                                    <label class="form-check-label" for="playercheck11">
+                                        共享/分割螢幕
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="playercheck12">
+                                    <label class="form-check-label" for="playercheck12">
+                                        跨平台多人作戰
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

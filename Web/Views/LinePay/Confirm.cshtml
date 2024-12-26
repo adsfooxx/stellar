@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "交易確認";
+}
+
+@section topCSS {
+    <link href="~/css/Payment/payment.css" rel="stylesheet" asp-append-version="true" />
+}
+
+
+<div id="app_payment">
+    <div class="container process_box">
+        <div class="process">
+            <div class="check">付款資訊</div>
+            <div class="check">複核 + 購買</div>
+            <div class="check bg-primary">感謝您</div>
+
+        </div>
+    </div>
+    <div class="container pay">
+        <div class="pay-func ">
+            <div class="title thx">感謝您的購買</div>
+            <div class="content purchase-description">
+                <p>我們已寄送交易確認用電子郵件給您。</p>
+                <p>此訂單中的稅為項目已註冊在您的 Stellar 的帳戶。若要存取您的項目，隨時前往您的<a asp-controller="Member" asp-action="GameLibray">Stellar 收藏庫</a>即可。</p>
+            </div>
+            <div class="title detail">您的購買收據</div>
+            <div class="content invoice">
+                <p>購買確認訊息如下所示，此資訊也會立即透過電子郵件發送給您。</p>
+                <div class="pay-detail">
+                    <div class="row-name account">帳戶名稱</div>
+                    <div class="row-value account">@ViewData["Account"]</div>
+                    <div class="row-name total">總計</div>
+                    <div class="row-value total">
+                        <span class="currency">NT</span>
+                        <span class="tag">$</span>
+                        <span class="dollar">@ViewData["總計"]</span>
+                    </div>
+                    <div class="row-name account">確認碼</div>
+                    <div class="row-value account">@ViewData["OrderId"]</div>
+                </div>
+            </div>
+            <a asp-controller="Home" asp-action="Index">返回商店</a>
+
+        </div>
+        <div class="pay-choice-text ">
+            <div class="box" action="">
+
+                <div class="title">需要協助?</div>
+                <p>如需協助或產品支援，請前往 Stellar 線上客服</p>
+            </div>
+        </div>
+    </div>
+

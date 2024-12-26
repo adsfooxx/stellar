@@ -1,0 +1,200 @@
+main .container {
+    padding: 30px 20px;
+
+}
+
+main .btn {
+    border: none;
+    box-shadow: none;
+}
+
+main p {
+    margin: 0;
+}
+
+main hr {
+    color: #75dfff;
+    margin: 6px 0;
+}
+
+main ul {
+    padding: 0;
+}
+
+main ul.breadcrumb {
+    --bs-breadcrumb-margin-bottom: 0;
+
+}
+
+main ul.breadcrumb li.breadcrumb-item {
+    font-size: 14px;
+    color: #8e989e;
+}
+
+main ul.breadcrumb li a {
+    text-decoration: none;
+    color: #ccc;
+    font-size: 14px;
+}
+
+main ul.breadcrumb li a:hover {
+    color: #fff;
+}
+
+main h5 {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 600
+}
+
+main .help {
+    font-size: 20px;
+    color: #5eafde;
+    margin: 16px 0;
+}
+
+main .btn-group {
+    display: flex;
+    position: relative;
+
+}
+
+main .btn-group a {
+    text-align: left;
+    font-size: 18px;
+    padding: 8px 10px;
+    background-color: #445468;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    height: 48px;
+    overflow: hidden;
+}
+
+
+
+main .btn-group a:hover {
+    background-color: #4581a5;
+}
+
+    main .btn-group.dropend a::after {
+        margin-left: auto;
+        scale: 1.5;
+        color: #9db0c7;
+        padding-right:10px;
+    }
+
+main .btn-group .pic {
+    width: 32px;
+    height: 32px;
+    margin-right: 15px
+}
+
+main .btn-group .pic img {
+    width: 100%;
+}
+
+main .btn-group p.product_name {
+    font-size: 15px;
+
+
+}
+
+main .card_list {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    
+}
+main .card_list.other_service{
+    gap: 15px;
+    padding:0;
+}
+main .card_list .card {
+    display: flex;
+    width: 100%;
+    
+
+    border-radius: 0;
+}
+main .product_list {
+    background-color: rgb(29, 40, 55);
+}
+
+
+main .card_list p.title {
+    color: #5eafde;
+    font-size: 14px;
+
+}
+
+main .card .pic img {
+    width: 100%;
+    min-width: 50px;
+    min-height: 50px;
+}
+
+main .card.product {
+    background-color: #fff0;
+    border: none;
+}
+
+main .card.product .product_name {
+    color: #fff;
+    font-size: 16px;
+    padding: 10px 0;
+}
+
+main .card.product .detail {
+    margin-left: auto;
+    font-size: 13px;
+}
+
+main .card.product .detail_name {
+    color: #67c1f5;
+}
+
+main .card.product .detail_value {
+    color: #b0b6c0;
+}
+
+main .card.receipt {
+    background-color: #2c3e54;
+    width: 100%;
+    padding: 5px;
+    
+    color: #ccc;
+}
+
+main .card.receipt .receipt_view {
+    font-size: 12px;
+    color: #82909a;
+    display: flex;
+    padding: 5px;
+}
+main .card.receipt .others_view {
+    padding-left: 5px
+}
+
+
+
+main .card.receipt a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 12px;
+}
+
+
+@media screen and (min-width:768px) {
+    main .card_list .card {
+        flex-direction: row;
+    }
+
+    main .card.product .product_name {
+        padding: 0 10px;
+        font-size: 20px;
+    }
+
+
+
+}

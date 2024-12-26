@@ -1,0 +1,117 @@
+﻿
+@using Web.ViewModels.Member;
+@model GameLiberyViewModel;
+@{
+    
+}
+@section topCSS {
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css" rel="stylesheet" />
+    <link href="~/css/PurchaseHistory/tailwindcss_min.css">
+    <style>
+        .dragging {
+            opacity: 0.5;
+            transition: opacity 0.2s ease;
+        }
+
+        .drag-over {
+            border: 2px dashed blue;
+            transform: scale(1.05);
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+
+    </style>
+}
+
+<div id="gameLibrary" class="  container" v-cloak>
+    <div class="pt-3">
+        <div class="bg-[#2B3340] max-w-[1000px] h-[110px] flex">
+            <img :src="user.userImgUrl" class=" object-cover w-[88px] h-[88px]" style="margin:12px">
+            <nav class="flex" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+                    <li class="inline-flex items-center">
+                        <a class="inline-flex items-center text-sm font-medium text-white "
+                           :href=`/Member/Index`>
+                            {{user.userName}}
+                        </a>
+                    </li>
+                    <li>
+                        <div class=" flex items-center hover:text-gray-500">
+                            <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
+                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                      stroke-width="2" d="m1 9 4-4-4-4" />
+                            </svg>
+                            <a href="#"
+                               class="ms-1 text-sm font-medium  text-gray-300 hover:text-gray-500">遊戲</a>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="flex mt-5 justify-between text-white">
+            <h3><b>所有遊戲</b>({{user.gameCount}})</h3>
+            <div><a href="/Member/WishList" class="hover:text-gray-500">願望清單</a></div>
+        </div>
+        <div class="h-2 bg-[#417B9C] mb-5"></div>
+
+        <div class="flex justify-between ">
+            <form class="max-w-md">
+                <label for="default-search"
+                       class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">搜尋遊戲</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 end-2 flex items-center ps-3 pointer-events-none">
+                    </div>
+                    <input type="search" id="default-search" v-model="searchQuery"
+                           class="block w-[300px] p-2 ps-10 text-sm text-gray-900 border border-gray-300 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           placeholder="搜尋遊戲..." />
+                </div>
+            </form>
+        </div>
+
+        <ul class="list-none p-0 my-3">
+            <li v-for="(game, index) in filteredGames" :key="game.id" draggable="true"
+            @@dragstart="onDragStart(index)" @@dragover="onDragOver(index, $event)"
+            @@dragenter="onDragEnter(index, $event)" @@dragleave="onDragLeave($event)"
+            @@drop="onDrop(index, $event)"
+                :class="{
+                        'drag-over': dragOverIndex === index,
+                        'dragging': isDragging && draggedIndex === index}"
+                class="px-2 py-1 my-2 bg-[#16202D] border-cus-1 border-gray-300 rounded cursor-move max-w-960 h-[80px] transition-transform duration-200">
+                <div class="items-center flex">
+                    <div class="mr-3 text-white">{{index + 1}}</div>
+                    <img :src="game.productImgUrl" class="w-[120px]" style="aspect-ratio: 1.8/1;">
+                    <div class="pl-5 w-full md:w-[960px]">
+                        <div class="text-white">
+                            <b>{{game.productName }}</b>
+                        </div>
+                        <div class="flex justify-between pt-2 mt-2">
+                            <a class="bg-[#28303B] hover:bg-blue-700 text-[#ccc] font-bold py-1 px-3 text-12"
+                               :href="`/product/productpage/${game.productId}`">
+                                商品頁面
+                            </a>
+                            <div>
+                                <button class="bg-[#28303B] hover:bg-blue-700 text-[#ccc] font-bold h-[30px] px-3 pt-1 text-12">
+                                    下載
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+@section endJS {
+    <script src="https://cdn.tailwindcss.com"></script>
+     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script> 
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="~/js/games/Games.js" asp-append-version="true"></script>
+}
+
+

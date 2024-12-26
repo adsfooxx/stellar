@@ -1,0 +1,75 @@
+﻿@using Web.ViewModels.Partial
+@using Web.Services.Partial
+
+@model AddShoppingCartViewModel
+<!-- Modal -->
+@* <div class="modal fade" id="shopping_Modal" tabindex="-1" aria-labelledby="shopping_ModalLabel" aria-hidden="true"> *@
+<div class="modal fade addToCart" id="shopping_Modal-@Model.ProductId" tabindex="-1" aria-labelledby="shopping_ModalLabel-@Model.ProductId" aria-hidden="true">
+    <section class="modal-dialog modal-dialog-centered">
+        <div class="modal-content game-card">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-header">
+                <h2>是否加入購物車</h2>
+            </div>
+            <div class="game-card-">
+                <div class="game-card-img">
+                    <img src="@Model.ProductImgUrl" alt="">
+                </div>
+                <div class="game-card-content">
+                    <h3>@Model.ProductName</h3>
+                    @if (Model.Discount != 0)
+                    {
+                        <div class="game-card-price-field">
+                            <span class="game-card-price-discount">-@Model.DiscountFormat%</span>
+                            <div>
+                                <div class="game-card-price-cut">
+                                    <span>NT$&nbsp;</span>
+                                    <span>@Model.ProductPriceFormat</span>
+                                </div>
+                                <div class="game-card-price">
+                                    <span>NT$&nbsp;</span>
+                                    <span>@Model.SalesPriceFormat</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="game-card-price-field">
+                            <span class="game-card-price-discount d-none">-@Model.DiscountFormat%</span>
+                            <div>
+                                <div class="game-card-price-cut d-none">
+                                    <span>NT$&nbsp;</span>
+                                    <span>@Model.ProductPriceFormat</span>
+                                </div>
+                                <div class="game-card-price">
+                                    <span>NT$&nbsp;</span>
+                                    <span>@Model.SalesPriceFormat</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <span class="d-flex justify-content-between mt-2">
+                        <select class="form-select-sm">
+                            <option value="user" selected>自己帳戶使用</option>
+                        </select>
+                        <span>
+                  @*           <span class="game-card-new border-end pe-2">新增</span>
+                            <span class="game-card-remove ps-1">移除</span> *@
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+
+                <form asp-action="AddToCart" method="post" class="add_cart_btn">
+                    <input type="hidden" name="productId" value="@Model.ProductId" />
+                    
+                    <button type="submit" class="btn btn-primary">加入購物車</button>
+                </form>
+                
+            </div>
+        </div>
+    </section>
+</div>

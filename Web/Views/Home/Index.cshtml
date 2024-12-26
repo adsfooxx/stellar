@@ -1,0 +1,611 @@
+﻿@using Web.ViewModels.Home
+@model HomeVMBy7N
+@* 網站首頁 *@
+@{
+    ViewData["Title"] = "Stellar首頁";
+}
+@section topCSS {
+    <link rel="stylesheet" href="~/css/Home/home.css" asp-append-version="true">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/Partial/StoreNavbar.css">
+}
+@section endJS {
+    @*   <script src="~/js/Home/HomeJS.js" asp-append-version="true"></script> *@
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+            $('.tab_card_container').hover(function () {
+                var PName = $(this).data('name');
+                var PCommendString = $(this).data('cs');
+                var PCommendCount = $(this).data('pc');
+
+                var taglistSting = $(this).data('taglist');
+                var taglist = taglistSting.split(",");
+                var taghtml = "";
+                taglist.forEach(function (item) {
+                    taghtml += "<a>" + item + "</a>";
+                });
+
+                var supimgString = $(this).data('img');
+                var supImgList = supimgString.split(",,");
+
+
+                var imghtml = "";
+                supImgList.forEach(function (item) {
+                    imghtml += ' <div class="tab_preview_img"><img src="' + item + '" alt=""></div>';
+                });
+
+
+
+
+                $('#taglist').html("");
+                $('#imglist').html("");
+                $('#PName').text(PName); // 修改展示区的内容
+                $('#commendString').text(PCommendString);
+                $('#commemdCount').text(PCommendCount);
+                $('#taglist').append(taghtml);
+                $('#imglist').append(imghtml);
+            }, function () {
+                $('#product-description').text('Hover over a product to see the description.');
+            });
+
+
+
+        }); 
+
+
+    </script>
+}
+@{
+    var featuredisFirst = true;
+    var specialfferisFirst = true;
+    var categoryisFirst = true;
+}
+
+@* @await Html.PartialAsync("_StoreNavbar") *@
+@await Component.InvokeAsync("StoreNavbar", new { Section = "_StoreNavbar" })
+
+<div class="container home_page ">
+    <div class="home_page_sort">
+
+        <div class="sort_items">
+
+            @foreach (var cate in Model.CategorySpLists) {
+                <a href="@Url.Action("ProductSearchMin", "Product", new { categoryId =cate.CategoryID})"> @cate.CategoryName</a>
+            }
+
+        </div>
+    </div>
+    <div class="home_page_featured_carousel">
+        <h2 class="featured_title">精選與推薦</h2>
+        <div id="featuredcarousel" class="carousel slide carousel-fade d-flex flex-wrap w-100"
+             data-bs-ride="carousel">
+            <div class="carousel-inner">
+                @foreach (var topitem in Model.topProducts)
+                {
+                    <a href="@Url.Action("ProductPage", "Product", new { id = topitem.ProductId })">
+
+                        <div class="carousel-item @(featuredisFirst ? "active" : "") d-flex ">
+                            <div class="featured_carousel_img">
+                                <img src="@topitem.MainImg" class="d-block w-100 h-100" alt="...">
+                            </div>
+                            <div class="col-5 featured_carousel_main">
+                                <h3>@topitem.ProductName</h3>
+                                <div class="content_screen row">
+                                    @if (topitem.SupImg.Count != 0)
+                                    {
+                                        @foreach (var Simg in topitem.SupImg)
+                                        {
+                                            <div class="content_screen_pic col-6">
+                                                <img src="@Simg.SupImgUrl">
+                                            </div>
+                                        }}
+                                </div>
+                                <div class="nowavailable">
+                                    @if (topitem.CraftTime > DateOnly.FromDateTime(DateTime.Now))
+                                    {
+                                        <h4>即將發行</h4>
+                                    }
+                                    else if (DateOnly.FromDateTime(DateTime.Now) <= topitem.CraftTime.AddDays(30))
+                                    {
+                                        <h4>新推出</h4>
+                                    }
+                                    else
+                                    {
+                                     <h4>現已推出</h4>
+                                    }
+
+                                    
+                                    
+                                    @foreach (var tag in topitem.TagList)
+                                    {
+                                        <p>@tag.TagName</p>
+                                    }
+                                </div>
+                                <div class="discount_price d-flex justify-content-between">
+                                    @if (topitem.Price == 0)
+                                    {
+                                        <p>免費遊玩</p>
+                                    }
+                                    else if (topitem.Discount != 1)
+                                    {
+                                        <div class="discount_price_item">
+                                            <div class="item_discount">-@(((1 - topitem.Discount) * 100).ToString("#,##0"))%</div>
+                                            <div class="item_original_price">NT$ @(topitem.Price.ToString("#,##0"))</div>
+                                            <div class="item_after_price">NT$ @((topitem.SalesPrice.ToString("#,##0")))</div>
+
+                                        </div>
+
+                                    }
+                                    else
+                                    {
+                                        <p>NT$ @(topitem.Price.ToString("#,##0"))</p>
+                                    }
+                                    <div><img src="~/img/Home/home/icon_platform_win.png" alt=""></div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    @* Set isFirst to false after rendering the first item *@
+                    featuredisFirst = false;
+                }
+
+
+            </div>
+            <button class="carousel-control-prev left_btn" type="button" data-bs-target="#featuredcarousel"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#featuredcarousel"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#featuredcarousel" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                @for(int i = 1; i < 10; i++)
+                {
+                    <button type="button" data-bs-target="#featuredcarousel" data-bs-slide-to="@i"
+                            aria-label="Slide @(i+1)"></button>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="home_page_advertise">
+        <a href="#">
+            <img src="https://res.cloudinary.com/dffbxpdov/image/upload/v1728835694/003_licc93.png" />
+            @* <img src="~/img/Home/home/advertise.jpg"alt=""> *@
+        </a>
+    </div>
+
+    <div class="home_page_special_promotion_carousel">
+        <h2 class="special_promotion_title">特別優惠</h2>
+        <div id="special_promotion_carousel" class="carousel slide carousel-fade w-100"
+             data-bs-ride="carousel">
+
+            <div class="carousel-inner">
+                @foreach (var sp3 in Model.SpecialProduct.Chunk(3))
+                {
+                    <div class="carousel-item @(specialfferisFirst ? "active" : "") d-flex ">
+                        @foreach (var sp in sp3)
+                        {
+                            <div class="card special_promotion_card">
+                                <a href="@Url.Action("ProductPage", "Product", new { id = sp.Id })">
+                                    <img class="card-img-top" src="@sp.MainImg" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h3>@sp.ProductName</h3>
+                                        <p class="card-text">特惠將於 @sp.OverTime 截止。</p>
+                                        @*  <p class="card-text">特惠將於 8 月 14 日 上午 1:00 截止。</p> *@
+                                        <div class="finaly_price">
+                                            <div class="discount_pct">-@(((1 - sp.Discount) * 100).ToString("#,##0"))%</div>
+                                            <div class="card_price">
+                                                <div class="original_price">NT$@sp.Price.ToString("#,##0")</div>
+                                                <div class="after_price">NT$@sp.SalesPrice.ToString("#,##0")</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                    </div>
+                    @* Set isFirst to false after rendering the first item *@
+                    specialfferisFirst = false;
+                }
+            </div>
+            <button class="carousel-control-prev left_btn" type="button"
+                    data-bs-target="#special_promotion_carousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#special_promotion_carousel"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#special_promotion_carousel" data-bs-slide-to="0"
+                        class="active" aria-current="true" aria-label="Slide 1"></button>
+                @if (Model.SpecialProduct.Count > 3)
+                {
+                    <button type="button" data-bs-target="#special_promotion_carousel" data-bs-slide-to="1"
+                            aria-label="Slide 2"></button>
+                }
+                @if (Model.SpecialProduct.Count > 6)
+                {
+                    <button type="button" data-bs-target="#special_promotion_carousel" data-bs-slide-to="2"
+                            aria-label="Slide 3"></button>
+                }
+                @if (Model.SpecialProduct.Count > 9)
+                {
+
+                    <button type="button" data-bs-target="#special_promotion_carousel" data-bs-slide-to="3"
+                            aria-label="Slide 4"></button>
+                }
+
+
+            </div>
+        </div>
+        <div class="special_promotion_carousel_toPhone">
+            @foreach (var specialitem in Model.SpecialProduct.Chunk(3))
+            {
+                @foreach (var sp in specialitem)
+                {
+                    <div class="card special_promotion_card">
+                        <a href="@Url.Action("ProductPage", "Product", new { id = sp.Id })">
+                            <img class="card-img-top" src="@sp.MainImg" alt="Card image cap">
+                            <div class="card-body">
+                                <h3>@sp.ProductName</h3>
+                                <p class="card-text">特惠將於 @(sp.OverTime)截止。</p>
+                                @*  <p class="card-text">特惠將於 8 月 14 日 上午 1:00 截止。</p> *@
+                                <div class="finaly_price">
+                                    <div class="discount_pct">-@(((1 - sp.Discount) * 100).ToString("#,##0"))%</div>
+                                    <div class="card_price">
+                                        <div class="original_price">NT$ @sp.Price.ToString("#,##0")</div>
+                                        <div class="after_price">NT$ @sp.SalesPrice.ToString("#,##0")</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    <div class="home_page_Browse_categoryn_carousel">
+        <h2 class="Browse_categoryn_title">依類別瀏覽</h2>
+
+        <div id="Browse_categoryn_carousel" class="carousel slide carousel-fade d-flex flex-wrap w-100">
+
+            <div class="carousel-inner">
+                @foreach (var CSPL in Model.CategorySpLists.Chunk(4))
+                {
+                    <div class="carousel-item @(categoryisFirst ? "active" : "")">
+                        @foreach (var C in CSPL)
+                        {
+                            <div class="Browse_categoryn_card">
+                                @* 還不知道超連結要帶去哪裡 *@
+                                <a href="@Url.Action("ProductSearchMin", "Product", new { categoryId =C.CategoryID})">
+                                    <img src="@C.CategoryImgUrl" alt="Card image cap">
+                                    <div class="gradient"></div>
+                                    <div class="Browse_categoryn_item"><span>@C.CategoryName</span></div>
+                                </a>
+                            </div>
+                        }
+                    </div>
+                    @* Set isFirst to false after rendering the first item *@
+                    categoryisFirst = false;
+                }
+            </div>
+            <button class="carousel-control-prev left_btn" type="button"
+                    data-bs-target="#Browse_categoryn_carousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#Browse_categoryn_carousel"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#Browse_categoryn_carousel" data-bs-slide-to="0"
+                        class="active" aria-current="true" aria-label="Slide 1"></button>
+                @if (Model.CategorySpLists.Count > 4)
+                {
+                    <button type="button" data-bs-target="#Browse_categoryn_carousel" data-bs-slide-to="1"
+                            aria-label="Slide 2"></button>
+                }
+                @if (Model.CategorySpLists.Count > 8)
+                {
+                    <button type="button" data-bs-target="#Browse_categoryn_carousel" data-bs-slide-to="2"
+                            aria-label="Slide 3"></button>
+                }
+                @if (Model.CategorySpLists.Count > 12)
+                {
+                    <button type="button" data-bs-target="#Browse_categoryn_carousel" data-bs-slide-to="3"
+                            aria-label="Slide 4"></button>
+                }
+            </div>
+        </div>
+
+    </div>
+    @if(Model.login==false){
+    <div class="home_page_recommend">
+        <p>登入以檢視個人化推薦項目</p>
+        <div class="signin_btn">
+                <a href="~/Authentication/login" class="btn_green">
+                <span>登入</span>
+            </a>
+            <br>
+            <br>
+                或免費<a href="~/Authentication/Regiter">註冊</a>並加入 Stellar
+        </div>
+    </div>
+    }
+@*     <div class="home_page_browse">
+        <h2 class="browse_title">瀏覽 Stellar</h2>
+        <div class="browse_btn">
+
+
+            <a href="#">新推出</a>
+            <a href="#">特惠</a>
+            <a href="#">免費遊戲</a>
+            <a href="#">依使用者標籤</a>
+
+        </div>
+    </div> *@
+</div>
+
+<div class="container home_page_container">
+    <nav>
+        <div class="nav nav-tabs" id="home_page_nav_tab" role="tablist">
+            <button class="nav-link active" id="home_page_nav_home_tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+                    type="button" role="tab" aria-controls="nav-home" aria-selected="true">
+                新品與話題商品
+            </button>
+            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+                    type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
+                暢銷商品
+            </button>
+            <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact"
+                    type="button" role="tab" aria-controls="nav-contact" aria-selected="false">
+                免費遊玩
+            </button>
+            <button class="nav-link" id="nav-special-tab" data-bs-toggle="tab" data-bs-target="#nav-special"
+                    type="button" role="tab" aria-controls="nav-special" aria-selected="false">
+                特惠
+            </button>
+        </div>
+    </nav>
+    <div class="home_page_tab">
+        <div class="tab_left_col">
+            <div class="tab-content" id="home_page_nav_tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                     aria-labelledby="home_page_nav_home_tab">
+                    @foreach (var P in Model.ProductList.Take(11))
+                    {
+                        <div class="tab_card_container" data-name="@P.ProductName" data-cs="@P.CommendString" data-pc="@P.ProductCommend" data-taglist="@string.Join(",", P.TagList.Select(x => x.TagName))" data-img="@string.Join(",,", P.SupImg.Select(x => x.SupImgUrl))">
+                            <a href="@Url.Action("ProductPage", "Product", new { id = P.ProductId })" style="text-decoration:none">
+                                <div class="tab_card">
+                                    <div class="tab_pic"><img src="@P.MainImg" alt=""></div>
+                                    <div class="tab_txt">
+                                        <h3>@P.ProductName</h3>
+                                        <div class="tab_txt_detail">
+                                            <div class="detail_pic"><img src="~/img/Home/home/icon_platform_win.png" alt=""></div>
+                                            <span class="detail_items">
+                                                <span> @string.Join(", ", P.TagList.Select(c => c.TagName))</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    @if (P.Price == 0)
+                                    {
+                                        <div class="tab_item_discount">
+                                            <div class="item_price">
+                                                <div class="item_after_price text-light">免費遊玩</div>
+                                            </div>
+                                        </div>
+
+                                    }
+                                    else if (P.Discount == 1)
+                                    {
+                                        <div class="tab_item_discount">
+                                            <div class="item_price">
+                                                <div class="item_after_price text-light">NT$ @P.Price.ToString("#,##0")</div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="tab_item_discount justify-content-between">
+                                            <div class="discount_pct">-@(((1 - P.Discount) * 100).ToString("#,##0"))%</div>
+                                            <div class="item_price">
+                                                <div class="item_original_price">NT$ @P.Price.ToString("#,##0")</div>
+                                                <div class="item_after_price">NT$@P.SalesPrice.ToString("#,##0")</div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </a>
+                        </div>
+                    }
+                </div>
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    @foreach (var P in Model.ProductList.OrderByDescending(x => x.HasGameNum).Take(11))
+                    {
+                        <div class="tab_card_container" data-name="@P.ProductName" data-cs="@P.CommendString" data-pc="@P.ProductCommend" data-taglist="@string.Join(",", P.TagList.Select(x => x.TagName))" data-img="@string.Join(",,", P.SupImg.Select(x => x.SupImgUrl))">
+                            <a href="@Url.Action("ProductPage", "Product", new { id = P.ProductId })" style="text-decoration:none">
+                                <div class="tab_card">
+                                    <div class="tab_pic"><img src="@P.MainImg" alt=""></div>
+                                    <div class="tab_txt">
+                                        <h3>@P.ProductName</h3>
+                                        <div class="tab_txt_detail">
+                                            <div class="detail_pic"><img src="~/img/Home/home/icon_platform_win.png" alt=""></div>
+                                            <span class="detail_items">
+                                                <span> @string.Join(", ", P.TagList.Select(c => c.TagName))</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    @if (P.Price == 0)
+                                    {
+                                        <div class="tab_item_discount">
+                                            <div class="item_price">
+                                                <div class="item_after_price text-light">免費遊玩</div>
+                                            </div>
+                                        </div>
+
+                                    }
+                                    else if (P.Discount == 1)
+                                    {
+                                        <div class="tab_item_discount">
+                                            <div class="item_price">
+                                                <div class="item_after_price text-light">NT$ @P.Price.ToString("#,##0")</div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="tab_item_discount justify-content-between">
+                                            <div class="discount_pct">-@(((1 - P.Discount) * 100).ToString("#,##0"))%</div>
+                                            <div class="item_price">
+                                                <div class="item_original_price">NT$ @P.Price.ToString("#,##0")</div>
+                                                <div class="item_after_price">NT$@P.SalesPrice.ToString("#,##0")</div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </a>
+                        </div>
+                    }
+                </div>
+                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                    @foreach (var P in Model.ProductList.Where(x=>x.Price==0).Take(11))
+                    {
+                        <div class="tab_card_container" data-name="@P.ProductName" data-cs="@P.CommendString" data-pc="@P.ProductCommend" data-taglist="@string.Join(",", P.TagList.Select(x => x.TagName))" data-img="@string.Join(",,", P.SupImg.Select(x => x.SupImgUrl))">
+                            <a href="@Url.Action("ProductPage", "Product", new { id = P.ProductId })" style="text-decoration:none">
+                                <div class="tab_card">
+                                    <div class="tab_pic"><img src="@P.MainImg" alt=""></div>
+                                    <div class="tab_txt">
+                                        <h3>@P.ProductName</h3>
+                                        <div class="tab_txt_detail">
+                                            <div class="detail_pic"><img src="~/img/Home/home/icon_platform_win.png" alt=""></div>
+                                            <span class="detail_items">
+                                                <span> @string.Join(", ", P.TagList.Select(c => c.TagName))</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    @if (P.Price == 0)
+                                    {
+                                        <div class="tab_item_discount">
+                                            <div class="item_price">
+                                                <div class="item_after_price text-light">免費遊玩</div>
+                                            </div>
+                                        </div>
+
+                                    }
+                                    else if (P.Discount == 1)
+                                    {
+                                        <div class="tab_item_discount">
+                                            <div class="item_price">
+                                                <div class="item_after_price text-light">NT$ @P.Price.ToString("#,##0")</div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="tab_item_discount justify-content-between">
+                                            <div class="discount_pct">-@(((1 - P.Discount) * 100).ToString("#,##0"))%</div>
+                                            <div class="item_price">
+                                                <div class="item_original_price">NT$ @P.Price.ToString("#,##0")</div>
+                                                <div class="item_after_price">NT$@P.SalesPrice.ToString("#,##0")</div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </a>
+                        </div>
+                    }
+                </div>
+                <div class="tab-pane fade" id="nav-special" role="tabpanel" aria-labelledby="nav-special-tab">
+                    @foreach (var P in Model.ProductList.Where(x=>x.Discount<1).Take(11))
+                    {
+                        <div class="tab_card_container" data-name="@P.ProductName" data-cs="@P.CommendString" data-pc="@P.ProductCommend" data-taglist="@string.Join(",", P.TagList.Select(x => x.TagName))" data-img="@string.Join(",,", P.SupImg.Select(x => x.SupImgUrl))">
+                            <a href="@Url.Action("ProductPage", "Product", new { id = P.ProductId })" style="text-decoration:none">
+                                <div class="tab_card">
+                                    <div class="tab_pic"><img src="@P.MainImg" alt=""></div>
+                                    <div class="tab_txt">
+                                        <h3>@P.ProductName</h3>
+                                        <div class="tab_txt_detail">
+                                            <div class="detail_pic"><img src="~/img/Home/home/icon_platform_win.png" alt=""></div>
+                                            <span class="detail_items">
+                                                <span> @string.Join(", ", P.TagList.Select(c => c.TagName))</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    @if (P.Price == 0)
+                                    {
+                                        <div class="tab_item_discount">
+                                            <div class="item_price">
+                                                <div class="item_after_price text-light">免費遊玩</div>
+                                            </div>
+                                        </div>
+
+                                    }
+                                    else if (P.Discount == 1)
+                                    {
+                                        <div class="tab_item_discount">
+                                            <div class="item_price">
+                                                <div class="item_after_price text-light">NT$ @P.Price.ToString("#,##0")</div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="tab_item_discount justify-content-between">
+                                            <div class="discount_pct">-@(((1 - P.Discount) * 100).ToString("#,##0"))%</div>
+                                            <div class="item_price">
+                                                <div class="item_original_price">NT$ @P.Price.ToString("#,##0")</div>
+                                                <div class="item_after_price">NT$@P.SalesPrice.ToString("#,##0")</div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="tab_right_col">
+            <div class="tab_preview_card">
+                <h3 id="PName">Hero Emblems II</h3>
+                <div class="tab_preview_review">
+                    <p>整體使用者評論：</p>
+                    <span id="commendString">好評</span>
+                    (<span id="commemdCount" style="color:#CCB">47</span>)
+                </div>
+                <div class="tab_preview_item" id="taglist">
+                    <a>日系角色扮演</a>
+                    <a>回合制戰鬥</a>
+                    <a>三消</a>
+                    <a>假 3D</a>
+                    <a>獨立</a>
+                </div>
+                <div id="imglist">
+                    <div class="tab_preview_img"><img src="~/img/Home/home/tab_preview_img1.jpg" alt=""></div>
+                    <div class="tab_preview_img"><img src="~/img/Home/home/tab_preview_img2.jpg" alt=""></div>
+                    <div class="tab_preview_img"><img src="~/img/Home/home/tab_preview_img3.jpg" alt=""></div>
+                    <div class="tab_preview_img"><img src="~/img/Home/home/tab_preview_img4.jpg" alt=""></div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

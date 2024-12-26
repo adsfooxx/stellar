@@ -1,0 +1,6 @@
+@Stellar.API_HostAddress = http://localhost:5209
+
+GET {{Stellar.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,85 @@
+﻿@using Web.ViewModels.CustomerSupport
+@model CustomerSupportViewModel
+
+@section topCSS{
+    <link href="~/css/CustomerService/Index/customer_service.css" rel="stylesheet" />
+}
+@{
+    var errorMessage = TempData["ErrorMessage"] as string;
+    ViewData["Title"] = "客服中心";
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <script>
+        
+        alert("操作失敗，請勿直接修改路徑到您沒有的產品資訊。");
+    </script>
+}
+<div class="container customer_service">
+    <h5>Stellar 客服</h5>
+    @if (Model.UserId != 0){
+        <p class="help">
+            @Model.Account
+            ，您有什麼需要幫忙的嗎？</p>
+    }
+    else
+    {
+        <p class="help">親愛的客戶，您有什麼需要幫忙的嗎？</p>
+    }
+
+    <div class="service">
+        <div class="card_list product_list">
+            @if(Model.UserId != 0){
+            <p class="title">近期產品</p>
+            @foreach(var product in Model.Games){
+            <div class=" btn-group dropend ">
+                    <a asp-controller="CustomerSupport" asp-action="ProductSupport" asp-route-id="@product.ProductId" class="btn btn-secondary dropdown-toggle">
+                        <div class="pic"><img src="@product.ProductImgUrl"></div>
+                
+                    <p class="product_name">@product.ProductName</p>
+                </a>
+            </div>
+            }
+            }
+
+
+        </div>
+        <hr>
+        <div class="card_list text_only other_service">
+            <div class=" btn-group dropend ">
+                <a href="" class="btn btn-secondary dropdown-toggle">
+
+                    <p class="product_name">遊戲軟體等</p>
+                </a>
+            </div>
+            <div class=" btn-group dropend ">
+                <a href="" class="btn btn-secondary dropdown-toggle">
+
+                    <p class="product_name">購買消費</p>
+                </a>
+            </div>
+            <div class=" btn-group dropend ">
+                <a href="" class="btn btn-secondary dropdown-toggle">
+
+                    <p class="product_name">我的帳戶</p>
+                </a>
+            </div>
+            <div class=" btn-group dropend ">
+                <a href="" class="btn btn-secondary dropdown-toggle">
+
+                    <p class="product_name">Stellar 社群</p>
+                </a>
+            </div>
+            <div class=" btn-group dropend">
+                <a href="" class="btn btn-secondary dropdown-toggle">
+                    <p class="product_name">Stellar 用戶端</p>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+
+
+</div>

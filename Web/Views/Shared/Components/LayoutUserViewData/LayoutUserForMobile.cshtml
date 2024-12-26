@@ -1,0 +1,171 @@
+﻿
+@using Web.ViewModels.Layout
+@model LayoutViewModel
+@{
+}
+
+
+
+<!-- 登入前 的登入按鈕 -->
+@if (Context.User?.Identity?.IsAuthenticated ?? false){
+    <!-- 登入後的 user資訊-->
+
+    <li class="card-user">
+        <div class="user-info">
+            <img src="@Model.UserImgUrl">
+            &ensp;
+            <a asp-controller="Member" asp-action="Index" asp-route-id="@Model.UserId">@Model.Account</a>
+        </div>
+        <div class="card_href_box">
+            <div class="card_content shopping_cart">
+                <a asp-controller="Member" asp-action="WishList">
+                    <span>願望清單</span>
+                    <span class="text">（</span>
+                    <span class="text count update-wish-count">@Model.WishListCount</span>
+                    <span class="text">）</span>
+                </a>
+            </div>
+            <div class="card_content shopping_cart">
+                <a asp-controller="ShoppingCart" asp-action="ShoppingCart">
+                    <span>購物車</span>
+                    <span class="text">（</span>
+                    <span class="text count update-cart-count">@Model.ShoppingCartCount</span>
+                    <span class="text">）</span>
+                </a>
+            </div>
+            <div class="card_content wallet">
+                <a asp-controller="Member" asp-action="AccountPage">
+                    <span>錢包</span>
+                    <span class="text">（NT$</span>
+                    <span class="text dollar">@Model.WalletAmount</span>
+                    <span class="text">）</span>
+                </a>
+            </div>
+        </div>
+    </li>
+    
+}
+else
+{
+
+    <li class="aonly"><a asp-controller="Authentication" asp-action="Login">登入</a></li>
+        }
+<!-- 通知，有登入才有 -->
+@if (Context.User?.Identity?.IsAuthenticated ?? false)
+{
+
+    @* <li class="drop"> *@
+    <li class="aonly"><a asp-controller="Member" asp-action="NotifyPage">通知</a></li>
+         @* </li> *@
+}
+<li class="aonly"><a asp-controller="Home" asp-action="Index">首頁</a></li>
+
+@* <li class="drop">
+    <div class="accordion-item">
+        <button class="accordion-button collapsed" type="button"
+                data-bs-toggle="collapse" data-bs-target="#collapse-store"
+                aria-expanded="true" aria-controls="collapse-store">
+            <p>商店</p>
+        </button>
+
+        <div id="collapse-store" class="accordion-collapse collapse"
+             data-bs-parent="#offcanvas-accordion">
+            <div class="accordion-body">
+                <ul>
+                    
+                    <li><a href="#">探索佇列</a></li>
+                    
+                    <li><a href="#">點數商店</a></li>
+                    <li><a href="#">新聞</a></li>
+                    <li><a href="#">統計資料</a></li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</li> *@
+
+@* <li class="drop">
+    <div class="accordion-item">
+
+        <button class="accordion-button collapsed" type="button"
+                data-bs-toggle="collapse" data-bs-target="#collapse-community"
+                aria-expanded="true" aria-controls="collapse-community">
+            <p>社群</p>
+        </button>
+
+        <div id="collapse-community" class="accordion-collapse collapse"
+             data-bs-parent="#offcanvas-accordion">
+            <div class="accordion-body">
+                <ul>
+                    <li><a>首頁</a></li>
+                    <li><a href="#">討論區</a></li>
+                    <li><a href="#">工作坊</a></li>
+                    <li><a href="#">市集</a></li>
+                    <li><a href="#">實況直播</a></li>
+                    <li><a asp-controller="Member" asp-action="GameLibray">遊戲庫</a></li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</li> *@
+<!-- 您和好友，也是登入才會有 -->
+@if (Context.User?.Identity?.IsAuthenticated ?? false)
+{
+    <li class="aonly"><a href="/Member/GameLibray">遊戲庫</a></li>
+    <li class="aonly"><a href="Member/Index/@Model.UserId">個人檔案</a></li>
+@*     <li class="drop">
+        <div class="accordion-item">
+
+            <button class="accordion-button collapsed" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#collapse-friend"
+                    aria-expanded="true" aria-controls="collapse-friend">
+                <p>您和好友</p>
+            </button>
+
+            <div id="collapse-friend" class="accordion-collapse collapse"
+                 data-bs-parent="#offcanvas-accordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><a href="#">動態</a></li>
+                        <li><a href="Member/Index/@Model.UserId" >個人檔案</a></li>
+                        <li><a href="#">好友</a></li>
+                        <li><a href="/Member/GameLibray">遊戲</a></li>
+                        <li><a href="#">內容</a></li>
+                        <li><a href="#">物品庫</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </li> *@
+}
+<!-- 聊天，登入後才有朋友可以聊天 -->
+@if (Context.User?.Identity?.IsAuthenticated ?? false)
+{
+    <li class="aonly">
+        @if (Context.User?.Identity?.IsAuthenticated ?? false)
+        {
+            <a href="Message/Index">聊天室</a>
+        }
+        else
+        {
+            <a asp-controller="Authenticatin" asp-action="Login">聊天室</a>
+        }
+    </li>
+}
+<li class="aonly"><a href="https://www.build-school.com/">關於</a></li>
+<li class="aonly"><a asp-controller="CustomerSupport" asp-action="CustomerSupport">客服</a></li>
+<li class="func">
+    <!-- 以下3個只會再登入出現 -->
+    @if (Context.User?.Identity?.IsAuthenticated ?? false)
+    {
+        <a class="btn  change-language" asp-controller="Member" asp-action="AccountPage">帳戶詳細資訊</a>
+        <a class="btn  change-language" asp-controller="Authentication" asp-action="Logout">登出</a>
+    }
+
+
+</li>
+
+

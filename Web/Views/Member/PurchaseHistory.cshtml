@@ -1,0 +1,313 @@
+﻿@section topCSS {
+    <link href="~/css/PurchaseHistory/tailwindcss_min.css" rel="stylesheet" asp-append-version="true">
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+}
+<div id="PurchaseHistory" class="container" v-cloak>
+    <!-- 購買紀錄頁 -->
+    <template v-if="!showOrderDetail">
+        <div v-if="loading">加載中...</div>
+        <h2 class="text-center text-4xl mb-4 py-3 font-medium text-white block sm:hidden">{{ account }}的購買記錄</h2>
+        <div v-if="purchaseHistoryList.length === 0" class="text-white">
+            沒有找到購買記錄
+        </div>
+        <div v-else>
+            <!-- 手機 -->
+            <div class="py-3 block sm:hidden" style=" text-align-last: center;">
+                <input type="text" class="w-[65%]" placeholder="" v-model="searchQuery"
+                       style="background-color:#316282 ;" />
+                <button class="border-cus-1 ml-2 bg-[#316282] w-[15%] h-[42px]">
+                    搜尋
+                </button>
+            </div>
+            <div v-for="order in filteredGames" :key="order.orderId">
+                <div class="container mobile_card block sm:hidden">
+                    <div class="row text-[#ccc] px-7 py-5">
+                        <div class="detail_list card_list ">
+                            <a @@click="viewOrderDetail(order.orderId)">
+                                <div class="detail card p-2 text-white">
+                                    <div class="detail_title text-center">
+                                        <div class="date text-[#7092A5]">
+                                            {{ formatDate(order.purchaseDate)
+                                            }}
+                                        </div>
+                                        <div class="product ">
+
+
+                                            <ul v-for="product in order.productList">
+                                                <li> {{ product.productName.trim() }}</li>
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                    <div class="detail_content">
+                                        <div class="detail_type detail_row flex justify-between mt-3">
+                                            <div class="title  text-[#3887c0] font-bold">類型</div>
+                                            <div class="content">
+                                                <div class="type_value">購買</div>
+                                            </div>
+                                        </div>
+                                        <div class="detail_total detail_row flex justify-between mt-3">
+                                            <div class="title text-[#3887c0] font-bold">總計</div>
+                                            <div class="content">
+                                                <div class="type_value">
+                                                    <span>NT</span>
+                                                    <span>$</span>
+                                                    <span class="dollar">{{ order.totalPrice }}</span>
+                                                </div>
+                                                <div class="memo text-xs text-[#7092A5]"></div>
+                                            </div>
+                                        </div>
+                                        <div class="wallet mt-3">
+                                            <div class="change wallet_content flex text-sm">
+                                                <div class="title">錢包變更</div>
+                                                <div class="change_value flex items-end pl-3">
+                                                    <span>-</span>
+                                                    <span>NT</span>
+                                                    <span>$</span>
+                                                    <span class="dollar">
+                                                        {{ order.walletChange ?? 0
+                                                        }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="amount wallet_content  flex text-sm">
+                                                <div class="title">錢包餘額</div>
+                                                <div class="change_value flex items-end pl-3">
+                                                    <span>NT</span>
+                                                    <span>$</span>
+                                                    <span class="dollar">
+                                                        {{ order.walletBalance ?? 0
+                                                        }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 桌機 -->
+            <div class=" hidden sm:block mx-auto  pt-3">
+                <!-- 麵包屑 -->
+                <nav class="flex" aria-label="Breadcrumb">
+                    <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+                        <li class="inline-flex items-center">
+                            <a  asp-controller="Home" asp-action="Index"
+                               class="inline-flex items-center text-sm font-medium text-gray-300 hover:text-[#b19f9f6a] dark:text-gray-400 dark:hover:text-white">
+                                首頁
+                            </a>
+                        </li>
+                        <li>
+                            <div class="flex items-center">
+                                <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
+                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                          stroke-width="2" d="m1 9 4-4-4-4" />
+                                </svg>
+                                <a  asp-controller="Member" asp-action="AccountPage"
+                                   class="ms-1 text-sm font-medium text-gray-300 hover:text-[#b19f9f6a] md:ms-2 dark:text-gray-400 dark:hover:text-white">帳戶</a>
+                            </div>
+                        </li>
+                        <li aria-current="page">
+                            <div class="flex items-center">
+                                <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
+                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                          stroke-width="2" d="m1 9 4-4-4-4" />
+                                </svg>
+                                <span class="ms-1 text-sm font-medium text-gray-400 md:ms-2 dark:text-gray-400">購買記錄</span>
+                            </div>
+                        </li>
+                    </ol>
+                </nav>
+                <h2 class="text-4xl mb-4 font-medium  text-white"><span>{{ account }}</span>的購買記錄</h2>
+
+                <div class="text-xs text-blue-400">交易有問題嗎？請在下方選擇有問題的交易以獲得幫助。</div>
+
+                <!-- 搜尋框 -->
+                <div class="my-3">
+                    <input type="text" placeholder="搜尋..." v-model="searchQuery"
+                           style="background-color:#316282 ;" />
+                </div>
+
+                <table class="table-auto w-full">
+                    <thead>
+                        <tr class=" bg-custom_blue text-white text-sm ">
+                            <th class="flex-1 text-left pl-3">日期</th>
+                            <th class="flex-3 text-left pl-3 ">物品</th>
+                            <th class="flex-2 text-left pl-3">類型</th>
+                            <th class="flex-1 text-center">總計</th>
+                            <th class="flex-2 pl-3">
+                                <div class="text-center">錢包</div>
+                                <div class="flex justify-between px-2">
+                                    <div>變更</div>
+                                    <div>餘額</div>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="order leading-loose  text-xs ">
+                        <tr v-for="order in filteredGames" :key="order.orderId">
+                            <td class="pl-3 text-custom_blue">{{ formatDate(order.purchaseDate) }}</td>
+                            <td data-tooltip-target="tooltip-dark-4" class="pl-3 leading-relaxed">
+                                <div v-for="product in order.productList" :key="product.productId">
+                                    <button @@click="viewOrderDetail(order.orderId)">
+                                        {{
+                                        product.productName.trim() }}
+                                    </button>
+                                </div>
+                                <!-- 類型 -->
+                            <td class="pl-3">
+                                <div>購買</div>
+                                <div class="text-custom_blue">
+                                    <small>{{order.paymentType}}</small>
+                                </div>
+                            </td>
+                            <!-- 總計 -->
+                            <td>
+                                <div class="text-center ">{{ order.totalPrice }}</div>
+                                <div class="text-center text-custom_blue"><small>資金</small></div>
+                            </td>
+                            <!-- 錢包 -->
+                            <td class="border-l border-[#2c405b]">
+                                <div class="flex justify-between px-2">
+                                    <div class="text-custom_blue">
+                                        <span>-</span><span>NT$</span>
+                                        <span>{{order.walletChange ?? 0 }}</span>
+                                    </div>
+                                    <div class="text-custom_blue">
+                                        <span>-</span><span>NT$</span>
+                                        <span>{{ order.walletBalance ?? 0 }}</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </template>
+
+    <!-- 訂單詳細頁 -->
+    <template v-if="showOrderDetail">
+        <div id="orderDetail" class="py-3 px-7 ">
+            <h2 class="text-2xl text-gray-300">Stellar 客服</h2>
+            <!-- 麵包屑 -->
+            <nav class="flex my-4" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+                    <li class="inline-flex items-center">
+                        <a href="#"
+                           class="inline-flex items-center text-sm font-medium text-gray-300 hover:text-[#b19f9f6a]  dark:text-gray-400 dark:hover:text-white">
+                            首頁
+                        </a>
+                    </li>
+                    <li>
+                        <div class="flex items-center">
+                            <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
+                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                      stroke-width="2" d="m1 9 4-4-4-4" />
+                            </svg>
+
+                            <a class="btn  change-language" asp-controller="Member"
+                               asp-action="PurchaseHistory">
+                                <span class="ms-1 text-sm font-medium text-gray-300 hover:text-[#b19f9f6a] md:ms-2 dark:text-gray-400 dark:hover:text-white">近期購物</span>
+                            </a>
+
+                        </div>
+                    </li>
+                    <li aria-current="page">
+                        <div class="flex items-center">
+                            <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
+                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                      stroke-width="2" d="m1 9 4-4-4-4" />
+                            </svg>
+                            <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">
+                                {{
+                                order.histroyDetailProducts.length > 0 ?
+                                order.histroyDetailProducts[0].productName.trim() : '無產品' }}
+                            </span>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+
+            <!-- details -->
+            <div class="details leading-loose p-2" style="background-color:rgb(29, 40, 55) ;">
+                <div class=" text-gray-400 text-sm">交易編號：{{ order.orderId }}</div>
+                <div class="text-gray-400  text-sm">
+                    <small>{{order.paymentType}}</small>
+                </div>
+                <div class="text-gray-400  text-sm">
+                    {{order.purchaseDate}}
+                </div>
+                <div v-for="product in order.histroyDetailProducts" :key="product.productId"
+                     class="text-sm text-blue-300 my-2">
+                    {{ product.productName.trim() }}
+                    - NT$
+                    {{ product.salesPrice }}
+
+                </div>
+                <div class="text-sm text-blue-300">
+                    <span>小計</span> <span>NT$</span> <span>
+                        {{
+                        order.subtotal
+                        }}
+                    </span>
+                </div>
+                <div class="text-sm text-blue-300">
+                    <span>折扣</span> <span>NT$</span> <span>
+                        {{
+                        order.orderDiscount }}
+                    </span>
+                </div>
+
+                <div class="text-sm border-t border-t-gray-600 text-blue-300 max-w-36">
+                    總計 <span class="ml-1">
+                        NT$
+                        {{ order.totalPrice }}
+                    </span>
+                </div>
+            </div>
+            <!-- 遇到困難 -->
+            <div class="text-[#4077a1] text-lg mt-4">您在這筆購買中遭遇什麼樣的困難？</div>
+            <a href="" class="refund_btn hover:bg-blue-500">我想退款</a>
+            <a href="" class="refund_btn hover:bg-blue-500">我被重複付款了</a>
+            <a href="" class="refund_btn hover:bg-blue-500">我的扣款金額有誤</a>
+            <a href="" class="refund_btn hover:bg-blue-500">我對這項購買有疑問</a>
+            <a href="" class="refund_btn hover:bg-blue-500">我想檢視貨列印該次購買的收據</a>
+            <div class="text-[#4077a1] text-lg mt-3">這是購買中的某件產品有問題</div>
+            <div v-for="p in order.histroyDetailProducts ">
+                <a :href="`/product/productpage/${p.productId}`" class="refund_btn hover:bg-blue-500">
+                    <div class="flex">
+                        <div class="" style="width:100px"><img class="w-full" :src=p.productImgUrl></div>
+
+                        <div class="content-center ml-1">{{p.productName}}</div>
+                    </div>
+                </a>
+            </div>
+            <div class="my-3" style="text-align: -webkit-center;">
+                <button @@click="backToHistory" class="stellar-btn">返回購買紀錄</button>
+            </div>
+
+        </div>
+    </template>
+</div>
+
+@section endJS {
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="~/js/PurchaseHistory/PurchaseHistory.js" asp-append-version="true"></script>
+ 
+}
+
+

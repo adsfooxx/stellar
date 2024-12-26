@@ -1,0 +1,541 @@
+* {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
+.container {
+    max-width: 940px;
+}
+
+
+header {
+    width: 100%;
+    background-color: #171d25;
+    position: fixed;
+    top: 0;
+    z-index: 5;
+}
+
+/* 大於900 */
+@media screen and (min-width:900px) {
+    header {
+        position: static;
+    }
+
+
+}
+
+header .container {
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+}
+
+@media screen and (max-width:900px) {
+    header .container .navbar.lg {
+        display: none;
+    }
+
+    header .container .log {
+        display: none;
+    }
+}
+
+@media screen and (min-width:900px) {
+
+    header .container {
+        justify-content: flex-start;
+    }
+
+    header .container .navbar nav ol {
+        display: flex;
+        align-content: center;
+        margin: 0;
+    }
+
+    header .container .log {
+        margin-left: auto;
+        position: relative;
+
+        padding-top: 5px;
+        align-self: self-start;
+        display: flex;
+
+
+    }
+
+    header .container .log a {
+        text-decoration: none;
+        color: #ccc;
+        font-size: 12px;
+    }
+
+    header .container .log .log-in-type {
+        display: flex;
+    }
+
+    header .container .log .log-in-type .notify button {
+        background-color: #3d4450;
+        width: 46px;
+        height: fit-content;
+        display: flex;
+        justify-content: center;
+        transform: translateY(5px);
+        object-fit: contain;
+        padding: 0;
+        border-radius: 0;
+        border: none;
+    }
+    header .container .log .log-in-type .collapse-notify{
+        position: absolute;
+        top: 35px;
+        width: 300px;
+        transform: translateX(-254px);
+    }
+
+    header .container .log .log-in-type .collapse-notify .card{
+        background: linear-gradient(to right, #2f333a 0%, #25282e 50%);
+        border: 1px solid #000;
+        color: #ccc;
+    }
+    header .container .log .log-in-type .collapse-notify .card .title{
+        display: flex;
+        justify-content: space-between;
+    }
+    header .container .log .log-in-type .collapse-notify .card .title .view{
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background-color: #636978;
+        padding: 3px 5px;
+        color: #ccc;
+        font-size: 13px;
+    }
+    header .container .log .log-in-type .collapse-notify .card .content{
+        padding:20px 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    header .container .log .log-in-type .collapse-notify .card .content p{
+        text-align: center;
+    }
+    header .container .log .log-in-type .collapse-notify .card .content .status{
+        font-size: 12px;
+    }
+    header .container .log .log-in-type .collapse-notify .card .content .sug{
+        font-size: 12px;
+    }
+    header .container .log .log-in-type .user-info a {
+        padding-bottom: 0;
+    }
+    header .container .log .log-in-type .user-info .dropdown .dropdown-toggle{
+        border: none;
+    }
+    header .container .log .log-in-type .user-info .dropdown ul {
+
+        border-radius: 0;
+    }
+
+    header .container .log .log-in-type .user-info .dropdown ul li a {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    header .container .log .log-in-type .user-info .dropdown ul li a span {
+        color: #4cb4ff;
+    }
+
+    header .container .log .log-in-type .user-info .wallet {
+        color: #ccc;
+        font-size: 12px;
+        padding: 0 12px;
+        ;
+    }
+
+    header .container .log .log-in-type .user-headshot {
+        padding-top: 5px;
+    }
+
+
+
+}
+
+@media screen and (min-width:900px) {
+    header .container .navbar.lg {
+        margin-left: 30px;
+    }
+}
+
+
+header .container .navbar nav .breadcrumb li a {
+    text-decoration: none;
+    color: #ccc;
+
+}
+
+header .container .navbar nav .breadcrumb li a:hover {
+    color: #fff;
+
+}
+
+header .container .navbar nav .breadcrumb li .dropdown:hover .dropdown-menu {
+    display: block;
+
+}
+
+header .container .navbar nav .breadcrumb li .dropdown .dropdown-menu li a {
+    font-size: 12px;
+}
+
+header .container .logo {
+    height: 36.14px;
+    width: 144px;
+}
+
+
+
+header .navbar .container-fluid {
+    padding: 0;
+    /* background-color: #012; */
+    
+    position: relative;
+
+}
+
+/* 漢堡 */
+
+header .navbar .navbar-toggler {
+    background-color: #0120;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    position: fixed;
+    left: 10px;
+    border:none;
+}
+header .navbar .navbar-toggler:focus{
+    box-shadow:none;
+}
+
+header .navbar .navbar-toggler span {
+    border-radius: 3px;
+
+    width: 23px;
+    height: 3px;
+
+}
+
+header .navbar .navbar-toggler .top {
+    position: absolute;
+    background-color: #eee;
+    transform: translateY(-7px);
+}
+
+header .navbar .navbar-toggler .middle {
+    background-color: #ddd;
+}
+
+header .navbar .navbar-toggler .bottom {
+    background-color: #ccc;
+    position: absolute;
+    transform: translateY(7px);
+}
+
+@media screen and (min-width:900px) {
+    header .navbar .navbar-toggler {
+        display: none;
+    }
+}
+
+header .navbar .container-fluid .offcanvas {
+    color: #fff;
+    width: 70vw;
+    background-color: #171a21;
+    /* background-color: #000; */
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body>ul {
+    list-style: none;
+    background-color: #171a21;
+}
+
+@media screen and (min-width:900px) {
+    header .navbar .container-fluid .offcanvas .offcanvas-body {
+        display: none;
+    }
+
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body>ul>li {
+
+    width: 100%;
+    border-top: 1px solid #2f3138;
+    border-bottom: 1px solid #000;
+    padding: 0 15px;
+
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body>ul :last-child {
+    border-bottom: none;
+}
+
+/* 登入後的左邊offcanvas選單 上面的使用者資訊 */
+header .navbar .container-fluid .offcanvas .offcanvas-body ul .card-user {
+    background-image: linear-gradient(to right, #283545 0%, #171a21 40%, #171a21 100%);
+    padding: 24px 25px 12px 25px;
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body ul .card-user .user-info a {
+    text-decoration: none;
+    color: #8a8a8a;
+    font-size: 22px;
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body ul .card-user .wallet {
+    margin-top: 20px;
+    color: #8a8a8a;
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body ul .card-user .wallet .money {
+    font-weight: bolder;
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body ul .aonly {
+    height: 57px;
+    flex-grow: 1;
+    display: flex;
+
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body ul .aonly a {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    flex-grow: 1;
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body ul li {
+    color: #ccc;
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body ul li>a {
+    text-decoration: none;
+    color: #ccc;
+    font-size: 20px;
+
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body ul li p {
+    margin: 0;
+    width: 100%;
+}
+
+
+
+header .navbar .container-fluid .offcanvas .offcanvas-body ul button {
+    padding: 0;
+    color: #ccc;
+    width: 100%;
+    display: block;
+    height: 57px;
+
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body .btn {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body .drop {
+    padding: 0;
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body .drop .accordion-item {
+
+    border: none;
+    --bs-accordion-bg: none;
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body .drop .accordion-button {
+    font-size: 20px;
+    border: none;
+
+    background-color: #171a21;
+    display: flex;
+    align-items: center;
+
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body .drop .accordion-button:not(.collapsed) {
+    box-shadow: none;
+    background-color: #192533;
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body .drop .accordion-button:not(.collapsed)+.accordion-collapse {
+    box-shadow: none;
+    background-color: #192533;
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body .drop .accordion-button::after {
+    display: block;
+
+    content: " ";
+    background-image: url(../img/arrow.png);
+    position: relative;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body .drop .accordion-collapse .accordion-body {
+    border-top: 1px solid #2f3138;
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body .drop .accordion-button p {
+    padding-left: 15px;
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body .drop .accordion-collapse ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    padding-left: 10px;
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body .drop li a {
+    font-size: 16px;
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body ul .func {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 10px;
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body ul .func .btn {
+    height: 30px;
+    font-size: 16px;
+    color: #8a8a8a;
+    display: block;
+    text-align: left;
+    width: 100%;
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body .offcanvas-footer {
+    padding: 15px;
+    font-size: 10px;
+    color: #ccc;
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body .offcanvas-footer ol .breadcrumb-item {
+    display: inline;
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body .offcanvas-footer ol .breadcrumb-item:nth-child(n+2):before {
+    content: "|";
+    color: #ccc;
+}
+
+header .navbar .container-fluid .offcanvas .offcanvas-body .offcanvas-footer ol li a {
+    font-size: 10px;
+    text-decoration: none;
+    color: #ccc;
+}
+
+main {
+    width: 100%;
+    /* height: 1000px; */
+    margin-top: 70px;
+    background-color: #1a2a3c;
+    background: linear-gradient(to bottom, #214d6f 0%, #1a2a3c 400px);
+}
+
+@media screen and (min-width:900px) {
+    main {
+        margin-top: 0;
+    }
+}
+
+footer {
+    display: none;
+    background-color: #171d25;
+    height: 300px;
+    padding: 16px 0 60px 0;
+}
+
+@media screen and (min-width:900px) {
+    footer {
+        display: block
+    }
+}
+
+footer .container {
+    padding-top: 10px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+footer .privacy {
+    display: flex;
+    justify-content: space-between;
+}
+
+footer .privacy .text p {
+    font-size: 12px;
+    color: #ccc;
+}
+
+footer .privacy .logo {
+    width: 144px;
+    height: 36.14px;
+}
+
+footer .privacy .logo img {
+    width: 100%;
+}
+
+footer .privacy nav ol .breadcrumb-item {
+    display: inline;
+}
+
+footer .container nav .breadcrumb .breadcrumb-item:nth-child(n+2)::before {
+    content: "|";
+    color: #ccc;
+}
+
+footer .container nav .breadcrumb .breadcrumb-item a {
+    font-size: 12px;
+    text-decoration: none;
+    color: #ccc;
+}
+
+footer .container .footer-navbar nav .ol {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    width: 100%;
+}

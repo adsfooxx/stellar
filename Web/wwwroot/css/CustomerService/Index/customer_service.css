@@ -1,0 +1,107 @@
+main .container {
+    padding: 30px 20px;
+}
+
+main .btn {
+    border: none;
+    box-shadow: none;
+}
+
+main p {
+    margin: 0;
+}
+
+main hr {
+    color: #75dfff;
+}
+
+main h5 {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 600
+}
+
+main .help {
+    font-size: 20px;
+    color: #5eafde;
+    margin: 16px 0;
+}
+
+main .btn-group {
+    display: flex;
+    position: relative;
+    overflow: auto;
+    border-radius: 0;
+}
+
+    main .btn-group a {
+        text-align: left;
+        font-size: 18px;
+        padding: 8px 10px;
+        background-color: #445468;
+        border-radius: 0;
+        display: flex;
+        align-items: center;
+        height: 48px;
+        overflow: hidden;
+    }
+
+
+
+main .btn-group a:hover {
+    background-color: #4581a5;
+}
+
+    main .btn-group.dropend a::after {
+        margin-left: auto;
+        scale: 1.5;
+        color: #9db0c7;
+        padding-right:10px;
+    }
+
+main .btn-group .pic {
+    width: 32px;
+    height: 32px;
+    margin-right: 15px
+}
+
+main .btn-group .pic img {
+    width: 100%;
+    
+}
+
+main .btn-group p.product_name {
+    font-size: 15px;
+
+
+}
+
+main .card_list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+main .card_list p.title {
+    color: #5eafde;
+    font-size: 14px;
+    
+}
+
+main .text_only .btn-group a {
+    height: 64px;
+}
+
+main .search {
+    background-color: #324965;
+    border: #000;
+    height: 54px;
+    box-shadow: none;
+    margin: 30px 0;
+}
+
+main .search::placeholder {
+    text-align: center;
+    font-size: 24px;
+    font-style: italic;
+}

@@ -1,0 +1,333 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+/* 個人檔案 */
+
+.profile_card {
+  display: flex;
+  background-color: #2a3340;
+  max-width: 978px;
+  height: 102px;
+  margin: 0 auto;
+  align-items: center;
+  padding: 0 15px;
+  margin-bottom: 20px;
+}
+.profile_card > img {
+  width: 64px;
+  height: 64px;
+  margin-right: 20px;
+}
+.profile_card > .card_body a {
+  color: #ebebeb;
+  text-decoration: none;
+}
+
+.profile_card > .card_body a:nth-child(1) {
+  font-size: 26px;
+  margin-right: 10px;
+}
+.profile_card > .card_body span {
+  font-size: 16px;
+  color: #828282;
+  margin-right: 5px;
+}
+.profile_card > .card_body a:nth-child(3) {
+  font-size: 14px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.profile_card > .card_body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* 通知區 */
+.notify_area {
+  margin: 0 auto;
+}
+/* 通知區title */
+.notify_area > .title {
+  font-size: 18px;
+  padding: 5px 0px;
+  color: #fff;
+}
+.notify_area > .title :nth-child(2) {
+  font-size: 16px;
+}
+
+/* 通知區內容 */
+.notify_card_padding {
+  padding: 10px;
+
+}
+.col_controller {
+  gap: 10px;
+  display: flex;
+  flex-direction: column-reverse;
+
+}
+.col_controller > .col-8 {
+  width: 100%;
+}
+.col_controller > .col-4 {
+  width: 100%;
+}
+.notify_card {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin: 0px 0px 5px 0;
+  background-color: #16202d;
+  overflow: hidden;
+}
+/* 隱藏刪除按鈕 */
+.delete_notify_btn {
+    display: none;
+}
+
+/* 當滑鼠移到 .notify_card 上時，顯示刪除按鈕 */
+.notify_card:hover .delete_notify_btn {
+    display: block;
+    /*margin-top:10px;*/
+}
+
+
+
+    /* 卡片 hover 時的效果 */
+    .notify_card:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+.notify_card > .card_body_txt {
+        color: white;
+        display: flex;
+    }
+    .notify_card > .card_body_txt > .card_body_img {   
+        width: 44px;
+        margin-right: 10px;
+    }
+.notify_card .card_body_img > img {
+    aspect-ratio: 1;  
+}
+
+.notify_card .notify_type_info_time {
+  display: flex;
+  align-items: center;
+}
+
+.notify_card .notify_type_info_time .friend_add_img svg {
+  width: 100%;
+  height: auto;
+  vertical-align: top;
+  color: #8b929a;
+}
+.notify_card .notify_type_info_time .friend_add_img img{
+  width: 100%;
+  height: auto;
+  vertical-align: top;
+  background-color: #8b929a;
+  vertical-align: top;
+}
+
+.notify_card .notify_type_info_time .friend_add_img {
+  width: 13px;
+  height: 13px;
+  margin-right: 5px;
+}
+.notify_type_info_time :nth-child(2) {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #8b929a;
+  margin-right: 0.5em;
+}
+.notify_type_info_time :nth-child(3) {
+  color: #67707b;
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #8b929a;
+  flex-shrink: 0;
+  margin-left: 5px;
+}
+
+.notify_card > .card_body_txt > .friend_add_name {
+  color: #dcdedf;
+  font-weight: 400;
+  letter-spacing: none;
+  font-size: 14px;
+}
+.notify_card > .card_body_txt  > .friend_add_text {
+  color: #8b929a;
+  font-size: 12px;
+}
+
+.notify_card > .card_body_btn {
+    display: flex;
+    margin-left: auto;
+}
+
+    /* 按鈕操作區 */
+.delete_notify_btn > button {
+    background-color: #3d4450;
+    border: none;
+   margin-left:5px;
+
+    border-radius: 2px;
+    font-size: 14px;
+}
+.btn_controller {
+    padding: 10px;
+    background: #16202d;
+    color: white;
+    height: auto;
+}
+
+.mark_and_setting_btn {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.mark_and_setting_btn > button {
+  background-color: #3d4450;
+  border: none;
+  width: 100%;
+  border-radius: 2px;
+  font-size: 14px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.notify_card .friend_add_btn > button {
+    margin: 10px;
+    border: none;
+    border-radius: 2px;
+    font-size: 14px;
+    background-color: #3d4450;
+}
+/* 篩選 */
+.filter_by > legend {
+    padding-top: 10px;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #9298a0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.filter_by {
+  width: 100%;
+}
+
+.filter_type > label {
+  font-size: 14px;
+  color: #9298a0;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  margin-bottom: 10px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.filter_type > label > input {
+  margin-right: 5px;
+  
+}
+.setting_button > svg {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+}
+.setting_button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.filter_by > button {
+  background-color: #3d4450;
+  border: none;
+  width: 33.333333%;
+  border-radius: 2px;
+  font-size: 14px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+@media screen and (min-width: 797px) {
+  .mark_and_setting_btn {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+}
+@media screen and (min-width:768px) {
+  .col_controller {
+    gap: 0px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .col_controller > .col-8 {
+    width: 60%;
+  }
+  .col_controller > .col-4 {
+    width: 40%;
+  }
+  .notify_card{
+    margin: 0px 10px 5px 0;
+  }
+}
+
+.filter_by {
+    width: 100%;
+}
+
+.filter_type {
+    margin-bottom: 10px;
+}
+
+.filter_type label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #9298a0;
+    cursor: pointer; 
+}
+
+.filter_type input[type="checkbox"] {
+    display: none;
+}
+
+.filter_type input[type="checkbox"] + span {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
+    background-color: #090909;
+    position: relative;
+    text-align: center;
+    line-height: 20px; 
+}
+
+.filter_type input[type="checkbox"]:checked + span::before {
+    content: '✔'; 
+    font-size: 16px;
+}
+
+/* 跟邵討論 */
+/* main{
+    background: #1A2A3C;
+} */

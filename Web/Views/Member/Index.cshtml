@@ -1,0 +1,196 @@
+﻿@using Web.ViewModels.Member
+@model MemberIndexViewModel
+@section topCSS {
+    <link href="~/css/Member/Index/personal(user).css" rel="stylesheet" asp-append-version="true">
+}
+@section endJS {
+    <script src="~/js/member/memberIndex.js" asp-append-version="true"></script>
+}
+<div class="container-lg mainContainer">
+    <div class="row">
+        <div class="row userHead">
+            <div class="col-12">
+                <div class="row">
+                    <div class="userAll">
+                        <div class="userName">
+                            <div class="name">
+                                <span>@Model.UserName</span>
+                                <!-- bst -->
+                                <li class="breadcrumb-item">
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                           aria-expanded="false">
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-dark">
+                                            <p class="fs-7 ms-2 mb-1">此用戶使用過以下名稱</p>
+                                            @foreach (var HisName in Model.UserHistoryNameList)
+                                            {
+                                                <li class="fs-7 row">
+                                                    <ol>@HisName.Name</ol>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </li>
+                            </div>
+
+                            <!-- bst -->
+                            <div class="pic country fs-7">
+                                <img src="~/img/country_Taiwan.png" alt="國家">
+                                <span class="" id="aavv">Taiwan</span>
+                            </div>
+                        </div>
+
+                        <div class="userpic"><img src="@Model.UserImgUrl"></div>
+
+                        <div class="userTag fs-7">
+                            <p>@Model.Userintro</p>
+                        </div>
+
+                        <div class="userMore">
+                            @if (Model.UserId == Model.loginUserId)
+                            {
+                                @*編輯個人*@
+                                <a href="@Url.Action("EditData", "Member" )" style="text-decoration:none;">
+                                    <button class="userEditBtn">Edit</button>
+                                </a>
+                            }
+                            else if (Model.isFriend == true)
+                            {
+                                <button class="userEditBtn" disabled>已經是朋友了</button>
+                            }
+                            else if (Model.isSendFriend == true && Model.sendIsMe == true)
+                            {
+                                <button class="userEditBtn" disabled>已經寄送好友邀請</button>
+                            }
+                            else if (Model.isSendFriend == true && Model.sendIsMe == false)
+                            {
+                                @using (Html.BeginForm("CheckFriend", "Member", FormMethod.Post))
+                                {@*新增好友*@
+                                    @Html.HiddenFor(model => model.loginUserId)
+                                    @Html.HiddenFor(model => model.UserId)
+                                    <button type="submit" id="" class="userEditBtn">成為朋友</button>
+                                }
+                            }
+                            else if (Model.isSendFriend == false)
+                            {
+                                @using (Html.BeginForm("AddFriend", "Member", FormMethod.Post))
+                                {@*新增好友*@
+                                    @Html.HiddenFor(model => model.loginUserId)
+                                    @Html.HiddenFor(model => model.UserId)
+                                    <button type="submit" id="" class="userEditBtn">寄送好友邀請</button>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row col-12 col-lg-3 supBox gap-1 mt-4 me-0">
+            <div class="col-12 bg-b pt-2 pb-2 onlion">
+                <span>線上</span>
+            </div>
+            <div class="col-6-e col-sm-4-e col-md-3-e col-lg-12 bg-b pt-2 pb-2sup_click_box">
+                <span class="fs-6">遊戲</span>
+            </div>
+            <div class="col-6-e col-sm-4-e col-md-3-e col-lg-12 bg-b pt-2 pb-2sup_click_box">
+                <span class="fs-6">物品庫</span>
+            </div>
+            @* 這裡的span 要接收資料 count 好友數量 *@
+            <div class="col-6-e col-sm-4-e col-md-3-e col-lg-12 bg-b pt-2 pb-2 sup_click_box">
+                <span class="fs-6">好友</span><span class="ms-2 fs-5">@Model.FriendList.Count()</span>
+            </div>
+            <div class="col-6-e col-sm-4-e col-md-3-e col-lg-12 bg-b pt-2 pb-2sup_click_box">
+                <span class="fs-6">湊數</span>
+            </div>
+        </div>
+        <div class="row col-12 col-lg-9 mainBox">
+            <div class="row  mt-4 mainStyle">
+                <div class="col-12 mainBoxTitle pt-3">
+                    <p>近期動態</p>
+                    <p>最近購買的遊戲</p>
+                </div>
+                <div class="col-12 gameList">
+                    <!-- 卡片 -->
+                    @foreach (var game in Model.GameList)
+                    {
+                        <div class="col-12 card-e mt-4">
+                            <div class="pic m-1"><img src="@game.ImgUrl"></div>
+                            <div class="txt fs-6">
+                                <div class="title">
+                                    <p>@game.Name</p>
+                                </div>
+                                <div class="gameMore fs-7">
+                                    @*    <p>總時數 @(game.Time) 小時</p> *@
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <!-- 第一章 卡片到這 -->
+                    <!-- 卡片到這 -->
+                    <div class="gameListFooter fs-7 mt-3">
+                        <span>檢視</span>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Member" asp-action="GameLibray">
+                            <p>全部的遊戲</p>
+                        </a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Member" asp-action="WishList">
+                            <p>願望清單</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mainBox mainStyle mt-4 mb-5">
+                <div class="col-12 mainBoxTitle pt-3">
+                    <p>留言</p>
+                </div>
+                <div class="msgBox">
+                    <div class="col-12 msgPush   ">
+                        <div class="pic">
+                            <img src="@(Model.loginUserImg)">
+                        </div>
+                        @using (Html.BeginForm("Index", "Member", FormMethod.Post, new { @class = "w-100" }))
+                        {
+                            @Html.HiddenFor(model => model.loginUserId)
+                            @Html.HiddenFor(model => model.UserId)
+                            @Html.TextBoxFor(m => m.commidContent, new { @id = "commid_input", @class = "msgTxt", @placeholder = "請輸入留言" })
+                            <button type="submit" id="commid_Show_Button" class="hidden userEditBtn">>></button>
+                        }
+                    </div>
+                    <div class="col-12 msgList">
+                        @* 留言卡片 開始 *@
+                        @foreach (var commid in Model.CommidList)
+                        {
+                            <div class="listCard">
+                                <div class="pic">
+                                    <img src="@(commid.CommUserImgUrl)">
+                                </div>
+                                <div class="msgContain fs-6">
+
+                                    <div class="msgName">
+                                        <span>@(commid.CommUserName)</span>
+                                        <span class="commentTime">@(commid.CommidCreateTime)</span>
+                                    </div>
+
+                                    @using (Html.BeginForm("DeleteCommmid", "Member", FormMethod.Post))
+                                    {
+                                        <input type="hidden" name="id" value="@commid.CommidId" />
+                                        <input type="hidden" name="loginUser" value="@Model.loginUserId" />
+                                        <button type="submit" class="gbgBtn"><img src="~/img/garbige.png" alt=""></button>
+                                    }
+
+                                    <div class="text w-100">
+                                        <p>@(commid.CommidText)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @* 留言卡片第一章 結束 *@
+                        @* 留言卡片 結束 *@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

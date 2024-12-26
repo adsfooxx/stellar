@@ -1,0 +1,876 @@
+﻿@using Web.ViewModels.Message
+@model MessageViewModel
+@{
+    Layout = null;
+    ViewData["Title"] = "Stellar聊天室";
+}
+
+
+
+
+
+
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Web</title>
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Web.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Message/message.css" asp-append-version="true">
+</head>
+
+<body>
+    <!--  bg-body-tertiary -->
+
+    <header>
+        <nav class="navbar navbar-expand ">
+            <div class="container-fluid ">
+                <a class="navbar-brand pic" asp-controller="Home" asp-action="Index"><img src="../img/logo_steam.png" alt=""></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">首頁</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Member" asp-action="Index" asp-route-id="@Model.UserId">個人檔案</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="CustomerSupport" asp-action="CustomerSupport" class="nav-link">客服</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="allDiv">
+            <!--  -->
+            <div class="userBox">
+                <!-- user -->
+                <div class="user">
+                    <img src="@Model.UserImgUrl">
+                    <div class="name">
+                        <span class="userName">@(Model.UserName) </span>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li class="row">
+                                    <lo>
+                                        <input type="radio" name="state" value="線上" id="onlion" checked>
+                                        <label for="onlion">線上</label>
+                                    </lo>
+                                    <lo>
+                                        <input type="radio" name="state" value="離開" id="leave">
+                                        <label for="leave">離開</label>
+                                    </lo>
+                                    <lo>
+                                        <input type="radio" name="state" value="隱藏" id="hide">
+                                        <label for="hide">隱藏</label>
+                                        <p>顯示為離線但可聊天</p>
+                                    </lo>
+                                    <hr>
+                                    <lo>
+                                        <input type="checkbox" id="noMsg">
+                                        <label for="noMsg">請勿打擾</label>
+                                        <p>停用所有聊天通知</p>
+                                    </lo>
+                                    <hr>
+                                    <p>個人檔案名稱</p>
+                                </li>
+                            </ul>
+
+                        </div>
+                        <p id="state">
+                            線上
+                        </p>
+
+
+                    </div>
+                    <button class="editBtn"><img src="../img/edit.png" alt=""></button>
+                </div>
+
+                <!-- /user\   \ friend / -->
+                <div class="friend">
+                    <span>好友</span>
+                    <div class="container-fluid serchBox">
+                        <form class="d-flex position-relative" role="search">
+                            <input class="form-control serchInput" type="search" aria-label="Search">
+                            <button class="btn position-absolute serchBtn" type="submit">
+                                <img src="../img/serch.png"
+                                     alt="">
+                            </button>
+                        </form>
+                    </div>
+                    <button class="addFriendBtn"><img src="../img/addFriend.png" alt=""></button>
+                </div>
+
+
+                <div class="accordion accordion-flush friendList " id="accordionFlushExample">
+                    <!--  -->
+                    <div class="accordion-item bg-0000 onlionFriend">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button friBtn bg-0000" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseOne" aria-expanded="true"
+                                    aria-controls="flush-collapseOne">
+                                線上好友(@(Model.FriendList.Count(x => x.FriendState == true)))
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse show"
+                             data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body friCard_onlionList" id="list_online">
+                                <!--線上 第一張  -->
+                                @foreach (var onlionMember in Model.FriendList)
+                                {
+                                    @if (onlionMember.FriendState == true)
+                                    {
+                                        <div class="friCard_onlion" id="@onlionMember.FriendId" data-fname="@(onlionMember.FriendName)" data-fid="@onlionMember.FriendId" data-fimg="@onlionMember.FriendImgUrl" data-stact="@onlionMember.FriendState" data-talkid="@onlionMember.talkID">
+                                            <img src="@onlionMember.FriendImgUrl">
+                                            <div class="name">
+                                                <span class="userName">@onlionMember.FriendName</span>
+                                                <div class="dropdown">
+                                                    <a class="dropdown-toggle friMoreBtn" type="button"
+                                                       data-bs-toggle="dropdown" aria-expanded="false">
+                                                    </a>
+                                                    <ul class="dropdown-menu dropdown-menu-dark">
+                                                        <li class="row friMore">
+                                                            <lo class="sendBtn" data-fname="@(onlionMember.FriendName)" data-fid="@onlionMember.FriendId" data-fimg="@onlionMember.FriendImgUrl" data-stact="@onlionMember.FriendState" data-talkid="@onlionMember.talkID">
+                                                                傳送訊息
+                                                            </lo>
+                                                            <lo>
+                                                                <a href="../Member/Index/@onlionMember.FriendId" style="text-decoration:none;color:#DEE">顯示個人檔案</a>
+                                                            </lo>
+
+                                                        </li>
+                                                    </ul>
+
+                                                </div>
+                                                <p class="onlion_text">
+                                                    線上
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                    }
+                                }
+                                <!--第一章結束  -->
+                                <!-- 線上尾端  -->
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <div class="accordion-item bg-0000 notOnlionFriend">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed friBtn bg-0000" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                    aria-controls="flush-collapseThree">
+                                離線好友(@(Model.FriendList.Count(x => x.FriendState == false)))
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree" class="accordion-collapse collapse"
+                             data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body friCard_notOnlionList" id="list_notonline">
+                                <!-- 離線 第一張 -->
+                                @foreach (var notonlionMember in Model.FriendList)
+                                {
+                                    @if (notonlionMember.FriendState == false)
+                                    {
+                                        <div class="friCard_notOnlion" id="@notonlionMember.FriendId" data-fname="@(notonlionMember.FriendName)" data-fid="@notonlionMember.FriendId" data-fimg="@notonlionMember.FriendImgUrl" data-stact="@notonlionMember.FriendState" data-talkid="@notonlionMember.talkID">
+                                            <img src="@notonlionMember.FriendImgUrl">
+                                            <div class="name">
+                                                <span class="userName">@notonlionMember.FriendName</span>
+                                                <div class="dropdown">
+                                                    <a class="dropdown-toggle friMoreBtn" type="button"
+                                                       data-bs-toggle="dropdown" aria-expanded="false">
+                                                    </a>
+                                                    <ul class="dropdown-menu dropdown-menu-dark">
+                                                        <li class="row friMore">
+                                                            <lo class="sendBtn" data-fname="@(notonlionMember.FriendName)" data-fid="@notonlionMember.FriendId" data-fimg="@notonlionMember.FriendImgUrl" data-stact="@notonlionMember.FriendState" data-talkid="@notonlionMember.talkID">
+                                                                傳送訊息
+                                                            </lo>
+                                                            <lo>
+                                                                <a href="../Member/Index/@notonlionMember.FriendId" style="text-decoration:none;color:#DEE">顯示個人檔案</a>
+                                                            </lo>
+
+                                                        </li>
+                                                    </ul>
+
+                                                </div>
+                                                <p class="onlion_text">
+                                                    離線
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                    }
+                                }
+                                <!--  第一章結束-->
+                                <!--  結束-->
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                </div>
+
+
+
+
+            </div>
+            <div class="msgBox">
+                <p class="msgTopTxt">
+                    點擊好友開聊!
+                </p>
+                <div class="select_msg">
+
+
+
+
+                    <!-- BST -->
+                    <ul class="nav nav-tabs">
+
+                        <li class="nav-item select_card">
+                            <!--      選擇對話   -->
+                            <input type="radio" class="" id="sel_all" name="friend_select" data-state="true" checked data-f_name="hello">
+                            <label class="nav-link" for="sel_all">
+                                <div class="select_friend_card is_onlion">
+                                    <img src="https://hackmd.io/_uploads/Syxmo0CIpA.png">
+                                    <div class="name">
+                                        <span class="userName">這裡是群聊</span>
+                                        <p>不是男同俱樂部</p>
+                                    </div>
+                                </div>
+                            </label>
+
+                        </li>
+                    </ul>
+
+                </div>
+                <!--  -->
+                <div class="message_box">
+                    <div class="talk_box" id="talk_box">
+
+                        <!--      聊天區   -->
+                        <!-- 對話 -->
+                        @if (Model.CommidList.Count > 0)
+                        {
+                            @foreach (var msg in Model.CommidList)
+                            {
+                                <div class="msg">
+                                    <div class="talk_user">
+                                        <img src="@msg.CommUserImgUrl">
+                                        <span>離線時來自--@(msg.CommUserName)--的留言</span>
+                                        <time>
+                                            留言時間--@(msg.CreateTime)
+                                        </time>
+                                    </div>
+                                    <ul class="talk_msg_box">
+                                        <!--  -->
+                                        <p class="talk_msg">
+                                            @msg.CommidText
+                                        </p>
+                                        <!--  -->
+                                    </ul>
+                                </div>
+
+
+                            }
+                        }
+                    </div>
+
+                    <div class="message_input_box">
+                        <input type="text" id="input_text">
+                        <button class="input_btn" id="input_btn" data-user="@Model.UserName" data-userid="@Model.UserId" data-userimg="@Model.UserImgUrl">></button>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script>
+
+
+        //聊天的東西從這開始宣告
+        var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+        let n_user = $('#input_btn').data('user').toString();
+        let n_userid = `${@Model.UserId}`;
+        let n_userimg = $('#input_btn').data('userimg');
+        let n_state;
+        let n_user_state = @Model.UserState.ToString().ToLower();
+        if (n_user_state) { // 直接检查布尔值是否为 true
+            n_state = "線上";
+        } else {
+            n_state = "離線";
+        }
+        let input_text = $('#input_text');
+        let inputBtn = $('#input_btn');
+        let $choose = $('input[type="radio"][name="friend_select"]');
+        console.log($choose);
+        //上方選擇列表
+        $('lo.sendBtn').click(addsel);
+        $('div.friCard_onlion').dblclick(addsel);
+        $('div.friCard_notOnlion').dblclick(addsel);
+        function addsel() {//主動新增聊天室
+
+            let click_f_talkid = $(this).data('talkid');
+            let click_f_id = $(this).data('fid').toString();
+            let click_f_name = $(this).data('fname');
+            let click_f_img = $(this).data('fimg');
+            let click_f_stact = $(this).data('stact');
+            let c_bool = false;
+            $choose = $('input[type="radio"][name="friend_select"]');
+            $choose.each(function () {//判斷有沒有重複
+                let text = $(this).attr('id');
+                let ts = text.split('_');
+                let checkid = ts[1].toString();
+                if (checkid === click_f_id) {
+                    c_bool = true;
+                }
+            });
+            if (c_bool === true) {
+                //重複
+                text = "";
+                ts = "";
+                checkid = "";
+            } else {
+                //沒重複
+
+                let state_str = '1';
+                let css = '2';
+                if (click_f_stact === false || click_f_stact === 'False' || click_f_stact === 'false') {
+                    state_str = "離線";
+                    css = "friCard_notOnlion";
+                } else if (click_f_stact === true || click_f_stact === 'True'||click_f_stact === 'true') {
+                    state_str = "線上";
+                    css = "is_onlion";
+                }
+
+                // 添加元素的函数
+                function addFriendCard() {
+                    let addHtml = '<input type="radio" class="" id="sel_' + click_f_id + '" name="friend_select" data-state="' + click_f_stact + '" data-f_name="' + click_f_name + '" data-f_id="' + click_f_id + '">' +
+                        '<label class="nav-link" for="sel_' + click_f_id + '">' +
+                        '<div class="select_friend_card ' + css + '">' +
+                        '<img src="' + click_f_img + '">' +
+                        '<div class="name">' +
+                        ' <span class="userName">' + click_f_name + '</span>' +
+                        '<p class="onlion_text">' + state_str + '</p>' +
+                        '</div>' +
+                        `<button type="button" class="friend_close" id="del_${click_f_id}">X</button>` +
+                        '</div>' +
+                        '</label>';
+
+                    $('.select_card').append(addHtml);
+
+                    // 切换到新群组的聊天记录
+                    let element = document.getElementById(`sel_${click_f_id}`);
+                    element.addEventListener('change', function () {
+                        $("#talk_box").empty();
+                        if (msg_box[element.id]) {
+                            msg_box[element.id].forEach(function (msg) {
+                                $('#talk_box').append(msg);
+                            });
+                        }
+                    });
+                }
+
+                // 初始添加
+                addFriendCard();
+
+                // 使用事件代理处理删除按钮点击
+                $(`#del_${click_f_id}`).on('click', function () {
+                    $(`#sel_${click_f_id}`).remove();
+                    $(this).closest('label.nav-link').remove();
+
+                    // 这里你可以调用 addFriendCard 来重新添加该元素
+
+                });
+
+            }
+        }
+        //被動創建聊天室
+        function li_obo_add(user_name, user_img, user_state, user_id) {
+            {//判斷有沒有重複
+
+                let click_f_id = user_id;
+                let click_f_name = user_name;
+                let click_f_img = user_img;
+                let click_f_stact = user_state;
+                let c_bool = false;
+
+                $choose = $('input[type="radio"][name="friend_select"]');
+                $choose.each(function () {//判斷有沒有重複
+                    let text = $(this).attr('id');
+                    let ts = text.split('_');
+                    let checkid = ts[1].toString();
+                    if (checkid === click_f_id) {
+                        c_bool = true;
+                    }
+                });
+
+
+
+
+
+                if (c_bool === true) {
+                    //重複
+                    text = "";
+                    ts = "";
+                    checkid = "";
+                } else {
+                    //沒重複
+
+                    let state_str = '1';
+                    let css = '2';
+                    if (click_f_stact === '離線') {
+                        state_str = "離線";
+                        css = "friCard_notOnlion";
+                    } else if (click_f_stact === '線上') {
+                        state_str = "線上";
+                        css = "is_onlion";
+                    }
+
+                    // 添加元素的函数
+                    function addFriendCard() {
+                        let addHtml = '<input type="radio" class="" id="sel_' + click_f_id + '" name="friend_select" data-state="' + click_f_stact + '" data-f_name="' + click_f_name + '" data-f_id="' + click_f_id + '">' +
+                            '<label class="nav-link" for="sel_' + click_f_id + '">' +
+                            '<div class="select_friend_card ' + css + '">' +
+                            '<img src="' + click_f_img + '">' +
+                            '<div class="name">' +
+                            ' <span class="userName">' + click_f_name + '</span>' +
+                            '<p class="onlion_text">' + state_str + '</p>' +
+                            '</div>' +
+                            `<button type="button" class="friend_close" id="del_${click_f_id}">X</button>` +
+                            '</div>' +
+                            '</label>';
+
+                        $('.select_card').append(addHtml);
+
+                        // 切换到新群组的聊天记录
+                        let element = document.getElementById(`sel_${click_f_id}`);
+                        element.addEventListener('change', function () {
+                            $("#talk_box").empty();
+                            if (msg_box[element.id]) {
+                                msg_box[element.id].forEach(function (msg) {
+                                    $('#talk_box').append(msg);
+                                });
+                            }
+                        });
+                    }
+
+                    // 初始添加
+                    addFriendCard();
+
+                    // 使用事件代理处理删除按钮点击
+                    $(`#del_${click_f_id}`).on('click', function () {
+                        $(`#sel_${click_f_id}`).remove();
+                        $(this).closest('label.nav-link').remove();
+
+                        // 这里你可以调用 addFriendCard 来重新添加该元素
+
+                    });
+                }
+            }
+
+
+
+        }
+        //聊天紀錄暫存
+        let msg_box = {};
+        //預設的選擇聊天監聽
+        $choose.on('change', function () {
+            let selectedRadioId = $choose.attr('id');
+            console.log(selectedRadioId);
+            // 切换到新聊天记录
+            $("#talk_box").empty();
+            if (msg_box[selectedRadioId]) {
+                msg_box[selectedRadioId].forEach(function (msg) {
+                    $('#talk_box').append(msg);
+                });
+            }
+        });
+        $("#input_btn").data('user').disabled = true;
+        //接收訊息多人
+        connection.on("AllReceiveMessage", function (user, message) {
+
+            let input = user.split(",,");
+            let user_name = input[0];
+            let user_img = input[1];
+            let hour = @DateTime.Now.ToString("HH");
+            let min = @DateTime.Now.ToString("mm");
+
+            let now_time = hour + ":" + min;
+            //下半
+            let text_p = document.createElement('p');
+            text_p.classList.add("talk_msg");
+            text_p.textContent = message;
+            let text_ul = document.createElement('ul');
+            text_ul.classList.add("talk_msg_box");
+            text_ul.appendChild(text_p);
+            //上半
+            let now_time_html = document.createElement('time');
+            now_time_html.textContent = now_time;
+            let msg_user = document.createElement('span');
+            msg_user.textContent = user_name;
+            let msg_img = document.createElement('img');
+            msg_img.src = user_img;
+            let talk_user = document.createElement('div');
+            talk_user.classList.add("talk_user");
+            talk_user.appendChild(msg_img);
+            talk_user.appendChild(msg_user);
+            talk_user.appendChild(now_time_html);
+            //組合
+            var msg = document.createElement('div');
+            msg.classList.add("msg");
+            msg.appendChild(talk_user);
+            msg.appendChild(text_ul);
+            //發送至頁面
+            document.getElementById("talk_box").appendChild(msg);
+            document.getElementById("talk_box").scrollTop = document.getElementById("talk_box").scrollHeight;
+
+
+
+            let select_id = `sel_all`;
+            // 缓存当前群组的消息
+            if (!msg_box[select_id]) {
+                msg_box[select_id] = [];
+            }
+            msg_box[select_id].push(msg);
+
+
+        });
+        // 一對一接收
+        connection.on("ReceiveMessage", function (message) {
+
+
+
+            let input = message.split(",,");
+            let input_msg = input[0];
+            let user_name = "來自 " + input[1] + "   的私人訊息";
+            let user_img = input[2];
+            let user_state = input[3];
+            let user_id = input[4];
+            let hour = @DateTime.Now.ToString("HH");
+            let min = @DateTime.Now.ToString("mm");
+
+            let now_time = hour + ":" + min;
+
+
+            //建立選擇對話
+            li_obo_add(input[1], user_img, user_state, user_id);
+
+
+            //下半
+            let text_p = document.createElement('p');
+            text_p.classList.add("talk_msg");
+            text_p.textContent = input_msg;
+            let text_ul = document.createElement('ul');
+            text_ul.classList.add("talk_msg_box");
+            text_ul.appendChild(text_p);
+            //上半
+            let now_time_html = document.createElement('time');
+            now_time_html.textContent = now_time;
+            let msg_user = document.createElement('span');
+            msg_user.textContent = user_name;
+            let msg_img = document.createElement('img');
+            msg_img.src = user_img;
+            let talk_user = document.createElement('div');
+            talk_user.classList.add("talk_user");
+            talk_user.appendChild(msg_img);
+            talk_user.appendChild(msg_user);
+            talk_user.appendChild(now_time_html);
+            //組合
+            var msg = document.createElement('div');
+            msg.classList.add("msg");
+            msg.appendChild(talk_user);
+            msg.appendChild(text_ul);
+            //發送至頁面
+            document.getElementById("talk_box").appendChild(msg);
+            document.getElementById("talk_box").scrollTop = document.getElementById("talk_box").scrollHeight;
+
+
+            let select_id = `sel_${user_id}`;
+            // 缓存当前群组的消息
+            if (!msg_box[select_id]) {
+                msg_box[select_id] = [];
+            }
+            msg_box[select_id].push(msg);
+
+
+        });
+        //連線到hub
+        connection.start().then(function () {
+            document.getElementById("input_btn").disabled = false;
+            connection.invoke("Connect", n_user);
+            connection.invoke("AIMethods", n_user, `給我一個特別的專屬問候`, n_userid)
+                .catch(function (err) {
+                    return console.error("呼叫AI失敗");
+                });//意外
+
+        }).catch(function (err) {//意外
+            return console.error(err.toString());
+        });
+        //發送按鈕監聽(迴車建)
+        inputBtn.on('click', send);
+        input_text.on('keydown', function (event) {
+            if (event.key === "Enter") {
+                inputBtn.click();
+            }
+        });
+        //發送按鈕事件
+        function send(event) {
+            var message = $('#input_text').val().trim();
+            if (message === "") {
+
+                console.log("輸入不得為空");
+
+
+            } else {
+
+                if ($choose.filter(':checked').attr('id') === "sel_all") { //群發
+
+                    connection.invoke("SendMessage", n_user, message, n_userimg)
+                        .catch(function (err) {
+                            return console.error(err.toString());
+                        });//意外
+                    event.preventDefault();
+                    connection.invoke("AIMethods", n_user, message,n_userid)
+                        .catch(function (err) {
+                            return console.error("呼叫AI失敗");
+                        });//意外
+
+                } else {//一對一
+                    $choose = $('input[type="radio"][name="friend_select"]');
+                    let onlion = $choose.filter(':checked').data('state');
+                    
+                    let f_name = $choose.filter(':checked').data('f_name').toString();
+                    
+                    let f_id = $choose.filter(':checked').data('f_id');
+                    
+                    const message = $('#input_text').val();
+
+
+                    if (onlion === false || onlion === 'False') {
+                        //離線 留言
+                        $.ajax({
+                            url: '@Url.Action("AddCommend", "Message")', // 指定 Controller 和 Action
+                            type: 'POST', // 可以是 'GET' 或 'POST'
+                            data: {
+                                // 这里可以传递数据到控制器
+                                text: message,
+                                sendToUser: f_id,
+                            },
+                            success: function (response) {
+                                // 请求成功时执行的操作
+                                console.log("留言成功");
+                            },
+                            error: function (xhr, status, error) {
+                                // 请求失败时执行的操作
+                                console.log("留言失敗");
+                            }
+                        });
+
+
+
+                    }
+                    connection.invoke("SendMessageToUser", f_name, message, n_user, n_userimg, n_state, n_userid)
+                        .catch(function (err) {
+                            console.log(f_name);
+                            console.log(message);
+                            console.log(n_user);
+                            console.log(n_userimg);
+                            console.log(n_state);
+                            console.log(n_userid);
+
+                            return console.error(err.toString());
+                        });
+                    event.preventDefault();
+
+
+
+
+
+
+                    let input_msg = message;
+                    let user_name = "傳給 " + f_name + "   的私人訊息";
+                    let user_img = n_userimg;
+                    let user_state = n_state;
+                    let user_id = n_userid;
+                    let hour = @DateTime.Now.ToString("HH");
+                    let min = @DateTime.Now.ToString("mm");
+
+                    let now_time = hour + ":" + min;
+
+                    //下半
+                    let text_p = document.createElement('p');
+                    text_p.classList.add("talk_msg");
+                    text_p.textContent = input_msg;
+                    let text_ul = document.createElement('ul');
+                    text_ul.classList.add("talk_msg_box");
+                    text_ul.appendChild(text_p);
+                    //上半
+                    let now_time_html = document.createElement('time');
+                    now_time_html.textContent = now_time;
+                    let msg_user = document.createElement('span');
+                    msg_user.textContent = user_name;
+                    let msg_img = document.createElement('img');
+                    msg_img.src = user_img;
+                    let talk_user = document.createElement('div');
+                    talk_user.classList.add("talk_user");
+                    talk_user.appendChild(msg_img);
+                    talk_user.appendChild(msg_user);
+                    talk_user.appendChild(now_time_html);
+                    //組合
+                    var msg = document.createElement('div');
+                    msg.classList.add("msg");
+                    msg.appendChild(talk_user);
+                    msg.appendChild(text_ul);
+                    //發送至頁面
+                    document.getElementById("talk_box").appendChild(msg);
+                    document.getElementById("talk_box").scrollTop = document.getElementById("talk_box").scrollHeight;
+                    //加入站存
+
+                    let select_id = `sel_${f_id}`;
+                    // 缓存当前群组的消息
+                    if (!msg_box[select_id]) {
+                        msg_box[select_id] = [];
+                    }
+                    msg_box[select_id].push(msg);
+
+
+                    //發送後清空
+
+                }
+                $('#input_text').val("");
+            }
+        }
+
+        //聊天功能到這邊
+        //切換狀態
+
+        connection.on("SwitchOnline", function (userid, state) {
+            console.log("收到" + userid + "---" + state);
+            if (userid === n_userid) { console.log("自己"); }
+            else {
+                if (state === 0) {
+                    let $target = $(`#list_online>#${userid}`);
+                    if ($target.length > 0) {
+                        $target.addClass("friCard_notOnlion").removeClass("friCard_onlion");
+                        $target.attr("data-stact", "false");
+                        $target.data("stact", "false");  // 更新 jQuery 缓存
+                        console.log($target.data("stact"));  // 将正确输出 'false'
+                        $target.find('.onlion_text').text('離線');
+                        let $clone = $target.clone(true);
+                        $("#list_notonline").append($clone);
+                        $target.remove();
+                    } else {
+                        console.log("沒有目標好友");
+                    }
+
+                } else if (state === 1) {
+                    let $target = $(`#list_notonline>#${userid}`);
+                    if ($target.length > 0) {
+                        $target.addClass("friCard_onlion").removeClass("friCard_notOnlion");
+                        $target.attr("data-stact", "true");
+                        $target.data("stact", "true");  // 更新 jQuery 缓存
+                        console.log($target.data("stact"));  // 将正确输出 'true'
+                        $target.find('.onlion_text').text('線上');
+                        let $clone = $target.clone(true);
+                        $("#list_online").append($clone);
+                        $target.remove();
+                    } else {
+                        console.log("沒有目標好友");
+                    }
+                }
+
+
+            }
+
+
+        });
+
+
+
+
+        $('input[name="state"]').on('change', function () {
+            // 获取当前 input 的值
+            let stateValue = $(this).val();
+
+            // 输出变更的值
+            console.log('State changed to: ' + stateValue);
+
+            // 这里可以根据变化执行其他操作
+            // 比如根据选择的值显示或隐藏其他元素
+            if (stateValue === '線上') {
+                switch_state(1);
+                document.getElementById("state").textContent = '線上';
+                console.log(document.getElementById("state").textContent);
+                connection.invoke("OnlionChange", n_userid, 1);
+            } else if (stateValue === '隱藏') {
+
+                switch_state(0);
+                document.getElementById("state").textContent = '隱藏';
+                console.log(document.getElementById("state").textContent);
+                connection.invoke("OnlionChange", n_userid, 0);
+            }
+        });
+
+
+        function switch_state(input_state) {
+            $.ajax({
+                url: '@Url.Action("changeState", "Message")', // 指定 Controller 和 Action
+                type: 'POST', // 可以是 'GET' 或 'POST'
+                data: {
+                    // 这里可以传递数据到控制器
+                    state: input_state,
+                },
+                success: function (response) {
+                    // 请求成功时执行的操作
+                    console.log("修改成功");
+                },
+                error: function (xhr, status, error) {
+                    // 请求失败时执行的操作
+                    console.log("修改失敗");
+                }
+            });
+
+        }
+        switch_state(1);//預設上限狀態
+
+        window.addEventListener("beforeunload", function (event) {
+            // 這裡是頁面完全卸載時的邏輯，例如保存數據或向服務器發送請求
+            switch_state(0);
+            connection.invoke("Exit", n_user)
+                .catch(function (err) {
+                    return console.error(err.toString());
+                });//意外
+        });
+
+
+        //切換個人狀態到這
+
+    </script>
+</body>
+
+
+</html>

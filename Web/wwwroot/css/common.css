@@ -1,0 +1,59 @@
+
+@media screen and (min-width:576px) {
+    header > .container,
+    main > .container,
+    main > div > .container,
+    footer > .container {
+        max-width: 100%;
+        --bs-gutter-x: 0;
+    }
+}
+@media screen and (max-width:767px) {
+    header > .container,
+    main > .container,
+    main > div > .container,
+    footer > .container {
+        width: 95%;
+        --bs-gutter-x: 0;
+    }
+}
+@media screen and (max-width:991px) {
+    header > .container,
+    main > .container,
+    main > div > .container,
+    footer > .container {
+        width: 95%;
+        --bs-gutter-x: 0;
+    }
+}
+@media screen and (min-width:992px) {
+    header > .container,
+    main > .container,
+    main > div > .container,
+    footer > .container {
+        max-width: 960px;
+        --bs-gutter-x: 0;
+    }
+}
+
+
+/* @media screen and (max-width:991px) {
+
+    header>.container,
+    main>.container,
+    footer>.container {
+        max-width: 100%;
+    }
+} */
+
+main {
+    min-height: calc(100vh - 70px);
+}
+
+@media screen and (min-width:992px) {
+    main {
+        min-height: calc(100vh - 370px);
+    }
+
+}
+

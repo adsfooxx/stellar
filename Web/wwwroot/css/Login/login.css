@@ -1,0 +1,184 @@
+.form-control:focus{
+    box-shadow: none;
+    
+}
+.btn:focus{
+    border: none;
+}
+main .login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+main .login .login-box {
+    margin: 30px auto 200px auto;
+
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 270px;
+    color: #ccc;
+}
+
+main .login .login-box h5 {
+    padding-bottom: 30px;
+    font-weight: bolder;
+    font-size: 28px;
+    text-align: center;
+}
+
+main .login .login-box .input-group {
+    flex-direction: row;
+    background-color: #181a21;
+    padding: 24px 32px;
+    max-width: 400px;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+main .login .login-box .input-group .input-group-login{
+    width: 100%;
+}
+@media screen and (min-width:992px) {
+    main .login .login-box .input-group .input-group-login{
+        width: 100%;
+    }
+}
+main .login .login-box .input-group a{
+    text-align: center;
+    font-size: 12px;
+    display: block;
+    margin: 20px auto;
+    color: #aaa;
+    
+}
+main .login .login-box .input-group  p{
+    text-align: center;
+    font-size: 12px;
+    
+    margin: 20px auto;
+    color: #aaa;
+}
+main .login .login-box .input-group label{
+    font-size: 12px;
+    color: #ccc;
+}
+main .login .login-box .input-group .account{
+    color: #06bfff;
+}
+main .login .login-box .input-group input{
+    background-color: #32353c;
+    border: none;
+    border-radius: 0;
+    color: #ccc;
+    
+}
+main .login .login-box .input-group .qr{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+        @media screen and (min-width:992px) {
+            main .login .login-box .input-group .qr{
+                width: 45%;
+            }
+        }
+main .login .login-box .input-group .qr label{
+    color: #06bfff;
+    
+}
+        @media screen and (min-width:992px) {
+            main .login .login-box .input-group .qr label{
+                align-self: flex-start;
+                padding-left: 13%;
+            }
+        }
+main .login .login-box .input-group .qr .pic-bg{
+    padding: 15px;
+    background-color: #fff;
+    width: 200px;
+    aspect-ratio: 1/1;
+    border-radius: 12px;
+}
+main .login .login-box .input-group .qr p{
+    margin-top: 5px;
+}
+main .login .login-box .input-group .qr  a{
+    display: contents;
+    text-decoration: underline;
+    
+}
+main .login .login-box .input-group input::placeholder{
+    color: #777;
+}
+
+main .login .login-box .button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+main .login .login-box .button .logbtn {
+    width: 50%;
+    margin-top:10px;
+    height: 47.6px;
+    border-radius: 3px;
+    background-image: linear-gradient(to right, #06bfff 0%, #2d74ff 100%);
+}
+
+main .register-box {
+    width: 100%;
+    background-color: #181a21;
+}
+
+main .register-box .container {
+    color: #ccc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+        @media screen and (min-width:768px) {
+            main .register-box .container{
+                flex-direction: row;
+                justify-content: space-evenly;
+            }
+        }
+
+main .register-box .container .create {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+main .register-box .container .create p{
+    font-size: 20px;
+    font-weight: bolder;
+}
+main .register-box .container .create .btn {
+    color: #fff;
+    background-image: linear-gradient(to right, #06bfff 0%, #2d74ff 100%);
+    margin-bottom: 30px;
+    border-radius: 3px;
+    height: 37.6px;
+}
+main .register-box .container  .induce{
+    max-width: 300px;
+}
+main .register-box .container .induce p{
+    display: block;
+    text-align: center;
+    color: #b8b6b4;
+    font-size: 14px;
+}
+.field-validation-error{
+    font-size:14px;
+    color:#aaa;
+}
+
+/*google«ö¶s*/
+.nsm7Bb-HzV7m-LgbsSe {
+    width: 168px !important;
+    height: 48px !important;
+}

@@ -1,0 +1,62 @@
+﻿@using Web.ViewModels.Layout
+@model LayoutViewModel
+@{
+}
+
+<div class="log">
+    
+    
+    @if (Context.User?.Identity?.IsAuthenticated ?? false)
+    {
+        <!-- 登入後 -->
+        <div class="log-in-type">
+            <!-- notify，請點擊右上角小鈴鐺 -->
+            <p class="notify">
+
+                @if (Model.AlreadyRead is true)
+                {
+                    <a asp-controller="Member" asp-action="NotifyPage"  class="btn" style="background:#0847a3">
+                        <img src="~/img/Layout/ringringbell.svg" />
+                    </a>
+
+                }
+                else
+                {
+                
+                    <!-- 沒登入時顯示 -->
+                    <a asp-controller="Member" asp-action="NotifyPage" class="btn" style="background:#555">
+                        <img src="~/img/bell.svg" alt="">
+                    </a>
+
+                }
+
+            </p>
+
+            <div class="user-info">
+                <div class="dropdown">
+                    <a class="btn  dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        @Model.NickName
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark py-0" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" asp-controller="Member" asp-action="Index" asp-route-id="@Model.UserId">檢視我的個人檔案</a></li>
+                        <li><a class="dropdown-item" asp-controller="Member" asp-action="AccountPage">帳戶詳細個人資料：<span>@Model.Account</span></a></li>
+                        <li><a class="dropdown-item" asp-controller="Member" asp-action="TopUp">檢視我的錢包：<span>NT$</span><span>@Model.WalletAmount</span></a></li>
+                        <li><a class="dropdown-item" asp-controller="Authentication" asp-action="Logout">登出帳戶...</a></li>
+                    </ul>
+                </div>
+                <a asp-controller="Member" asp-action="AccountPage" class="wallet"><span>NT$</span><span>@Model.WalletAmount</span></a>
+
+            </div>
+            <div class="user-headshot"><img src="@Model.UserImgUrl"></div>
+        </div>
+    }
+    else
+    {
+
+ 
+        <a asp-controller="Authentication" asp-action="Login">登入</a>
+        <a asp-controller="Authentication" asp-action="Regiter">註冊</a>
+        }
+
+</div>

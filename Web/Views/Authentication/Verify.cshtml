@@ -1,0 +1,81 @@
+﻿@section topCSS {
+    <link rel="stylesheet" href="~/css/Login/retrievepassword/retrievepassword.css">
+}
+@{
+    ViewData["Title"] = "變更密碼驗證";
+    var message = ViewBag.VerifyErr;
+}
+<div class="container retrieve_password" id="changePassword">
+    <div class="head_title ">Stellar 客服</div>
+    <div class="bread_crumb">變更密碼</div>
+    <div class="retrieve_password_box">
+        <div>
+        <template v-if="state==0">
+            <div class="title">我們將發送驗證信至您的信箱進行驗證</div>
+            <form method="post" class="sendverify" id="sendmail" v-on:submit.prevent="change_status">
+                <div class="serch_btn"><input  type="submit"  value="發送驗證信至您的信箱"></div>
+            </form>
+        </template>
+        
+            <div v-show="state==1" method="post" class="verify" id="userVerifyCodeForm">
+                <div class="verify_box" style="display:flex">
+                    <div class="title">我們已將驗證信送至您的信箱，請於信箱內進行確認。</div>
+                    <p>驗證信有效時間為15分鐘，請於時間內進行驗證。</p>
+                </div>
+                <div id="resultMessage"></div>
+            </div>
+            
+        </div>
+        @if (ViewBag.ChangePasswordErr != null)
+        {
+                    <div style="color:red" class="pb-4">
+                @ViewBag.ChangePasswordErr
+                    </div>
+        }
+    </div>
+</div>
+
+@section endJS{
+    
+    <script src="~/js/Authentication/Verify.js" asp-append-version="true"></script>
+    <script>
+        var { createApp } = Vue;
+
+        const changePassword = createApp({
+
+            data: function () {
+                return {
+                    state: 0,
+                    
+                }
+
+            },
+            methods: {
+                change_status: function () {
+                    if (this.state === 0) {
+                        this.state++;
+                    } else {
+                        this.state--;
+                    }
+                }
+
+            },
+            computed: {
+
+            },
+            watch: {
+
+                    
+
+            },
+        })
+        changePassword.mount("#changePassword");
+    </script>
+    <script>
+
+    </script>
+}
+
+
+
+

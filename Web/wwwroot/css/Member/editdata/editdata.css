@@ -1,0 +1,208 @@
+
+body{
+    background:#1D1E20;
+}
+main{
+    background: linear-gradient(180deg, #262D33 -3.38%, #1D1E20 78.58%)
+}
+ .popover{
+    background-color: #999;
+    color: #fff;
+ }
+main .profile{
+    margin: 0;
+    width: 100%;
+    background-color: rgba(58, 62, 71, 0.5);
+    color: #ccc;
+    display: flex;
+}
+        @media screen and (min-width:992px) {
+            main .profile{
+                margin: auto;
+            }
+        }
+main .profile .head_shot{
+    width:150px;
+    height:150px;
+    padding: 15px 15px 15px 30px;
+    
+}
+    main .profile .head_shot img{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+    }
+    main .user {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+main .user .user_name{
+    font-size: 26px;
+}
+main .user .edit{
+    padding-right: 15px;
+    font-size: 14px;
+    position: relative;
+}
+
+main .user .edit::before{
+    content:"»";
+    padding-left: 10px;
+    padding-right: 5px;
+}
+
+main .turn_back{
+    height: 50px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    
+}
+main .turn_back a{
+    color: #999;
+    font-size: 14px;
+}
+main .detail{
+    margin: 0 10px;
+    
+}
+main .detail .title{
+    color: #fff;
+    font-size: 24px;
+    font-weight: bolder;
+}
+main .detail .content{
+    color: #999;
+    font-size: 15px;
+}
+.mt-5 {
+    margin-top:20px;
+}
+main .detail .form_list .subheading{
+    font-size: 16px;
+    color: #ccc;
+    border-bottom:2px solid rgba(146, 146, 146, 0.2);
+
+    padding: 0 0 10px 10px;
+
+}
+main .detail .form_list .form{
+
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    color: #acb2b8;
+    font-size: 13px;
+}
+main .detail .form_list .form label{
+    margin-bottom: 2px;
+}
+main .detail .form_list .form .has_info{
+    position: relative;
+}
+main .detail .form_list .form .info{
+    margin: 0;
+}
+main .detail .form_list .form .collapse{
+    position: absolute;
+    top: 0;
+    left: 75px;
+    padding: 0;
+    
+}
+main .detail .form_list .form .info:hover + .collapse{
+    display: block;
+    
+}
+main .detail .form_list .form .card{
+    padding: 2px 5px;
+    background-color: #797676;
+    color: #ddd;
+    border-radius: 0;
+}
+main .detail .form_list .form .info button{
+    border: none;
+    padding: 0;
+    
+}
+main .detail .form_list .form .info img{
+    width: 15px;
+    height: 15px;
+}
+main .detail .form_list .form input{
+    padding: 10px;
+    background-color: #0004;
+    border:none;
+    color: #acb2b8;
+    
+}
+main .detail .form_list .form input:not(:last-of-type){
+    margin-bottom: 15px;
+}
+main .detail .form_list .form input:last-of-type{
+    margin-bottom: 5px;
+}
+main .detail .form_list .form input:focus{
+    outline: none;
+}
+    main .detail .form_list .form textarea {
+        padding: 15px;
+        background-color: #0004;
+        border: none;
+        color: #acb2b8;
+    }
+main .detail .category .form   .subheading
+, main .detail .category .form   .form , 
+ main .detail .category .form  .form.inside {
+    padding-left: 0;
+}
+
+main .btn_group {
+    padding: 15px;
+    display: flex;
+    justify-content: flex-end;
+}
+main .cancel,
+main .store{
+    width: 100%;
+    max-width: 200px;
+    border: none;
+    color: #ccc;
+    font-size: 13px;
+    height: 32px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:0;
+    
+}
+main .btn_group a {
+    width: 100%;
+    max-width: 200px;
+    text-align: center;
+    text-decoration: none;
+    color: #ccc;
+    font-size: 13px;
+    background-color: #3d4450;
+    line-height:2.3em;
+}
+main .store {
+    margin-left: 10px;
+    background: linear-gradient(to right, #47bfff 0%, #1a44c2 60%);
+}
+main .form select {
+    background-color: #0004;
+    border: none;
+    color: #acb2b8;
+    border-radius:0;
+    outline:none;
+}
+
+    main .form select:focus {
+        background-color: #171a1c;
+        color: #acb2b8;
+        outline: none;
+        box-shadow:none;
+    }

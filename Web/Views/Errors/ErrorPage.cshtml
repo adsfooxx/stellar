@@ -1,0 +1,47 @@
+﻿@{
+	ViewData["Title"] = "Error404";
+	string statuscode = ViewData["statuscode"].ToString();
+}
+@* <h1>錯誤代碼: @statuscode</h1> *@
+
+@switch (statuscode)
+{
+	case "400":
+		<h2 class="text-danger">無效的請求語法, 伺服器無法處理</h2>
+		break;
+	case "404":
+		@* <h2 class="text-danger">產品不存在</h2> *@
+		@*         <div>
+            <img src="/img/Error/404.jpg" alt="Alternate Text" />
+        </div> *@
+		@*<img src="~/images/404.jpg">*@
+		@section topCSS {
+	<link href="~/css/Partial/StoreNavbar.css" rel="stylesheet" asp-append-version="true" />
+	<style>
+/* 		main {
+			background-image: url('https://res.cloudinary.com/dijn0xzac/image/upload/v1728363089/ozjcimvng0e5qvdlhagm.jpg');
+			background-size: contain; 
+			background-repeat: no-repeat; 
+			background-position: center center; 
+			margin: auto;
+		} */
+		#error404 img {
+			max-width: 100%; 
+			height: auto; 
+			display: block; 
+			margin: auto; 
+		}
+	</style>
+		}
+		break;
+	default:
+		<h2 class="text-danger">未知錯誤類型, 請聯絡系統管理員</h2>
+		break;
+}
+
+@await Component.InvokeAsync("StoreNavbar", new { Section = "_StoreNavbar" })
+
+
+	<div id="error404">
+		<img src="https://res.cloudinary.com/dijn0xzac/image/upload/v1728363089/ozjcimvng0e5qvdlhagm.jpg" alt="404" />
+	</div>

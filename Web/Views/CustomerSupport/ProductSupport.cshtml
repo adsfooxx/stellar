@@ -1,0 +1,90 @@
+﻿@using Web.ViewModels.CustomerSupport
+@model ProductSupportViewModel
+@{
+    ViewData["Title"] = "產品客服中心";
+}
+
+@section topCSS{
+    <link href="~/css/CustomerService/ProductService/product_service.css" rel="stylesheet" />
+}
+
+<div class="container customer_service">
+    <h5>Stellar 客服</h5>
+    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;)" aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">首頁</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="#">遊戲與應用程式</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.ProductName</li>
+        </ul>
+    </nav>
+    <hr>
+    <div class="card_list product_list">
+        <div class="card product">
+            <div class="pic col-12 col-md-2"><img src="@Model.ProductImgUrl"></div>
+            <div class="product_name col-12 col-md-7">@Model.ProductName</div>
+            <div class="detail col-12 col-md-3">
+                <ul>
+                    <li><span class="detail_name account">帳戶：</span><span class="detail_value account">@Model.Account</span></li>
+                    @if(Model.PurchasedDate is not "-1"){
+                     <li><span class="detail_name purchase_date">購買日期：</span><span class="detail_value purchase_date">@Model.PurchasedDate</span></li> 
+                    }else{
+                        <li><span class="detail_name ">在Stellar上免費獲得</li>
+                    }
+                 </ul>
+            </div>
+        </div>
+        <div class="card receipt">
+            <div class="receipt_view col-12 col-md-9">
+                @if(Model.PurchasedDate is not "-1"){
+                 <div class="purchase_date">@Model.PurchasedDate</div><div>-在Stellar上購得</div> 
+                 }else{
+                    <div>在Stellar上免費獲得</div>
+                 }
+            </div>
+            <div class="others_view col-12 col-md-3">
+                <div><a asp-controller="Product" asp-action="ProductPage" asp-route-id="@Model.ProductId">在商店中檢視</a></div>
+                <div><a asp-controller="Member" asp-action="GameLibray">在收藏庫中檢視</a></div>
+            </div>
+        </div>
+    </div>
+    <div class="service">
+        <p class="help">您在這款產品中遭遇什麼樣的困難？</p>
+        <div class="service">
+            <div class="card_list text_only other_service">
+                <div class=" btn-group dropend ">
+                    <a href="" class="btn btn-secondary dropdown-toggle">
+
+                        <p class="product_name">遊戲軟體等</p>
+                    </a>
+                </div>
+                <div class=" btn-group dropend ">
+                    <a href="" class="btn btn-secondary dropdown-toggle">
+
+                        <p class="product_name">購買消費</p>
+                    </a>
+                </div>
+                <div class=" btn-group dropend ">
+                    <a href="" class="btn btn-secondary dropdown-toggle">
+
+                        <p class="product_name">我的帳戶</p>
+                    </a>
+                </div>
+                <div class=" btn-group dropend ">
+                    <a href="" class="btn btn-secondary dropdown-toggle">
+
+                        <p class="product_name">Stellar 社群</p>
+                    </a>
+                </div>
+                <div class=" btn-group dropend">
+                    <a href="" class="btn btn-secondary dropdown-toggle">
+
+                        <p class="product_name">Stellar 用戶端</p>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>

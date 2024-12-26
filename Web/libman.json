@@ -1,0 +1,30 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "provider": "unpkg",
+      "library": "bootstrap@5.3.3",
+      "destination": "wwwroot/lib/bootstrap5_3_3"
+    },
+    {
+      "provider": "unpkg",
+      "library": "tailwindcss@3.4.10",
+      "destination": "wwwroot/lib/tailwindcss/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "npm@10.8.3",
+      "destination": "wwwroot/lib/npm/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "@microsoft/signalr@latest",
+      "destination": "wwwroot/js/signalr",
+      "files": [
+        "dist/browser/signalr.js",
+        "dist/browser/signalr.min.js"
+      ]
+    }
+  ]
+}

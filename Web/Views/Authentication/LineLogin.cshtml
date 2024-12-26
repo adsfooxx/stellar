@@ -1,0 +1,59 @@
+﻿ @model Web.ViewModels.Authentication.LineLoginSettingsViewModel
+
+@section topCSS {
+    <link rel="stylesheet" href="~/lib/bootstrap5_3_3/dist/css/bootstrap.min.css">
+    <style>
+      
+        main{
+            align-content: center;
+        }
+        .login-card {
+            max-width: 400px;
+            padding: 2rem;
+            color: bisque;
+            margin:auto;
+        }
+
+        .btn-line {
+            background-color: #00c300;
+            border-color: #00c300;
+            color: #fff;
+        }
+
+            .btn-line:hover {
+                background-color: #00a800;
+                border-color: #00a800;
+            }
+    </style>
+}
+
+<div class="login-card text-center">
+    <h3 class="mb-3">使用 LINE Login</h3>
+    <p class="mb-4">請點選下方按鈕使用 LINE 帳號登入...</p>
+    <button id="Login" class="btn btn-line btn-lg w-100">LINE 登入</button>
+</div>
+
+
+
+@section topJS {
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        console.log('in')
+        function Login() {
+            var URL = 'https://access.line.me/oauth2/v2.1/authorize?';
+            URL += 'response_type=code';
+
+            URL += '&client_id=@Model.Channel_ID';   //TODO:這邊要換成你的client_id
+            URL += '&redirect_uri=@Model.CallbackURL';   //TODO:要將此redirect url 填回你的 LineLogin後台設定
+            URL += '&scope=openid%20profile%20email';
+            URL += '&state=abcde';
+            window.location.href = URL;
+        }
+        $(function () {
+            $('#Login').click(function (e) {
+                Login();
+            });
+        });
+    </script>
+}

@@ -1,0 +1,327 @@
+.shopping-cart * {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+.shopping-cart {
+    padding: 20px 0;
+}
+
+.shopping-cart .shopping-cart-content {
+    width: 90%;
+    margin: auto;
+}
+
+.shopping-cart .shopping-cart-title {
+    color: #b5d4df;
+    font-size: 12px;
+}
+
+.shopping-cart .shopping-cart-title a {
+    color: #66c0f4;
+}
+
+.shopping-cart .shopping-cart-title a:hover {
+    color: white;
+}
+
+.shopping-cart .game-card {
+    margin: 10px auto;
+    color: white;
+    background-color: #141e2a;
+    padding: 20px;
+}
+
+.shopping-cart .game-card-img {
+    margin: auto;
+}
+
+.shopping-cart .game-card-img img {
+    width: 100%;
+    aspect-ratio: 16/9;
+}
+
+.shopping-cart .game-card h3 {
+    padding-top: 20px;
+    font-size: 18px;
+}
+
+.shopping-cart .game-card-price-field {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 5px;
+    font-size: 15px;
+    color: #b5d4df;
+}
+
+.shopping-cart .game-card-price-field .game-card-price-discount {
+    padding: 3px;
+    color: #BEEE11;
+    background-color: #4c6b22;
+}
+
+.shopping-cart .game-card-price-field .game-card-original-price {
+    font-size: 10px;
+    color: #738895;
+    text-align: right;
+    position: relative;
+}
+
+.shopping-cart .game-card-price-field .game-card-original-price::before {
+    content: '';
+    left: 30px;
+    right: 0px;
+    position: absolute;
+    top: 43%;
+    border-bottom: 1.5px solid #738895;
+    transform: skewY(-8deg);
+    box-shadow: 0 0 2px black;
+}
+
+.shopping-cart .game-card-discount-price {
+     color: #BEEE11; 
+}
+
+.shopping-cart .game-card-content select {
+    width: 120px;
+    background-color: #555;
+    font-size: 12px;
+    color: #ddd;
+}
+
+.shopping-cart .game-card-new,
+.shopping-cart .game-card-remove,
+.shopping-cart .game-card-footer .game-card-all-remove {
+    font-size: 12px;
+    color: #606f7f;
+    cursor: pointer;
+    text-decoration: underline;
+    background: none;
+}
+
+.shopping-cart .game-card-new:hover,
+.shopping-cart .game-card-remove:hover,
+.shopping-cart .game-card-footer .game-card-all-remove:hover {
+    color: white;
+}
+
+.shopping-cart .game-card-Checkout {
+    width: 100%;
+    margin: 30px auto;
+    background-color: #141e2a;
+}
+
+.shopping-cart .game-card-sum {
+    width: 90%;
+    margin: auto;
+    padding: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    color: white;
+    font-weight: bolder;
+}
+
+.shopping-cart .game-card-txt {
+    width: 90%;
+    margin: auto;
+    font-size: 12px;
+    color: #b5d4df;
+}
+
+.shopping-cart .mobile-reverse {
+    width: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+}
+
+.shopping-cart .game-card-Checkout a {
+    width: 90%;
+    margin: 20px 5%;
+    padding: 3px;
+    font-size: 15px;
+    color: white;
+    background-color: #2a6fd7;
+    border-radius: 2px;
+}
+
+.shopping-cart .game-card-footer {
+    width: 100%;
+    margin: auto;
+}
+
+.shopping-cart .cartisNull {
+    color: #b5d4df;
+}
+
+.shopping-cart .continue-shopping {
+    font-size: 12px;
+    padding: 8px 30px;
+    color: white;
+    background-color: #3d4450;
+    border: none;
+}
+
+.shopping-cart .continue-shopping:hover {
+    background-color: #eee;
+    color: #333;
+}
+
+.shopping-cart .recommend {
+    color: #c6d4df;
+}
+
+.shopping-cart .recommend-game-box {
+    overflow-y: auto;
+    white-space: nowrap;
+    scrollbar-color: #3f7596 #0b1117;
+    scrollbar-width: auto;
+    padding-bottom: 5px;
+}
+
+.shopping-cart .recommend-game-box-card {
+    display: inline-flex;
+    flex-direction: column;
+    width: 35%;
+    min-width: 150px;
+}
+
+.shopping-cart .recommend-game-box-card + .recommend-game-box-card {
+    margin-left: 1%;
+}
+
+.shopping-cart img {
+    aspect-ratio: 16 / 9;
+}
+
+.shopping-cart .recommend .card-txt {
+    background-color: black;
+    vertical-align: bottom;
+    height: 40px;
+    text-align: right;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.shopping-cart .recommend .card-txt img {
+    display: none;
+    vertical-align: baseline;
+}
+
+.shopping-cart .recommend-game-box2 {
+    width: 100%;
+    margin: auto;
+    gap: 1%;
+}
+
+.shopping-cart .recommend-game-box2 > div {
+    width: 49.5%;
+    margin-bottom: 1%;
+}
+
+.shopping-cart .game-card-Checkout-out {
+    display: none;
+}
+
+@media screen and (min-width:768px) {
+    .shopping-cart .shopping-cart-content {
+        max-width: 800px;
+    }
+
+    .shopping-cart .game-card {
+        max-width: 800px;
+        display: flex;
+        flex-direction: row;
+        padding: 10px
+    }
+
+    .shopping-cart .game-card-img {
+        width: 38%;
+        margin-right: 15px;
+    }
+
+    .shopping-cart .game-card-content {
+        width: 60%;
+    }
+
+    .shopping-cart .game-card-content h3 {
+        padding: 0;
+    }
+
+    .shopping-cart .game-card-content select {
+        width: 40%;
+    }
+
+    .shopping-cart .recommend .card-txt img {
+        display: block;
+    }
+}
+
+@media screen and (min-width:992px) {
+    .shopping-cart .row {
+        --bs-gutter-x: 0;
+    }
+
+    .shopping-cart {
+        max-width: 960px;
+        margin: auto;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .shopping-cart .shopping-cart-content {
+        width: 75%;
+        margin-right: 5%;
+    }
+
+    .shopping-cart .recommend-game-box {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .shopping-cart .recommend-game-box-card {
+        width: 33%;
+    }
+
+    .shopping-cart .mobile-reverse {
+        display: block;
+    }
+
+    .shopping-cart .game-card-Checkout {
+        display: none;
+    }
+
+    .shopping-cart .game-card-Checkout-out {
+        width: 20%;
+        height: 150px;
+        margin: 57px auto;
+        display: flex;
+        flex-direction: column;
+        background-color: #141e2a;
+        position: sticky;
+        top: 0px;
+        z-index: 1;
+    }
+
+    .shopping-cart .game-card-Checkout-out a {
+        width: 90%;
+        margin: 10px auto;
+        padding: 3px;
+        font-size: 15px;
+        color: white;
+        background: linear-gradient(to right, #47bfff 0%, #1a44c2 60%);
+        background-position: 25%;
+        background-size: 330% 100%;
+        border-radius: 3px;
+        border: none;
+    }
+
+    .shopping-cart .game-card-Checkout-out a:hover {
+        background: linear-gradient(to right, #47bfff 0%, #1095e2 60%);
+    }
+}

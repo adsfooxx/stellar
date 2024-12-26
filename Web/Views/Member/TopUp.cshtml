@@ -1,0 +1,79 @@
+﻿@using Web.ViewModels.Member
+@using Web.Services.Member
+@model TopUpViewModel
+
+@section topCSS {
+    <link href="~/css/Member/TopUp/TopUp.css" rel="stylesheet" asp-append-version="true"/>
+}
+
+<div id="top_Up" class="top_Up_Content">
+    <div class="top_Up_Title">
+        <a href="/Home/Index">首頁</a>
+        <span>></span>
+        <a href="/Member/AccountPage">帳戶</a>
+        <span>></span>
+        <span>新增資金至您的 Stellar 錢包</span>
+        <h2 class="text-white fs-2">新增資金至您的 Stellar 錢包</h2>
+    </div>
+    <hr class="border-3">
+    <div class="top_Up_txt">
+        <span class="fw-bolder fs-5">
+            <span>新增資金至&nbsp;</span>
+            <span>@Model.Account</span>
+            <span>&nbsp;的錢包</span>
+        </span>
+        <div>Stellar 錢包資金可用於在 Stellar 上購買遊戲，或在支援 Stellar 交易的遊戲內使用。</div>
+        <div>您將可以在下訂單前複核訂單內容。</div>
+    </div>
+    <div class="top_Up_Page_Content">
+        <div class="account_Wallet">
+            <span class="text-white fs-5">您的&nbsp;Stellar&nbsp;帳戶</span>
+            <div class="top_Up_balance-background">
+                <div class="top_Up_balance">
+                    <div>目前錢包餘額</div>
+                    <div class="fs-5">
+                        <span>NT$&nbsp;</span>
+                        <span>@Model.Balance</span>
+                    </div>
+                </div>
+                <a href="/Member/AccountPage">
+                    <div class="page_Tum">
+                        查看我的帳戶詳細資料
+                    </div>
+                </a>
+@*                 <a href="#">
+                    <div class="page_Tum">
+                        兌換&nbsp;Stellar&nbsp;禮物卡或錢包儲值碼
+                    </div>
+                </a> *@
+            </div>
+        </div>
+        <div class="stored_Value">
+            @foreach (var amount in Model.Amount)
+            {
+                <div class="stored_Value_Box">
+                    <div class="stored_Value_Txt">
+                        <div class="fs-4">
+                            新增&nbsp;NT$&nbsp;@amount.Funds
+                        </div>
+                        <span>最低儲值金額</span>
+                    </div>
+@*                     <div class="stored_Value_Btn">
+                        <span>NT$&nbsp;@amount.Funds</span>
+                        <form action="/Payment/PayChoiceAndDetailCheck" method="post">
+                            <input type="hidden" name="from" value="wallet" />
+                            <!-- 傳遞儲值金額 -->
+                            <input type="hidden" name="funds" value="@amount.Funds" />
+                            <button type="submit">新增資金</button>
+                        </form>
+                    </div> *@
+                    <div class="stored_Value_Btn">
+                        <span>NT$&nbsp;@amount.Funds</span>
+                        <a class="disabled">暫時關閉</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <p class="top_Up_Footer">如需詳細資料，請參閱&nbsp;<a href="#">Stellar 訂戶協議</a>。</p>
+</div>

@@ -1,0 +1,205 @@
+#title-horizontally {
+    display: none;
+}
+
+#title-vertical,
+#title-horizontally {
+    --bs-accordion-btn-bg: none;
+    --bs-accordion-border-width: none;
+}
+
+#title-vertical .accordion-button::after,
+#title-horizontally .accordion-button::after {
+    content: none;
+    background-image: none;
+}
+
+#title-vertical .accordion-button:not(.collapsed),
+#title-horizontally .accordion-button:not(.collapsed) {
+    color: #ccc;
+    background-color: #2e7cbd;
+}
+
+#title-vertical *, #title-horizontally * {
+    box-shadow: none;
+}
+
+#title-vertical .accordion-header,
+#title-horizontally .accordion-header {
+    height: 30px;
+    background-image: linear-gradient(to right, #356897 40%, #0f226e 100%);
+}
+
+#title-vertical .accordion-button,
+#title-horizontally .accordion-button {
+    height: 30px;
+    font-size: 12px;
+    color: #ddd;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#title-vertical .accordion-collapse,
+#title-horizontally .accordion-collapse {
+    background-image: linear-gradient(to bottom, #575860 40%, #2d2e35 100%);
+    padding: 10px 0;
+}
+
+#title-vertical .row {
+    margin-left: 0;
+}
+
+#title-vertical ul {
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+#title-vertical .d-block,
+#title-horizontally .d-block {
+    padding: 3px var(--bs-accordion-body-padding-x);
+}
+
+#title-vertical .accordion-body a,
+#title-horizontally .accordion-body a {
+    font-size: 12px;
+    line-height: 20px;
+    text-decoration: none;
+    color: #ddd;
+}
+
+#title-vertical .accordion-body-active,
+#title-horizontally .accordion-body-active {
+    margin: 10px 0 -10px;
+    font-size: 11px;
+    color: #4098d6;
+}
+
+#title-vertical .search-container,
+#title-horizontally .search-container {
+    position: relative;
+}
+
+#title-vertical .search-container input,
+#title-horizontally .search-container input {
+    width: 100%;
+    padding: 5px;
+    font-size: 12px;
+    border: none;
+    border-radius: 2px;
+    position: absolute;
+    top: -14px;
+}
+
+#title-vertical .search-container a,
+#title-horizontally .search-container a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    width: 40px;
+    height: 28px;
+    position: absolute;
+    top: -14px;
+    right: 0;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#title-vertical .search-container a i {
+    padding-bottom: 2px;
+}
+
+#title-vertical .search-container a:hover,
+#title-horizontally .search-container a:hover {
+    background: #ccc;
+}
+
+@media screen and (min-width:992px) {
+    #title-vertical {
+        display: none;
+    }
+
+    #title-horizontally {
+        padding: 20px 0;
+        max-width: 960px;
+        margin: auto;
+        display: block;
+    }
+
+    #title-horizontally .store-controls {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 5px;
+    }
+
+    #title-horizontally .store-controls .btn-primary {
+        border-radius: 0%;
+        border: none;
+        height: 20px;
+        width: 120px;
+        font-size: 11px;
+        line-height: 22px;
+        padding: 0;
+    }
+
+    #title-horizontally .store-controls .btn-wishlist {
+        margin-right: 5px;
+        background-color: #4098d6;
+    }
+
+    #title-horizontally .store-controls .btn-wishlist:hover {
+        background-color: #93b0ce;
+    }
+
+    #title-horizontally .store-controls .btn-cart {
+        background-color: #7ea64b;
+    }
+
+    #title-horizontally .store-controls .btn-cart:hover {
+        background-color: #b3cf8d;
+    }
+
+    #title-horizontally .store-navbar-area {
+        height: 30px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        background-image: linear-gradient(to right, #3b638f 40%, #0f226e 100%);
+        position: relative;
+    }
+
+    #title-horizontally .store-navbar-area > div {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #title-horizontally .accordion-body:hover a {
+        border-bottom: 1px solid white;
+    }
+
+    #title-horizontally .store-navbar-dropdown:hover .dropdown-menu {
+        display: flex;
+    }
+
+    #title-horizontally .title-category {
+        width: 50%;
+        border-radius: 0px;
+    }
+
+    #title-horizontally .title-category a {
+        text-decoration: none;
+    }
+
+    #title-horizontally .search-container {
+        position: absolute;
+        right: 0;
+    }
+
+    #title-horizontally .search-container a i {
+        padding-top: 2px;
+        height: 24px;
+    }
+}

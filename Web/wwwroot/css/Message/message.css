@@ -1,0 +1,528 @@
+/* 滚动条整体样式 */
+::-webkit-scrollbar {
+    width: 6px;
+    /* 纵向滚动条宽度 */
+    /* height: 12px; */
+    /* 横向滚动条高度 */
+}
+
+
+/* 滚动条轨道样式 */
+::-webkit-scrollbar-track {
+    background: #f1f1f100;
+    /* 轨道背景颜色 */
+    border-radius: 10px;
+    /* 圆角 */
+}
+
+/* 滚动条滑块样式 */
+::-webkit-scrollbar-thumb {
+    background: #444;
+    /* 滑块背景颜色 */
+    border-radius: 15px;
+    /* 圆角 */
+}
+
+/* 滑块在悬停时的样式 */
+/* ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+            滑块悬停时的背景颜色
+        } */
+.accordion-button::after {
+    background-image: var(--bs-accordion-btn-active-icon);
+    filter: brightness(200%);
+}
+
+.accordion-button:not(.collapsed)::after {
+    background-image: var(--bs-accordion-btn-active-icon);
+    filter: brightness(150%);
+}
+
+:root {
+    --navhei: 40px;
+    --bs-primary-bg-subtle: #222E;
+    --bs-primary-text-emphasis: #ccc;
+}
+
+p {
+    margin-block-end: 0;
+}
+
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
+.pic img {
+    width: 120px;
+    height: 30px;
+}
+
+.pic:hover img {
+    filter: brightness(200%);
+}
+
+.navbar {
+    font-size: 14px;
+    background-color: #000;
+    height: var(--navhei);
+}
+
+.nav-link {
+    color: #AAA;
+}
+
+    .nav-link:hover {
+        color: #EEE;
+    }
+
+.allDiv {
+    width: 100%;
+    display: flex;
+    white-space: nowrap;
+    gap: 2px;
+    background-color: #222;
+}
+
+.userBox {
+    border: 1px solid #000;
+    min-width: 300px;
+    height: calc(100VH - var(--navhei));
+    background-image: linear-gradient(to bottom right, #234 0%, #112 27%, #222 50%);
+}
+
+.name {
+    padding-left: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    color: #6CF;
+}
+
+.user {
+    margin-top: 20px;
+    margin-left: 7px;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    border-right: 2px solid #000;
+}
+
+    .user img {
+        width: 45px;
+        height: 45px;
+        margin-right: 5px;
+    }
+
+.name p {
+    width: 100%;
+    font-size: 10px;
+    color: #6CFA;
+}
+
+.userName {
+    font-size: 12px;
+}
+
+.row input[type="radio"] {
+    display: none;
+}
+
+.row input[type="checkbox"] {
+    margin-left: 10px;
+    margin-right: -10px;
+}
+
+.row label {
+    margin-left: 10px;
+}
+
+.row p {
+    margin-left: 15px;
+    font-size: 10px;
+}
+
+.row input:checked + label {
+    color: aqua;
+}
+
+.editBtn {
+    margin-left: auto;
+    height: 20px;
+    width: 20px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background-color: #0000;
+    position: absolute;
+    right: 5px;
+    bottom: 10px;
+}
+
+    .editBtn:hover {
+        filter: brightness(150%);
+    }
+
+    .editBtn img {
+        width: 15px;
+        height: 15px;
+        margin: 0;
+        vertical-align: text-top;
+    }
+
+/* friend */
+.friend {
+    margin-top: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #445;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center
+}
+
+    .friend span {
+        margin-left: 10px;
+        color: #AAA;
+        font-size: 12px;
+    }
+
+.serchBox {
+    width: 80%;
+}
+
+    .serchBox:hover .serchInput {
+        background-color: #334;
+    }
+
+    .serchBox:hover .serchBtn {
+        filter: brightness(150%);
+    }
+
+.serchInput {
+    height: 20px;
+    border-radius: 0%;
+    background-color: #445;
+    border: none;
+}
+
+.serchBtn {
+    width: 15px;
+    height: 20px;
+    right: 0;
+    top: 0;
+    position: relative;
+}
+
+    .serchBtn img {
+        width: 15px;
+        height: 15px;
+        vertical-align: top;
+        position: absolute;
+        top: 15%;
+        right: 2px;
+    }
+
+.addFriendBtn {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    background-color: #0000;
+    border: none;
+}
+
+    .addFriendBtn:hover {
+        filter: brightness(150%);
+    }
+
+    .addFriendBtn img {
+        width: 20px;
+        height: 20px;
+        margin: 0;
+        padding: 0;
+        vertical-align: text-top;
+    }
+
+
+
+
+.friendList {
+    height: 75vh;
+    overflow: auto;
+}
+
+.onlionFriend {
+    color: #AAA;
+    font-size: 12px;
+}
+
+.bg-0000 {
+    color: #AAA;
+    font-size: 12px;
+    background-color: #0000;
+}
+
+.friMore {
+    width: 100%;
+    margin-left: 5px;
+    gap: 5px;
+}
+
+    .friMore lo {
+        width: 90%;
+        font-size: 12px;
+    }
+
+        .friMore lo:hover {
+            background-color: #fffA;
+            cursor: pointer
+        }
+
+.friCard_onlion {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 5px;
+}
+
+    .friCard_onlion:hover {
+        background-color: #6CF4;
+    }
+
+        .friCard_onlion:hover .friMoreBtn {
+            display: block;
+        }
+
+    .friCard_onlion .name {
+        margin-left: 8px;
+    }
+
+        .friCard_onlion .name p {
+            font-size: 9px;
+        }
+
+    .friCard_onlion img, .friCard_notOnlion img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .friCard_onlion .name .userName {
+        font-size: 10px;
+    }
+
+.friMoreBtn {
+    height: 10px;
+    display: none;
+}
+
+.friCard_notOnlion > .name > p {
+    color: #AAA;
+}
+
+.friCard_notOnlion > .name > .userName {
+    color: #AAA;
+}
+
+/*  */
+.friCard_notOnlion {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 5px;
+}
+
+    .friCard_notOnlion:hover {
+        background-color: #000;
+    }
+
+        .friCard_notOnlion:hover .friMoreBtn {
+            display: block;
+        }
+
+    .friCard_notOnlion .name {
+        margin-left: 8px;
+    }
+
+        .friCard_notOnlion .name span {
+            color: #aaa;
+        }
+
+        .friCard_notOnlion .name p {
+            font-size: 9px;
+        }
+
+        .friCard_notOnlion .name .userName {
+            font-size: 10px;
+        }
+
+.msgBox {
+    height: calc(100VH - var(--navhei));
+    width: calc(100VH - 300px);
+    flex-grow: 1;
+    background-image: linear-gradient(to right, #223 0%, #334 50%, #223 100%);
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* 沒對話窗要顯示的 */
+.msgTopTxt {
+    display: none;
+    color: #999;
+    position: absolute;
+    top: 50%;
+    left: 40%;
+    z-index: 0;
+}
+
+/*  */
+
+.select_card {
+    margin: 0;
+    padding: 0;
+    flex-grow: 1;
+    height: 40px;
+    display: flex;
+    overflow-X: auto;
+    overflow-y: hidden;
+}
+
+.nav-link {
+    margin: 0;
+    padding: 0;
+}
+
+.nav-tabs {
+    border: none;
+}
+
+.select_msg {
+    height: 40px;
+    border-bottom: 5px solid #AAAA;
+    width: 100%;
+}
+
+.select_friend_card img {
+    width: 25px;
+    height: 25px;
+}
+
+.select_friend_card {
+    margin-top: 5px;
+    margin-bottom: -5px;
+    margin-left: 7px;
+    display: flex;
+    position: relative;
+}
+
+.select_card label {
+    width: 140px;
+    height: 40px;
+}
+
+    .select_card label .userName {
+        font-size: 10px;
+    }
+
+    .select_card label p {
+        font-size: 9px;
+    }
+
+.select_card input[type="radio"] {
+    display: none;
+}
+
+    .select_card input[type="radio"]:checked + label {
+        background-color: #223;
+        border-top: 1px solid #999;
+        border-right: 1px solid #999;
+        border-left: 1px solid #999;
+    }
+
+.friend_close {
+    font-size: 14px;
+    width: 20px;
+    height: 20px;
+    border: none;
+    background-color: #0000;
+    color: #EEE5;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+}
+
+
+
+.message_box {
+    position: relative;
+    width: 100%;
+    height: calc(100VH - (var(--navhei) + 40px));
+    background-color: #222;
+    border-left: 1px solid #000;
+    /* background-image:linear-gradient(to right,#222 0%,#112 15%,#222 30%); */
+}
+
+.message_input_box {
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    bottom: 0;
+    padding: 5px;
+    background-color: #222;
+    gap: 2%;
+    display: flex;
+    border: 1px solid #000;
+}
+
+    .message_input_box input {
+        height: 40px;
+        flex-grow: 1;
+        background-color: #1127;
+        border: 2px solid #000;
+        color: #777;
+    }
+
+    .message_input_box button {
+        height: 40px;
+        width: 5%;
+        min-width: 50px;
+        color: #EEE5;
+        background-color: #222;
+        border: 1px solid #000;
+    }
+
+#talk_box {
+    height: calc(100% - 50px);
+    overflow: auto;
+}
+
+.talk_user > span {
+    padding-left: 5px;
+}
+
+.talk_user > time {
+    padding-left: 5px;
+}
+
+.msg {
+    margin: 10px;
+    color: #777;
+}
+
+    .msg img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .msg span {
+        font-size: 10px;
+        color: #6CF;
+    }
+
+    .msg time {
+        font-size: 8px;
+    }
+
+    .msg .talk_msg {
+        margin-left: -10px;
+        font-size: 10px;
+        color: #CCC;
+    }

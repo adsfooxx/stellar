@@ -1,0 +1,357 @@
+﻿* {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+}
+
+
+.page {
+    background-color: #1b2838;
+    font-family: sans-serif;
+    padding-bottom: 30px;
+    /* padding-top: 30px; */
+    min-height: 100vh;
+}
+
+    .page p {
+        color: #fff;
+        font-size: 12px;
+    }
+
+    .page
+    a {
+        color: #fff;
+        font-size: 12px;
+    }
+
+    .page
+    span {
+        color: #fff;
+        font-size: 12px;
+    }
+
+    .page .payment_choice {
+        border-radius: 0%;
+        background-color: #38414c;
+        width: 120px;
+    }
+
+        .page .payment_choice li:hover {
+            background-color: #dcdedf;
+        }
+
+        .page .payment_choice li a {
+            color: #fff;
+        }
+            .page .payment_choice li a:focus {
+                color: #757981;
+            }
+
+            .page .payment_choice li a:hover {
+                color: #757981;
+            }
+
+    .page .top_title {
+        margin: auto;
+        /* max-width: 960px; */
+        max-width: 1080px;
+        font-size: 12px;
+        background: linear-gradient(to right,#1b2a39 0%,#1c2a3a 5%,#1d2e40 10%,#1f344a 20%,#213b52 30%, #223e59 40%, #223e59 60%,#213b52 70%,#1f344a 80%, #1d2e40 90%,#1c2a3a 95%,#1b2a39 100% );
+        /* filter: blur(5px);  */
+        padding: 10px 20px 10px 20px;
+        margin-bottom: 15px;
+    }
+
+.top_title_content {
+    max-width: 960px;
+    margin: auto;
+    font-size: 12px;
+}
+
+
+
+
+.page .nav_line {
+    text-decoration: none;
+    padding-top: 24px;
+}
+
+.page .top_title a {
+    color: #8f98a0;
+    text-decoration: none;
+}
+
+.page .top_title span {
+    color: #56707f;
+}
+
+.page .top_title h2 {
+    color: #fff;
+    font-size: 34px;
+    padding-top: 20px;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* -------------------------------------------- */
+.page .content_part {
+    max-width: 960px;
+    margin: auto;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.page .account_contents {
+    width: 100%;
+    background-color: #1b2838;
+    margin: auto;
+}
+
+.page .subtitle_bar {
+    background-color: #223D5A;
+    font-size: 14px;
+    height: 30px;
+    color: #ffffff;
+}
+
+    .page .subtitle_bar span {
+        line-height: 30px;
+        vertical-align: middle;
+    }
+
+.page .card_pic_container {
+    width: 30px;
+    height: 30px;
+    display: inline;
+}
+
+
+.page .top_title p {
+    color: #808891;
+}
+
+.page .contents_div_part {
+    margin-bottom: 15px;
+}
+
+.page .subcontents {
+    background-color: #16202c;
+    padding: 20px;
+}
+
+.page .btn {
+    font-size: 12px;
+}
+
+.page .btn_subtitle {
+    background-color: #38414c;
+    border: none;
+    border-radius: 2px;
+}
+
+    .page .btn_subtitle .addwallet {
+        text-decoration: none;
+        color: #ffffff;
+        font-size: 12px;
+    }
+
+.page .wallet_content {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-self: center;
+    margin-right: 50px;
+}
+
+.page .sp_wallet p {
+    margin: 9px 0 0 0;
+    color: #66c0f4;
+}
+
+.page .sp_wallet a {
+    text-decoration: none;
+    color: #66c0f4;
+    font-size: 24px;
+}
+
+.page .sp_wallet .btn_subtitle, .page .delete_account .btn_subtitle {
+    margin-bottom: 20px;
+}
+
+.page .dropdown-toggle {
+    background-color: #3d4450;
+    border-radius: 0%;
+    border: none;
+    font-size: 12px;
+}
+
+.page .shop_and_history {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+    width: 100%;
+}
+
+.page .sp_wallet {
+    grid-column: 1 / span 1;
+    grid-row: 1 /span 1;
+    height: 131px;
+}
+
+.page .sp_location {
+    grid-column: 1 / span 1;
+    grid-row: 1 /span 1;
+    height: 65px;
+    /*align-content: center;*/
+}
+
+.page .sp_pay {
+    grid-column: 1 / span 1;
+    grid-row: 1 /span 1;
+    height: 131px;
+    /* border: 1px solid rgba(255, 255, 255, 0.2); */
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: start;
+    flex-grow: 1;
+}
+
+.page .sp_history {
+    grid-column: 2 / span 1;
+    /*grid-row: 2 /span 1;*/
+    grid-row: 1 /span 1;
+    height: 65px;
+    /*align-content: center;*/
+}
+
+.page .sp_location p {
+    margin: 0;
+}
+
+.page .sp_pay p {
+    margin: 0;
+    display: block;
+    padding: 0;
+    height: 55px;
+}
+
+.page .paychoice .btn_subtitle {
+    margin-left: 20px;
+}
+
+.page .email_and_phone {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.page .sp_email {
+    grid-column: 1 / span 1;
+}
+
+    .page .sp_email .btn_subtitle {
+        margin-bottom: 20px;
+    }
+
+    .page .sp_email p {
+        margin: 0;
+    }
+
+
+.page .sp_phone {
+    grid-column: 2 / span 1;
+}
+
+    .page .sp_phone .btn_subtitle {
+        margin-bottom: 20px;
+    }
+
+    .page .sp_phone p {
+        margin: 0;
+    }
+
+.page .contents_div_part .delete_account p {
+    margin: 0 0 0 20px;
+    display: inline;
+}
+
+.page .sercurity p {
+    display: inline;
+}
+
+.page .change_password {
+    margin-top: 20px;
+}
+
+@media screen and (max-width:992px) {
+    .page .content_part {
+        padding: 0 20px 0 20px;
+    }
+}
+
+@media screen and (max-width:768px) {
+    .page .shop_and_history {
+        grid-template-columns: 1fr;
+        grid-template-rows: 131px 65px 131px 65px;
+    }
+
+    .page .sp_wallet {
+        grid-column: 1 / span 1;
+        grid-row: 1 / span 1;
+        height: 131px;
+    }
+
+    .page .sp_location {
+        grid-column: 1 / span 1;
+        grid-row: 2 / span 1;
+        height: 65px;
+    }
+
+    .page .sp_pay {
+        grid-column: 1 / span 1;
+        grid-row: 3 / span 1;
+        height: 131px;
+    }
+
+    .page .sp_history {
+        grid-column: 1 / span 1;
+        grid-row: 4 / span 1;
+        height: 65px;
+    }
+}
+
+@media screen and (max-width:425px) {
+    .page .paychoice .btn_subtitle {
+        margin: 10px 0 0 0;
+        display: block;
+    }
+
+    .page .top_title h2 {
+        font-size: 24px;
+    }
+
+    .page .email_and_phone {
+        grid-template-columns: 1fr;
+        grid-template-rows: 50% 50%;
+    }
+
+    .page .sp_email {
+        grid-column: 1 / span 1;
+        grid-row: 1 / span 1;
+    }
+
+    .page .sp_phone {
+        grid-column: 1 / span 1;
+        grid-row: 2 / span 1;
+        margin-top: 20px;
+    }
+
+    .page .contents_div_part .delete_account p {
+        margin: 20px 0 0 0;
+        display: block;
+    }
+
+    .page .change_password p {
+        margin: 20px 0 0 0;
+        display: block;
+    }
+}

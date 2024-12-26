@@ -1,0 +1,145 @@
+﻿
+@using Web.ViewModels.Member
+@model EditDataViewModel
+@{
+    ViewData["Title"] = "編輯個人檔案";
+}
+@section topCSS {
+    <link href="~/css/Member/editdata/editdata.css" rel="stylesheet" asp-append-version="true" />
+}
+<div class="container profile">
+    <div class="head_shot"><img src="@Model.ImgUrl"></div>
+    <div class="user">
+        <div class="user_name">@Model.NickName</div>
+        <div class="edit">編輯個人檔案</div>
+    </div>
+</div>
+<div class="container individual">
+    <div class="turn_back">
+        <a asp-controller="Member" asp-action="Index" asp-route-id=@Model.UserId>返回個人檔案</a>
+    </div>
+    <div class="detail">
+        <div class="title">
+            一般
+        </div>
+        <div class="content">
+            <p>設定您的個人檔案名稱和詳細資料。提供您的真實姓名能幫助好友在 Stellar 社群中找到您。</p>
+            <p>
+                您的個人檔案名稱和個人圖示會在 Stellar 各處代表您，且必須適合所有年齡層。
+            </p>
+        </div>
+        @using (Html.BeginForm("EditData", "Member", FormMethod.Post, new { @class = "form_list", enctype = "multipart/form-data" }))
+        {
+            <form>
+                @Html.HiddenFor(m=>m.UserId);
+                @Html.HiddenFor(m=>m.ImgUrl);
+                <div class="category common">
+
+                    <div class="form">
+                    <div class="subheading">一般</div>
+                        
+                        <div class="form inside">
+                            <img id="imagePreview" style="display: none; width: 105px;height: 120px;" />
+                        <label for="File">大頭貼(限10MB以下)</label>
+                        <input type="file" name="File" id="fileupload"  accept="image/gif, image/jpeg, image/png" />
+                         <label for="user_dataname">個人檔案名稱</label> 
+
+                         @Html.TextBoxFor(model => model.NickName, new { htmlAttributes = new { @class = "form-control", id = "user_dataname" } })
+                         @Html.ValidationMessageFor(model => model.NickName)
+
+                        <div class="has_info">
+                            
+
+                             <label for="user_real_name">真實姓名</label> 
+                            <p class="info d-inline-flex ">
+                                <button class="btn" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapse_real_name" aria-expanded="false"
+                                        aria-controls="collapse_real_name" disabled>
+                                    <img src="~/img/Member/EditData/info.png" alt="">
+                                </button>
+                            </p>
+                            <div class="collapse" id="collapse_real_name">
+                                <div class="card card-body">
+                                    加入您的真實姓名可協助好友找到您。
+                                </div>
+                            </div>
+                        </div>
+                            @Html.TextBoxFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", id = "user_real_name" } })
+
+                           
+                        <!-- 自訂網址 -->
+                        </div>
+                        
+                            <div class="subheading">地點</div>
+                            
+                            <div class="form inside ">
+                                <div class="has_info">
+                                    <label for="country">國家/地區</label>
+                                    <p class="info d-inline-flex ">
+                                        <button class="btn" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapse_country" aria-expanded="false"
+                                                aria-controls="collapse_country" disabled>
+                                            <img src="~/img/Member/EditData/info.png" alt="">
+                                        </button>
+                                    </p>
+                                    <div class="collapse" id="collapse_country" value="@Model.Country">
+                                        <div class="card card-body">
+                                            選擇您的地區是連繫其他當地玩家、群組與好友最佳的方式。
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                            <select asp-for="Country" asp-items="Model.Countries" value="@Model.Country" class="form-control" id="country"></select>
+                            
+
+
+                                  <label for="city">城市</label>
+
+                            
+
+                            <select asp-for="City" asp-items="Model.Cities" value="@Model.City" class="form-control" id="country"></select>
+                            
+                            </div>
+                        
+                        <div class=" category summary">
+                            <div class="subheading">摘要</div>
+
+                            <div class="form inside">
+                                
+                                @Html.TextAreaFor(m => m.OverView, 3, 60, new { placeholder = "未提供任何資訊" })
+                                
+
+                            </div>
+                        </div>
+                        <div class="btn_group">
+                            <a asp-controller="Member" asp-action="Index" asp-route-id=@Model.UserId>取消</a>
+                            <button type="submit" class="store">儲存</button>
+                        </div>
+            </form>
+         } 
+
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        //popover
+        const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+        const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+        //預覽圖片
+            document.getElementById('fileupload').addEventListener('change', function (event) {
+                var file = event.target.files[0];
+                if (file) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var img = document.getElementById('imagePreview');
+                        img.src = e.target.result;
+                        img.style.display = 'block'; 
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+    
+    </script>
+
+}

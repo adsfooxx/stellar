@@ -1,0 +1,75 @@
+﻿@* 註冊 *@
+@using Web.ViewModels.Authentication;
+@model RegiterViewModel
+@{
+    ViewData["Title"] = "註冊頁面";
+}
+@section topCSS {
+    <link href="~/css/Login/regiter.css" rel="stylesheet" asp-append-version="true" />
+}
+<main>
+    <div class="container login">
+
+        <div class="login-box">
+            <h5>註冊</h5>
+            @using (Html.BeginForm())
+            {
+                <div class="input-group">
+
+                    <div class="mb-3">
+
+                        <label for="account" class="form-label account">帳戶名稱</label>
+
+                        @Html.TextBoxFor(m => m.Account, new { @class = "form-control" })
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label password">密碼</label>
+                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control" })
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label email">電子郵件</label>
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @type = "email" })
+                    </div>
+                    <div>
+                        <input type="checkbox" id="remember">
+                        <label for="remember" class="remember-text">我不是機器人</label>
+                    </div>
+                    @if (Model.text != null)
+                    {
+                        <label for="text" style="color: red; margin-left:5px;">@Model.text</label>
+                    }
+                    <div class="button">
+                        <button type="submit" class="logbtn btn btn-primary btn-lg" id="submit_btn">註冊</button>
+                        @* <button type="button" class="logbtn btn btn-primary btn-lg">註冊</button> *@
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="register-box">
+        <div class="container register">
+            <!-- <div class="create">
+                <p>初次使用 Storm ？</p>
+                <button class="btn">建立帳戶</button>
+            </div> -->
+            <div class="induce">
+                <p>免費又好用。發掘數千款遊戲，並和數百萬名新朋友一起遊玩。 深入了解 Stellar</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+@section endJS {
+    <!-- 機器人驗證 v2 -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+        $(document).ready(function () {
+            $('form').on('submit', function () {
+                // 禁用提交按鈕，防止重複提交
+                $('#submit_btn').prop('disabled', true).text('正在提交...');
+            });
+        });
+    </script>
+}
+

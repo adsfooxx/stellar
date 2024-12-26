@@ -1,0 +1,96 @@
+.addToCart .modal-content {
+    margin: 10px auto;
+    color: white;
+    background-color: #141e2a;
+    padding: 20px;
+}
+.addToCart .modal-header,
+.addToCart .modal-footer {
+    border: none;
+}
+.addToCart .game-card {
+    position: relative;
+}
+    .addToCart .game-card .btn-close {
+        width: 15px;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background-color: #fff;
+    }
+.addToCart .game-card-img {
+    width: 75%;
+    margin: auto;
+}
+.addToCart .game-card-img img {
+    width: 100%;
+    aspect-ratio: 16/9;
+}
+.addToCart .game-card h3 {
+    padding-top: 20px;
+    font-size: 18px;
+}
+.addToCart .game-card-price-field {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 5px;
+    font-size: 15px;
+    color: #b5d4df;
+}
+.addToCart .game-card-price-field .game-card-price-cut {
+    font-size: 10px;
+    color: #738895;
+    text-align: right;
+    position: relative;
+}
+.addToCart .game-card-price-field .game-card-price-cut::before {
+    content: '';
+    left: 30px;
+    right: 0px;
+    position: absolute;
+    top: 43%;
+    border-bottom: 1.5px solid #738895;
+    transform: skewY(-8deg);
+    box-shadow: 0 0 2px black;
+}
+.addToCart .game-card-price-field .game-card-price-discount {
+    padding: 3px;
+    color: #BEEE11;
+    background-color: #4c6b22;
+}
+.addToCart .game-card-content select{
+    width: 120px;
+    background-color: #555;
+    font-size: 12px;
+    color: #ddd;
+}
+.addToCart .game-card-new,
+.addToCart .game-card-remove,
+.addToCart .game-card-footer span {
+    font-size: 12px;
+    color: #606f7f;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.addToCart .modal-footer {
+    width: 100%;
+    padding: 20px 0;
+    justify-content: space-between;
+}
+.addToCart .modal-footer button{
+    margin: 0;
+    width: 48%;
+    font-size: 12px;
+}
+.addToCart .modal-footer form {
+    width:48%
+}
+.addToCart .modal-footer form button {
+    width: 100%
+
+}
+@media screen and (min-width:768px) {
+}
+@media screen and (min-width:992px) {
+}

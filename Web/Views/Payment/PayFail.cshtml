@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "交易失敗";
+}
+@section topCSS {
+    <style>
+        .row {
+            padding-top: 50px;
+        }
+
+            .row > * {
+                display: flex;
+                justify-content: center;
+                color: #fff;
+            }
+    </style>
+}
+<div class="container">
+    <div class="row">
+        <form id="form1" runat="server">
+            <div>
+                <h2>交易失敗</h2>
+                <p id="countdownText">5 秒後將自動跳轉到付款前頁面...</p>
+            </div>
+        </form>
+    </div>
+</div>
+@section endJS {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var countdown = 5; // 設定倒數秒數
+            var countdownInterval = setInterval(function () {
+                countdown--; // 每秒減少 1
+                $("#countdownText").text(countdown + " 秒後將自動跳轉到付款前頁面..."); // 更新倒數文字
+
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval); // 倒數結束，停止計時器
+                    // 使用 AJAX 發送表單
+                    $.ajax({
+                        url: '/Payment/PayChoiceAndDetailCheck', // 目標頁面的網址
+                        type: 'POST',
+                        data: $("#form1").serialize(), // 取得表單資料
+                        success: function (response) {
+                            // 成功後跳轉或顯示訊息
+                            window.location.href = '/Payment/PayChoiceAndDetailCheck';
+                        },
+                        error: function (xhr, status, error) {
+                            // 顯示錯誤訊息或處理錯誤
+                            
+                        }
+                    });
+                }
+            }, 1000); // 每 1000 毫秒 (1 秒) 執行一次
+        });
+    </script>
+}

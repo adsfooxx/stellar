@@ -1,0 +1,178 @@
+﻿@using Web.Service.Layout
+@using Web.ViewModels.Layout
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Stellar</title>
+    <link rel="icon" type="image/x-icon" href="https://res.cloudinary.com/dffbxpdov/image/upload/v1728216595/icon_stellar2_veltnx.png" />
+    <link rel="stylesheet" href="~/lib/bootstrap5_3_3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/common.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/Layout/layout.css" asp-append-version="true">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    @await RenderSectionAsync("topCSS", required: false)
+    @await RenderSectionAsync("topJS", required: false)
+</head>
+<body>
+    <header>
+        <div class="container" id="app_header">
+            <a class="navbar-brand logo" asp-controller="Home" asp-action="Index"><img class="w-100" src="~/img/Layout/logo_steam.png" alt=""></a>
+            <div class="navbar lg">
+                <nav style="--bs-breadcrumb-divider: '';" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item index"><a asp-controller="Home" asp-action="Index">首頁</a></li>
+
+                        @if (Context.User?.Identity?.IsAuthenticated ?? false)
+                        {
+                            <li class="breadcrumb-item">
+                                <a href="/Message/index">聊天室</a>
+                            </li>
+                        }
+                        @if (Context.User?.Identity?.IsAuthenticated ?? false)
+                        {
+                            <li class="breadcrumb-item"><a asp-controller="Member" asp-action="GameLibray">遊戲庫</a></li>
+                        }
+                        <li class="breadcrumb-item"><a asp-controller="CustomerSupport" asp-action="CustomerSupport">客服中心</a></li>
+
+                    </ol>
+                </nav>
+            </div>
+            @await Component.InvokeAsync("LayoutUserViewData", new { Section = "LayoutUserForDesktop" })
+
+            <nav class="navbar  bg-body-tertiary ">
+                <div class="container-fluid">
+
+                    <button class="navbar-toggler " type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
+
+                        <span class="top"></span>
+                        <span class="middle"></span>
+                        <span class="bottom"></span>
+
+                    </button>
+                    <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="true" tabindex="-1"
+                         id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+
+                        <div class="offcanvas-body p-0">
+
+                            <ul class="accordion p-0" id="offcanvas-accordion">
+                                @await Component.InvokeAsync("LayoutUserViewData", new { Section = "LayoutUserForMobile" })
+
+
+                            </ul>
+                            <div class="offcanvas-footer">
+                                <div>
+                                    <p>© 版權所有?並沒有。純為教育使用，非商業用途，所有商標皆純屬虛構。</p>
+                                    <nav aria-label="breadcrumb">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item"><a href="#">隱私權政策</a></li>
+                                            <li class="breadcrumb-item"><a href="#">法律聲明</a></li>
+                                            <li class="breadcrumb-item"><a href="#">Stellar訂戶協議</a></li>
+                                            <li class="breadcrumb-item"><a href="#">退款</a></li>
+                                        </ol>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+        </div>
+    </header>
+
+    <main role="main">
+        @RenderBody()
+
+
+        <div class="chat-container" id="chatBoxForVue">
+            <div class="chat-bubble" id="chatBubble">
+                <img src="https://res.cloudinary.com/dffbxpdov/image/upload/v1728216595/icon_stellar2_veltnx.png" style="width: 60px;" alt="">
+            </div>
+            <div class="chat-box" id="chatBox">
+                <div class="chat-header">
+                    Stellar小幫手
+                    <button id="closeChat" class="close-btn">✖</button>
+                </div>
+                <div class="chat-content">
+                    <p style="
+                        background-color: #91CABB;
+                        border: 1px solid #AADDDD;
+                        border-radius: 6px;
+                        display: block;
+                        padding: 5px 8px;
+                        align-self: flex-start;
+                        width: fit-content;
+                        max-width: 80%;"
+                       class="assistant-message">
+
+                        我是Stellar小幫手，很高興為您服務。</p>
+                </div>
+                <div class="chat-footer">
+                    <input type="text" placeholder="輸入訊息..." id="chatInput">
+                    <button :class="buttonClass" v-on:click="toggleRecording" :disabled="isProcessing" style="margin-right: 10px;">
+                        {{ isRecording ? '停止錄音' : '開始錄音' }}
+                    </button>
+                    <button id="sendBtn">發送</button>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+
+    <footer>
+        <div class="container">
+            <hr>
+            <div class="privacy">
+
+                <div class="text">
+                    <p>© 版權所有?並沒有。純為教育使用，非商業用途，所有商標皆純屬虛構。</p>
+                    <p>貨物既出，恕不退貨</p>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">隱私權政策</a></li>
+                            <li class="breadcrumb-item"><a href="#">法律聲明</a></li>
+                            <li class="breadcrumb-item"><a href="#">Stellar訂戶協議</a></li>
+                            <li class="breadcrumb-item"><a href="#">退款</a></li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="logo">
+                    <a asp-controller="Home" asp-action="Index"><img src="~/img/logo_steam.png" alt=""></a>
+                </div>
+            </div>
+            <hr>
+            <div class="footer-navbar">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="https://www.build-school.com/">關於Stellar</a></li>
+                        <li class="breadcrumb-item"><a href="https://rdrc.mnd.gov.tw/page/index">人才招募</a></li>
+                        <li class="breadcrumb-item"><a asp-controller="CustomerSupport" asp-action="CustomerSupport">客服中心</a></li>
+                        <li class="breadcrumb-item"><a href="#">Stellar發行</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+
+    <environment include="Development">
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    </environment>
+    <environment include="Production">
+        <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    </environment>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    @await RenderSectionAsync("endCSS", required: false)
+    @await RenderSectionAsync("endJS", required: false)
+    <script src="~/js/layout/layout.js" asp-append-version="true" charset="UTF-8"></script>
+    <script src="~/js/layout/voice.js" asp-append-version="true" charset="UTF-8"></script>
+</body>
+
+</html>

@@ -1,0 +1,391 @@
+﻿@using Web.ViewModels.ShoppingCart;
+@using Web.Services.ShoppingCart;
+@model ShoppingCartViewModel
+
+@{
+    ViewData["Title"] = "ShoppingCart";
+}
+
+@section topCSS {
+    <link href="~/css/ShoppingCart/shoppind-cart.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/Partial/StoreNavbar.css" rel="stylesheet" />
+}
+
+@await Component.InvokeAsync("StoreNavbar", new { Section = "_StoreNavbar" })
+
+<div class="shopping-cart">
+    <div class="shopping-cart-content">
+        <div class="shopping-cart-title">
+            <a href="/Home/Index">首頁</a>
+            <span>></span>
+            <span>你的購物車</span>
+            <h2 class="text-white fs-4">您的購物車</h2>
+        </div>
+        @foreach (var product in Model.ShoppingCartProducts)
+        {
+            <section class="game-card">
+                <div class="game-card-img">
+                    <a href="/Product/ProductPage/@product.ProductId"><img src="@product.ProductImgUrl" alt=""></a>
+                </div>
+                <div class="game-card-content">
+                    <h3>@product.ProductName</h3>
+                    <div class="text-left">
+                        <img src="~/img/Home/home/icon_platform_win.png" alt="..." />
+                    </div>
+                    @if (product.ProductStatus != 1)
+                    {
+                        <div class="game-card-price-field">
+                            目前產品已下架，請移除產品
+                        </div>
+                    }
+                    else if (product.Discount != 0)
+                    {
+                        <div class="game-card-price-field">
+                            <span class="game-card-price-discount">-@product.DiscountFormat%</span>
+                            <div class="d-flex flex-column">
+                                <span class="game-card-original-price">
+                                    <span>NT$&nbsp;</span>
+                                    <span>@product.ProductPriceFormat</span>
+                                </span>
+                                <span class="game-card-price game-card-discount-price">
+                                    <span>NT$&nbsp;</span>
+                                    <span>@product.SalesPriceFormat</span>
+                                </span>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="game-card-price-field">
+                            <span class="game-card-price-discount d-none">-@product.DiscountFormat%</span>
+                            <div class="d-flex flex-column">
+                                <span class="game-card-original-price d-none">
+                                    <span>NT$&nbsp;</span>
+                                    <span>@product.ProductPriceFormat</span>
+                                </span>
+                                <span class="game-card-price">
+                                    <span>NT$&nbsp;</span>
+                                    <span>@product.SalesPriceFormat</span>
+                                </span>
+                            </div>
+                        </div>
+                    }
+                    <div class="d-flex justify-content-between mt-2">
+                        <select class="form-select-sm">
+                            <option value="user" selected>自己帳戶使用</option>
+                        </select>
+                        <form id="remove-form-@product.ProductId" data-product-id="@product.ProductId" class="remove-product-form" method="post">
+                            <input type="hidden" name="productId" value="@product.ProductId" />
+                            <button type="button" class="game-card-remove ps-1 btn remove-btn" data-product-id="@product.ProductId">移除</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        }
+        @if (Model.ShoppingCartProducts == null || !Model.ShoppingCartProducts.Any())
+        {
+            <p class="cartisNull fs-6 my-5">您的購物車是空的。</p>
+            <div class="game-card-Checkout">
+                <div class="game-card-sum">
+                    <span>估計總額</span>
+                    <span>@Model.TotalPrice</span>
+                </div>
+                <div class="game-card-txt">銷售稅將於結帳時計算</div>
+                <a class="shadow-none btn btn-primary disabled">請新增產品再繼續付款</a>
+            </div>
+        }
+        else if (Model.ShoppingCartProducts.Any(x => x.ProductStatus != 1))
+        {
+            <div class="mobile-reverse">
+                <div class="game-card-Checkout">
+                    <div class="game-card-sum">
+                        <span>估計總額</span>
+                        <span id="total-price-mobile">@Model.TotalPrice</span>
+                    </div>
+                    <div class="game-card-txt">銷售稅將於結帳時計算</div>
+                    <a href="/Payment/PayChoiceAndDetailCheck" class="shadow-none btn btn-primary disabled" id="removeproduct-empty">請移除已下架產品</a>
+                </div>
+                <div class="game-card-footer d-flex justify-content-between">
+                    <a href="/Home/Index" class="continue-shopping btn btn-secondary">繼續購物</a>
+                    <form id="remove-all-form" method="post">
+                        <button type="submit" class="game-card-all-remove btn">移除所有產品</button>
+                    </form>
+                </div>
+            </div>
+
+        }
+        else
+        {
+            <div class="mobile-reverse">
+                <div class="game-card-Checkout">
+                    <div class="game-card-sum">
+                        <span>估計總額</span>
+                        <span id="total-price-mobile">@Model.TotalPrice</span>
+                    </div>
+                    <div class="game-card-txt">銷售稅將於結帳時計算</div>
+                    <a href="/Payment/PayChoiceAndDetailCheck" class="shadow-none btn btn-primary" id="payment-empty">繼續前往付款</a>
+                </div>
+                <div class="game-card-footer d-flex justify-content-between">
+                    <a href="/Home/Index" class="continue-shopping btn btn-secondary">繼續購物</a>
+                    <form id="remove-all-form" method="post">
+                        <button type="submit" class="game-card-all-remove btn">移除所有產品</button>
+                    </form>
+                </div>
+            </div>
+        }
+        <div class="recommend">
+            <div class="my-3">為您推薦</div>
+            <div class="recommend-game-box">
+                @foreach (var product in Model.RecommendWithinHalfYear)
+                {
+                    <div class="recommend-game-box-card">
+                        <a href="/Product/ProductPage/@product.ProductId">
+                            <img src="@product.ProductImgUrl" class="card-img-top" alt="...">
+                            <div class="card-txt">
+                                <div>
+                                    <img src="~/img/Home/home/icon_platform_win.png" alt="..." />
+                                </div>
+                                @if (product.Discount != 0)
+                                {
+                                    <div class="game-card-price-field">
+                                        <span class="game-card-price-discount">-@product.DiscountFormat%</span>
+                                        <div class="d-flex flex-column">
+                                            <span class="game-card-original-price">
+                                                <span>NT$&nbsp;</span>
+                                                <span>@product.ProductPriceFormat</span>
+                                            </span>
+                                            <span class="game-card-price game-card-discount-price">
+                                                <span>NT$&nbsp;</span>
+                                                <span>@product.SalesPriceFormat</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="game-card-price-field">
+                                        <div class="d-flex flex-column">
+                                            <span class="game-card-price">
+                                                <span>NT$&nbsp;</span>
+                                                <span>@product.SalesPriceFormat</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+            <div class="row mt-4 recommend-game-box2">
+                @foreach (var product in Model.RecommendProducts2)
+                {
+                    <div>
+                        <a href="/Product/ProductPage/@product.ProductId">
+                            <img src="@product.ProductImgUrl" class="card-img-top" alt="...">
+                            <div class="card-txt">
+                                <div>
+                                    <img src="~/img/Home/home/icon_platform_win.png" alt="..." />
+                                </div>
+                                @if (product.Discount != 0)
+                                {
+                                    <div class="game-card-price-field">
+                                        <span class="game-card-price-discount">-@product.DiscountFormat%</span>
+                                        <div class="d-flex flex-column">
+                                            <span class="game-card-original-price">
+                                                <span>NT$&nbsp;</span>
+                                                <span>@product.ProductPriceFormat</span>
+                                            </span>
+                                            <span class="game-card-price game-card-discount-price">
+                                                <span>NT$&nbsp;</span>
+                                                <span>@product.SalesPriceFormat</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="game-card-price-field">
+                                        <div class="d-flex flex-column">
+                                            <span class="game-card-price">
+                                                <span>NT$&nbsp;</span>
+                                                <span>@product.SalesPriceFormat</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="game-card-Checkout-out">
+        <div class="game-card-sum">
+            <span>估計總額</span>
+            <span id="total-price-desktop">@Model.TotalPrice</span>
+        </div>
+        <div class="game-card-txt">銷售稅將於結帳時計算</div>
+        @if (Model.ShoppingCartProducts == null || !Model.ShoppingCartProducts.Any())
+        {
+            <a class="shadow-none btn btn-primary disabled">請新增產品再繼續付款</a>
+        }
+        else if (Model.ShoppingCartProducts.Any(x => x.ProductStatus != 1))
+        {
+            <a href="/Payment/PayChoiceAndDetailCheck" class="shadow-none btn btn-primary disabled" id="removeproduct-filled">請移除已下架產品</a>
+        }
+        else
+        {
+            <a href="/Payment/PayChoiceAndDetailCheck" class="shadow-none btn btn-primary" id="payment-filled">繼續前往付款</a>
+        }
+    </div>
+</div>
+<form id="csrf-form">
+    @Html.AntiForgeryToken()
+</form>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const csrfElement = document.querySelector('#csrf-form input[name="__RequestVerificationToken"]');
+        if (!csrfElement) {
+            console.error('CSRF token not found!');
+            return;
+        }
+        const csrfToken = csrfElement.value;
+
+        // 單筆移除按鈕邏輯
+        const removeButtons = document.querySelectorAll('.remove-btn');
+        removeButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const productId = this.getAttribute('data-product-id');
+
+                fetch('/ShoppingCart/RemoveShoppingCart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken // 使用從隱藏欄位中獲取的 CSRF token
+                    },
+                    body: JSON.stringify({ productId: productId })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // 移除產品卡片
+                            const productElement = document.querySelector(`#remove-form-${productId}`).closest('.game-card');
+                            if (productElement) {
+                                productElement.remove();
+                            }
+
+                            // 更新總價和購物車數量
+                            updateCartUI(data);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Fetch error:', error);
+                    });
+            });
+        });
+
+
+        // 全部移除按鈕邏輯
+        const removeAllButton = document.querySelector('.game-card-all-remove');
+        if (removeAllButton) {
+            removeAllButton.addEventListener('click', function (event) {
+                // 阻止默認的表單提交行為
+                event.preventDefault();
+
+                // 發送 AJAX 請求來移除所有購物車中的產品
+                fetch('/ShoppingCart/RemoveAllShoppingCart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // 移除所有產品卡片
+                            document.querySelectorAll('.game-card').forEach(function (productElement) {
+                                productElement.remove();
+                            });
+
+                            // 更新總價和購物車數量
+                            updateCartUI(data);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Fetch error:', error);
+                    });
+            });
+        }
+
+        // 更新購物車UI的函數
+        function updateCartUI(data) {
+            const isProductStatus = data.productStatuses && data.productStatuses.every(status => status === 1);
+            // 更新總價
+            const totalPriceMobile = document.querySelector('#total-price-mobile');
+            if (totalPriceMobile) {
+                totalPriceMobile.innerText = `NT$ ${data.totalPrice}`;
+            }
+            const totalPriceDesktop = document.querySelector('#total-price-desktop');
+            if (totalPriceDesktop) {
+                totalPriceDesktop.innerText = `NT$ ${data.totalPrice}`;
+            }
+            // 更新購物車數量
+            const cartCountElements = document.querySelectorAll('.update-cart-count');
+            if (cartCountElements.length > 0) {
+                cartCountElements.forEach(function (element) {
+                    element.innerText = data.cartItemCount;
+                });
+            }
+            if (data.isCartEmpty) {
+                const footer = document.querySelector('.game-card-footer');
+                footer.innerText = '';
+
+                const emptyCartMessage = document.createElement('p');
+                emptyCartMessage.className = 'cartisNull fs-6 my-5';
+                emptyCartMessage.innerText = '您的購物車是空的。';
+                footer.appendChild(emptyCartMessage);
+
+                const paymentEmpty = document.querySelector('#payment-empty');
+                if (paymentEmpty) {
+                    paymentEmpty.classList.add('disabled');
+                    paymentEmpty.innerText = '請新增產品再繼續付款';
+                }
+
+                const paymentFilled = document.querySelector('#payment-filled');
+                if (paymentFilled) {
+                    paymentFilled.classList.add('disabled');
+                    paymentFilled.innerText = '請新增產品再繼續付款';
+                }
+
+                const removeProductEmpty = document.querySelector('#removeproduct-empty');
+                if (removeProductEmpty) {
+                    removeProductEmpty.classList.add('disabled');
+                    removeProductEmpty.innerText = '請新增產品再繼續付款';
+                }
+
+                const removeProductFilled = document.querySelector('#removeproduct-filled');
+                if (removeProductFilled) {
+                    removeProductFilled.classList.add('disabled');
+                    removeProductFilled.innerText = '請新增產品再繼續付款';
+                }
+            }
+            else if (isProductStatus) {
+                const removeProductEmpty = document.querySelector('#removeproduct-empty');
+                if (removeProductEmpty) {
+                    removeProductEmpty.classList.remove('disabled');
+                    removeProductEmpty.innerText = '繼續前往付款';
+                }
+
+                const removeProductFilled = document.querySelector('#removeproduct-filled');
+                if (removeProductFilled) {
+                    removeProductFilled.classList.remove('disabled');
+                    removeProductFilled.innerText = '繼續前往付款';
+                }
+            }
+        }
+    });
+
+</script>

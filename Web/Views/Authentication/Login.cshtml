@@ -1,0 +1,128 @@
+﻿ @model Web.ViewModels.Authentication.LoginViewModel
+ @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+@{
+    ViewData["Title"] = "登入";
+}
+@section topCSS {
+    <link href="~/css/Login/login.css" rel="stylesheet" asp-append-version="true" />
+}
+
+<div class="container login">
+
+    <div class="login-box">
+        <h5>登入</h5>
+        <div class="input-group">
+
+            <div class="input-group-login">
+                <div id="googleLoginError" class="alert alert-danger" style="display:none;"></div>
+                @using (Html.BeginForm())
+                {
+                    <div class="mb-3">
+
+                        <label for="account" class="form-label account">以帳戶名稱登入</label>
+                        @Html.TextBoxFor(m => m.Account, new { @class = "form-control", placeholder = "帳號" })
+                        @Html.ValidationMessageFor(m => m.Account)
+
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label password">密碼</label>
+                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control", placeholder = "密碼", @type = "password" })
+                        @Html.ValidationMessageFor(m => m.Password)
+
+                    </div>
+                    @if (ViewBag.loginErr != null)
+                    {
+                        <div style="color:red" class="pb-4">
+                            @ViewBag.loginErr
+                        </div>
+                    }
+
+                    @if (ViewData["textlog"] != null)
+                    {
+                        <div style="color:greenyellow" class="pb-4">
+                            @ViewData["textlog"]
+                        </div>
+                    }
+                    <div>
+                    </div>
+                    <div class="button">
+                        <button type="submit" class="logbtn btn btn-primary btn-lg">登入</button>
+                    </div>
+                }
+
+
+             
+                <a class="btn btn-line-login" asp-controller="Authentication" asp-action="LineLogin" style=" width: fit-content;">
+                    <img src="~/img/login/btn_login_base.png" alt="LINE Icon" class="line-icon" style="width:168px; height:48px;" /> 
+                </a>
+
+                <input type="hidden" id="antiForgeryToken" name="__RequestVerificationToken" value="@Antiforgery.GetAndStoreTokens(Context).RequestToken" />
+                <div class="google-signin-container" style=" width: fit-content; margin: 10px auto;">
+
+                    <div id="g_id_onload"
+                         data-client_id="925310348088-c12b9pm7m0ei957es517pc7s0pjuj37g.apps.googleusercontent.com"
+                         data-callback="handleCredentialResponse"
+                         data-auto_prompt="false"
+                         data-context="signin">
+                    </div>
+                    <div class="g_id_signin"
+                         data-type="standard"
+                         data-size="large"
+                         data-theme="outline"
+                         data-text="signin"
+                         data-shape="rectangular"
+                         data-logo_alignment="left">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="register-box">
+    <div class="container register">
+        <div class="create">
+            <p>初次使用 Stellar ？</p>
+            <a class="btn" asp-controller="Authentication" asp-action="regiter">建立帳戶</a>
+        </div>
+        <div class="induce">
+            <p>免費又好用。發掘數千款遊戲，並和數百萬名新朋友一起遊玩。 深入了解 Stellar</p>
+        </div>
+    </div>
+</div>
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+function handleCredentialResponse(response) {
+    const credential = response.credential;
+    console.log('Credential:', credential);
+    const antiForgeryToken = document.querySelector('input[name="__RequestVerificationToken"]').value;
+    console.log('Anti-Forgery Token:', antiForgeryToken);
+    fetch('/Authentication/GoogleLogin', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRF-TOKEN': antiForgeryToken
+        },
+        body: `credential=${encodeURIComponent(credential)}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.href = data.redirectUrl;
+        } else {
+            const errorContainer = document.getElementById('googleLoginError');
+            errorContainer.innerHTML = data.message;
+            errorContainer.style.display = 'block';
+        }
+    })
+    .catch(error => {
+        console.error('登錄發生異常：', error);
+        const errorContainer = document.getElementById('googleLoginError');
+        errorContainer.innerHTML = "發生錯誤，請稍後再試。";
+        errorContainer.style.display = 'block';
+    });
+}
+</script>
+

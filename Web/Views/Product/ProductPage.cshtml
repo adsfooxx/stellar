@@ -1,0 +1,1473 @@
+﻿@using Web.ViewModels.Product
+@model ProductPageViewModel
+@{
+    if(Model.IsDiscountGame){
+        ViewData["Title"] = "在 Stellar 購買" + Model.Name + " 即可省下 " + Model.FormattedDiscountForTitle;
+    }
+    else{
+        ViewData["Title"] = "Stellar - " + Model.Name;
+    }
+    
+}
+@section topCSS {
+    <link rel="stylesheet" href="~/css/Product/ProductPage.css" asp-append-version="true">
+    <link href="~/css/Partial/StoreNavbar.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/Partial/AddShoppingCartModal.css" rel="stylesheet" asp-append-version="true" />
+}
+
+
+@await Component.InvokeAsync("StoreNavbar", new { Section = "_StoreNavbar" })
+
+<div class="container">
+    <div id="for-background" class="for-background container">
+        <!-- md display -->
+        <div class="page_title_area">
+            <div class="blockbg">
+                <a asp-controller="Product" asp-action="ProductPage">所有遊戲</a>
+                &gt;
+                @* <a asp-controller="Product" asp-action="ProductPage">@Model.Category</a> *@
+                <a href="@Url.Action("ProductSearchMin","Product",new {categoryId=Model.CategoryId})">@Model.CategoryName</a>
+                &gt;
+                <a asp-controller="Product" asp-action="ProductPage"><span>@Model.Name</span></a>
+            </div>
+            <div class="breadcrumbs">
+                <div class="breadcrumbs-title">
+                    <div id="appHubAppName" class="apphub_AppName">@Model.Name</div>
+                </div>
+@*                 <div class="social-center">
+                    <a class="btn btn-secondary wish-list" style="display: inline-block;">
+                        <span>社群中心</span>
+                    </a>
+                </div> *@
+            </div>
+        </div>
+        <!-- 主要圖片 --> <!-- sm display -->
+        <div class="responsive_page_header_img">
+            <img style="width:100%;" src="@Model.ProductPageMainArea.MainImg">
+        </div>
+        <!-- card -->
+        <div class="card">
+            <div class="card-body lg-title-carousel">
+                <!-- sm display -->
+                <h5 class="card-title for-larger-500-none">@Model.Name</h5>
+                <!-- md display -->
+                <!-- lg d-flex -->
+                <div class="contain-card-tag for-lower-500-none for-larger-500-block lg-contain-card-tag">
+                    <div class="md-card lg-card">
+                        <div class="md_header_img lg_header_img">
+                            <img src="@Model.ProductPageMainArea.MainImg" alt="">
+                        </div>
+                        <div class="app_header_grid_container md-card-body lg-card-body">
+                            <div class="md-card-text">
+                                <p>
+                                    @Model.ProductPageMainArea.Description
+                                </p>
+                            </div>
+                            <div class="d-flex">
+                                <div class="grid_label grid_date">所有評論</div>
+                                <div id="pc-comment-description" class="grid_content grid_date @Model.CommentsClass">
+                                    @Model.ProductPageMainArea.Comment
+                                    @if(Model.ProductPageMainArea.Comment=="無使用者評論"){
+                                        
+                                    }else{
+                                        <span class='comment-count'>(@Model.ProductPageMainArea.TotalComment)</span>
+                                    }
+                                </div>
+                            </div>
+                            <div class="d-flex md-release-date">
+                                <div class="grid_label grid_date">發行日期</div>
+                                <div class="grid_content grid_date">
+                                    @Model.ProductPageMainArea.FormattedShelfTime
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="grid_label">開發人員</div>
+                                <div class="grid_content">
+                                    @* <a asp-controller="Product" asp-action="ProductSearchMin">@Model.ProductPageMainArea.Publisher</a> *@
+                                    <a href="#" style="pointer-events: none; cursor: default;">@Model.ProductPageMainArea.Publisher</a>
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="grid_label">發行商</div>
+                                <div class="grid_content">
+                                   @*  <a asp-controller="Product" asp-action="ProductSearchMin" disable>@Model.ProductPageMainArea.Publisher</a> *@
+                                    <a href="#" style="pointer-events: none; cursor: default;">@Model.ProductPageMainArea.Publisher</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- md-tags -->
+                    <div id="glanceCtnResponsiveRight " class="glance_ctn_responsive_right">
+                        <div class="responsive_block_header for-larger-500-none">標籤</div>
+                        <div class="glance_tags_ctn popular_tags_ctn md-label">
+                            <div class="glance_tags_label for-larger-500-block">使用者為此產品所選用的熱門標籤：</div>
+                            <div class="all-tags md-tags">
+                                <div class="md-except-plus">
+                                    @foreach (var tag in Model.ProductPageMainArea.TagList)
+                                    {
+                                    @*     <a asp-controller="Product" asp-action="ProductSearchMin" class="btn btn-secondary app_tag" style="display: inline-block;">
+                                            @tag.Name
+                                        </a> *@
+                                        <a class="btn btn-secondary app_tag" style="display: inline-block;"
+                                            href="@Url.Action("ProductSearchMin","Product",new {tagId=tag.Id})">@tag.Name</a>
+                                    }
+                                </div>
+                             
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <!-- sm display -->
+                <div class="app_header_grid_container for-larger-500-none">
+                    <div class="d-flex">
+                        <div class="grid_label grid_date">所有評論</div>
+                        <div id="pc-comment-description" class="grid_content grid_date @Model.CommentsClass">
+                            @Model.ProductPageMainArea.Comment
+                            @if (Model.ProductPageMainArea.Comment == "無使用者評論")
+                            {
+
+                            }
+                            else
+                            {
+                                <span class='comment-count'>(@Model.ProductPageMainArea.TotalComment)</span>
+                            }
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="grid_label">開發人員</div>
+                        <div class="grid_content">
+                            @* <a href="#">@Model.ProductPageMainArea.Publisher</a> *@
+                            <a href="#" style="pointer-events: none; cursor: default;">@Model.ProductPageMainArea.Publisher</a>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="grid_label">發行商</div>
+                        <div class="grid_content">
+                           @*  <a href="#">@Model.ProductPageMainArea.Publisher</a> *@
+                            <a href="#" style="pointer-events: none; cursor: default;">@Model.ProductPageMainArea.Publisher</a>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="grid_label grid_date">發行日期</div>
+                        <div class="grid_content grid_date">
+                            @Model.ProductPageMainArea.FormattedShelfTime
+                        </div>
+                    </div>
+                </div>
+                <p class="card-text for-larger-500-none">
+                    @Model.ProductPageMainArea.Description
+                </p>
+                <!-- sm tag -->
+                <div id="glanceCtnResponsiveRight " class="glance_ctn_responsive_right for-larger-500-none">
+                    <div class="responsive_block_header">標籤</div>
+                    <div class="glance_tags_ctn popular_tags_ctn">
+                        <div class="glance_tags_label">使用者為此產品所選用的熱門標籤：</div>
+                        <div class="all-tags sm-tags">
+                          
+                            <div class="except-plus">
+                                @foreach (var tag in Model.ProductPageMainArea.TagList)
+                                {
+                                    <a asp-controller="Product" asp-action="ProductSearchMin" class="btn btn-secondary app_tag" style="display: inline-block;">
+                                        @tag.Name
+                                    </a>
+                                }
+                            
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <!-- comment -->
+                 @*    <div class="responsive_block_header comment">評論</div>
+                    <div class="input-group mb-3">
+                        <input id="mobile-comment-description" type="text" class="form-control @Model.CommentsClass" placeholder="@Model.ProductPageMainArea.Comment" aria-label="Username"
+                               aria-describedby="basic-addon1" readonly>
+                    </div> *@
+                </div>
+                <!-- carousel -->
+                <!-- lg d-flex -->
+                <div class="highlight_overflow lg-highlight_overflow">
+                    <div id="highlight_player_area">
+                     
+                        <video autoplay muted controls>
+                            <source src="~/img/Product/ProductPage/movie_title.webm" type="video/webm">
+                            您的瀏覽器不支援 HTML5 影片。
+                        </video>
+
+                    </div>
+                    <div id="highlight_strip">
+                        <div class="highlight_strip-container container">
+                            <div class="row highlight-strip-row md-carousel ld-carousel sm-carousel">
+                                @* 廢code 為了增加輪播圖片 並且排除DataSrcUrl包含"video" *@
+                                @if (@Model.ProductPageMainArea.CarouselUrlList.All(x => !x.DataSrcUrl.Contains("video")) == true)
+                                {
+                                    <div class="col-3">
+                                        <img src="@Model.ProductPageMainArea.MainImg" data-src="@Model.ProductPageMainArea.MainImg" alt="">
+                                    </div>
+                                }
+                                else
+                                {
+                                    
+                                }
+                                @foreach (var carousel in Model.ProductPageMainArea.CarouselUrlList)
+                                {
+                                    <div class="col-3">
+                                        <img src="@carousel.ImgUrl" data-src="@carousel.DataSrcUrl" alt="">
+                                    </div>
+                                }
+                                @* 廢code 為了增加輪播圖片 *@
+                                @foreach (var about in Model.ProductPageAbout.AboutCardList)
+                                {
+                                    <div class="col-3">
+                                        <img src="@about.ImgUrl" data-src="@about.ImgUrl" alt="">
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carousel Modal -->
+                <div id="modal" class="productmodal" onclick="hideModal()">
+                    <div class="productmodal-content">
+                        <img id="modal-image" class="productmodal-image" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- 願望清單 -->
+        <div class="queue_overflow_ctn">
+            <div id="add_to_wishlist_area">
+              
+                <form id="wishlist-form">
+                    <input type="hidden" id="wishListProductId" value="@Model.ProductId" />
+                    <button id="wishlist-button" type="button" class="btn btn-secondary wish-list for_checked @(Model.IsInCollectionList ? "d-none" : "" )"
+                            data-product-id="@Model.ProductId"
+                            data-action-type="@(Model.IsInCollectionList ? "collection" : (Model.IsInWishList ? "remove" : "add"))">
+                        @if (Model.IsInCollectionList)
+                        {
+                      @*       <span class="for_checked_box checked"></span>
+
+                            <span>已經在您的 Stellar 收藏庫內</span> *@
+                        }
+                        else if (Model.IsInWishList)
+                        {
+                            <span class="for_checked_box checked"></span>
+                            <span>於願望清單內</span>
+                        }
+                        else
+                        {
+                            <span>新增至您的願望清單</span>
+                        }
+                    </button>
+                </form>
+               
+
+            </div>
+            <!-- 評論 -->
+            <div class="recommendation-container @(Model.IsInCollectionList ? "" : "d-none" )">
+                <div class="recommendation-text">
+                    <p>您是否推薦這款遊戲？</p>
+                </div>
+
+                <div class="recommendation-btn">
+
+                    <form id="good-comment-form">
+                    <input type="hidden" id="commentProductId" value="@Model.ProductId" />
+                        <button id="yes-button" 
+                                data-product-id="@Model.ProductId" type="button" class="btn btn-secondary wish-list comment-btn"
+                                data-action-type="@(Model.IsGoodCommentAlready ? "remove" : "add")">
+                            @if (Model.IsGoodCommentAlready)
+                            {
+                                <span class="for_checked_box checked"></span>
+                                <span>是</span>
+                            }
+                            else
+                            {
+                                <span class="comments-pic"><img src="/img/Product/ProductPage/Good.png" alt=""></span>
+                                <span>是</span>
+                            }
+           
+                    </button>
+                    </form>
+
+                    <form id="bad-comment-form">
+                        <input type="hidden" id="commentProductId" value="@Model.ProductId" />
+                        <button id="no-button"
+                                data-product-id="@Model.ProductId" type="button" class="btn btn-secondary wish-list comment-btn"
+                                data-action-type="@(Model.IsBadCommentAlready ? "remove" : "add")">
+                            @if (Model.IsBadCommentAlready)
+                            {
+                                <span class="for_checked_box checked"></span>
+                                <span>否</span>
+                            }
+                            else
+                            {
+                                <span class="comments-pic flipped-image"><img src="/img/Product/ProductPage/Good.png" alt=""></span>
+                                <span>否</span>
+                            }
+
+                        </button>
+                    </form>
+
+                    
+                </div>
+
+            </div>
+@*             <div id="rowBtnActions" class="d-flex md-follow-ignore">
+                <button id="icon_share" type="button" class="btn btn-secondary wish-list for-larger-500-none">
+                    <span><img src="~/img/Product/ProductPage/icon_share_android.svg" alt=""></span>
+                </button>
+                <button id="icon_report" type="button" class="btn btn-secondary wish-list for-larger-500-none">
+                    <span><img src="~/img/Product/ProductPage/icon_report.svg" alt=""></span>
+                </button>
+           
+                <button id="icon_focus" type="button" class="btn btn-secondary wish-list">
+                    <span>關注</span>
+                </button>
+                <div id="ignore-and-moreinfo" class="ignore-and-moreinfo">
+                    <button id="icon_ignore" type="button" class="btn btn-secondary wish-list"
+                            style="display: inline-block;">
+                        <span>忽略</span>
+                    </button>
+                    <button id="icon_moreinfo" type="button" class="btn btn-secondary wish-list"
+                            style="display: inline-block;">
+                        <span><img src="~/img/Product/ProductPage/btn_arrow_down_padded.png" alt=""></span>
+                    </button>
+                </div> *@
+            
+        </div>
+        <!-- sm購買選擇 -->
+        <!-- lg md-d-none -->
+        <div class="for-larger-500-none for-larger-910-none @(Model.IsOriginalPrice ? "" : "d-none")">
+            <div class="game_area_purchase_game_wrapper ">
+                <div class="game_area_purchase_game" id="game_area_purchase_section_add_to_cart_1053450">
+                    <div class="purchase-top">
+                        <div class="purchase-title">
+                            <h1>購買 @Model.Name</h1>
+                        </div>
+                        <div class="game_area_purchase_platform">
+                            <span class="platform_img win"><img src="~/img/Product/ProductPage/icon_platform_win.png" alt=""></span>
+                        </div>
+                    </div>
+                    <div class="game_purchase_action">
+                        <div class="game_purchase_action_bg">
+                            <div class="game_purchase_price price">
+                                @Model.FormattedPrice
+                            </div>
+
+                            <div class="btn_addtocart">
+                                @if (@Model.IsInComingSoonList)
+                                {
+                                    <button type="submit" class="btn btn-primary" disabled>
+                                        <span>即將發行</span>
+                                    </button>
+
+
+                                }
+                                else if (@Model.IsInCartList)
+                                {
+                                    <form asp-action="DirectToShoppingCart" method="post" class="">
+                                        <input type="hidden" name="productId" value="@Model.ProductId" />
+                                        <button type="submit" class="btn btn-primary">
+                                            <span>於購物車內</span>
+                                        </button>
+                                    </form>
+                                }
+                                else if (@Model.IsInCollectionList)
+                                {
+
+
+                                    <form asp-action="DirectToCollection" method="post" class="">
+                                        <input type="hidden" name="productId" value="@Model.ProductId" />
+                                        <button type="submit" class="btn btn-primary">
+                                            <span>於收藏庫內</span>
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#shopping_Modal-@Model.ProductId">
+                                        <span>加入購物車</span>
+                                    </button>
+
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- sm折扣後購買選擇 -->
+        <div class="for-larger-500-none for-larger-910-none @(Model.IsFreeGame ? "d-none" : (Model.IsDiscountGame ? "" : "d-none"))">
+            <div class="game_area_purchase_game_wrapper ">
+                <div class="game_area_purchase_game" id="game_area_purchase_section_add_to_cart_1053450">
+                    <div class="purchase-top">
+                        <div class="purchase-title">
+                            <h1>購買 @Model.Name</h1>
+                        </div>
+                        <div class="game_area_purchase_platform">
+                            <span class="platform_img win"><img src="~/img/Product/ProductPage/icon_platform_win.png" alt=""></span>
+                        </div>
+                    </div>
+                    <div class="game_purchase_action">
+                        <div class="game_purchase_action_bg">
+                            <div>
+                                <span class="game-card-price-discount">@Model.FormattedDiscount</span>
+                            </div>
+
+                            <div class="game_purchase_price price discount_bgc">
+                                <div class="original_price">
+                                    <span>@Model.FormattedPrice</span>
+                                </div>
+                                <div class="discount_price">
+                                    <span>@Model.FormattedSalesPrice</span>
+                                </div>
+
+                            </div>
+
+                            <div class="btn_addtocart">
+                                @if (@Model.IsInComingSoonList)
+                                {
+                                    <button type="submit" class="btn btn-primary" disabled>
+                                        <span>即將發行</span>
+                                    </button>
+
+
+                                }
+                                else if (@Model.IsInCartList)
+                                {
+                                    <form asp-action="DirectToShoppingCart" method="post" class="">
+                                        <input type="hidden" name="productId" value="@Model.ProductId" />
+                                        <button type="submit" class="btn btn-primary">
+                                            <span>於購物車內</span>
+                                        </button>
+                                    </form>
+                                }
+                                else if (@Model.IsInCollectionList)
+                                {
+
+
+                                    <form asp-action="DirectToCollection" method="post" class="">
+                                        <input type="hidden" name="productId" value="@Model.ProductId" />
+                                        <button type="submit" class="btn btn-primary">
+                                            <span>於收藏庫內</span>
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#shopping_Modal-@Model.ProductId">
+                                        <span>加入購物車</span>
+                                    </button>
+
+                                }
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- sm免費遊玩購買選擇 -->
+        <div class="for-larger-500-none for-larger-910-none @(Model.IsFreeGame ? "" : "d-none")">
+            <div class="game_area_purchase_game_wrapper ">
+                <div class="game_area_purchase_game" id="game_area_purchase_section_add_to_cart_1053450">
+                    <div class="purchase-top">
+                        <div class="purchase-title">
+                            <h1>執行 @Model.Name</h1>
+                        </div>
+                        <div class="game_area_purchase_platform">
+                            <span class="platform_img win"><img src="~/img/Product/ProductPage/icon_platform_win.png" alt=""></span>
+                        </div>
+                    </div>
+                    <div class="game_purchase_action">
+                        <div class="game_purchase_action_bg">
+                            <div class="game_purchase_price price">
+                                免費遊玩
+                            </div>
+
+                            <div class="btn_addtocart">
+                                @if (@Model.IsInComingSoonList)
+                                {
+                                    <button type="submit" class="btn btn-primary" disabled>
+                                        <span>即將發行</span>
+                                    </button>
+                                }
+                                else if (@Model.IsInCollectionList)
+                                {
+                                    <form asp-action="DirectToCollection" method="post" class="">
+                                        <input type="hidden" name="productId" value="@Model.ProductId" />
+                                        <button type="submit" class="btn btn-primary">
+                                            <span>於收藏庫內</span>
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form asp-action="AddToCollection" method="post" class="">
+                                        <input type="hidden" name="productId" value="@Model.ProductId" />
+                                        <button type="submit" class="btn btn-primary">
+                                            <span>新增至收藏庫</span>
+                                        </button>
+                                    </form>
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁面內容 -->
+        <div class="page_content" data-panel="[]">
+            <!-- Right Column -->
+            <div class="rightcol game_meta_data md-func-language lg-func-language lg-rightcol mlg-func-language">
+                <!-- 功能 -->
+                <div id="responsive_apppage_details_left_ctn">
+                    <!-- 功能 -->
+                    <div class="feature-contain">
+                        <div class="responsive_block_header responsive_apppage_details_left create-bottom-border for-larger-910-none">
+                            功能
+                        </div>
+@*                         <div class="block responsive_apppage_details_left" id="category_block">
+                            
+                            <div class="game_area_features_list_ctn">
+                                <a asp-controller="Product" asp-action="ProductSearchMin" class="all-feature">
+                                    <div class="feature-icon">
+                                        <img class="category_icon" src="~/img/Product/ProductPage/ico_singlePlayer.png" alt="">
+                                    </div>
+                                    <div class="feature-item">
+                                        <label class="feature-label">
+                                            單人
+                                        </label>
+                                    </div>
+                                </a>
+                                <a asp-controller="Product" asp-action="ProductSearchMin" class="all-feature">
+                                    <div class="feature-icon">
+                                        <img class="category_icon" src="~/img/Product/ProductPage/ico_achievements.png" alt="">
+                                    </div>
+                                    <div class="feature-item">
+                                        <label class="feature-label">
+                                            Stellar 成就
+                                        </label>
+                                    </div>
+                                </a>
+                                <a asp-controller="Product" asp-action="ProductSearchMin" class="all-feature">
+                                    <div class="feature-icon">
+                                        <img class="category_icon" src="~/img/Product/ProductPage/ico_cloud.png" alt="">
+                                    </div>
+                                    <div class="feature-item">
+                                        <label class="feature-label">
+                                            Stellar 雲端
+                                        </label>
+                                    </div>
+                                </a>
+                            </div>
+                        </div> *@
+                    </div>
+                    <!-- 控制器 -->
+                    <div class="controller-contain">
+                        <div class="responsive_block_header responsive_apppage_details_left">
+                            完整控制器支援
+                        </div>
+                        <div class="block responsive_apppage_details_left" id="category_block">
+                            <div class="game_area_features_list_ctn">
+                                <div class="all-feature">
+                                    <div class="feature-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" fill="none"
+                                             class="_1LWvkVSCiVeG4Yf5uxtQ28">
+                                            <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M11.25 5.625C11.909 5.625 12.182 5.81802 12.4081 5.97792C12.568 6.09099 12.7045 6.1875 12.9375 6.1875H23.0625C23.2955 6.1875 23.432 6.09099 23.5919 5.97792C23.818 5.81802 24.091 5.625 24.75 5.625C25.875 5.625 29.25 6.75 29.8125 7.3125C30.375 7.875 30.375 8.4375 30.375 8.4375V8.5803C30.8163 8.91923 31.1986 9.26106 31.5 9.5625C32.625 10.6875 36 20.25 36 25.3125C36 30.375 32.625 30.9375 32.625 30.9375C31.7178 30.9375 30.323 29.1494 28.9649 27.4083C27.7966 25.9106 26.6553 24.4476 25.875 24.1875C24.1875 23.625 11.8125 23.625 10.125 24.1875C9.34465 24.4476 8.20344 25.9106 7.03512 27.4083C5.67696 29.1494 4.28215 30.9375 3.375 30.9375C3.375 30.9375 0 30.375 0 25.3125C0 20.25 3.375 10.6875 4.5 9.5625C4.80144 9.26106 5.18366 8.91923 5.625 8.5803V8.4375C5.625 8.4375 5.625 7.875 6.1875 7.3125C6.75 6.75 10.125 5.625 11.25 5.625ZM27.5625 8.71875C28.3392 8.71875 28.9688 9.34835 28.9688 10.125C28.9688 10.9017 28.3392 11.5312 27.5625 11.5312C26.7858 11.5312 26.1562 10.9017 26.1562 10.125C26.1562 9.34835 26.7858 8.71875 27.5625 8.71875ZM8.4375 14.625C9.68014 14.625 10.6875 13.6176 10.6875 12.375C10.6875 11.1324 9.68014 10.125 8.4375 10.125C7.19486 10.125 6.1875 11.1324 6.1875 12.375C6.1875 13.6176 7.19486 14.625 8.4375 14.625ZM23.0625 20.25C24.3051 20.25 25.3125 19.2426 25.3125 18C25.3125 16.7574 24.3051 15.75 23.0625 15.75C21.8199 15.75 20.8125 16.7574 20.8125 18C20.8125 19.2426 21.8199 20.25 23.0625 20.25ZM12.0938 17.1562V16.3125C12.0938 16.0018 12.3456 15.75 12.6562 15.75H13.7812C14.0919 15.75 14.3438 16.0018 14.3438 16.3125V17.1562H15.1875C15.4982 17.1562 15.75 17.4081 15.75 17.7188V18.8438C15.75 19.1544 15.4982 19.4062 15.1875 19.4062H14.3438V20.25C14.3438 20.5607 14.0919 20.8125 13.7812 20.8125H12.6562C12.3456 20.8125 12.0938 20.5607 12.0938 20.25V19.4062H11.25C10.9393 19.4062 10.6875 19.1544 10.6875 18.8438V17.7188C10.6875 17.4081 10.9393 17.1562 11.25 17.1562H12.0938ZM25.0312 14.0625C25.8079 14.0625 26.4375 13.4329 26.4375 12.6562C26.4375 11.8796 25.8079 11.25 25.0312 11.25C24.2546 11.25 23.625 11.8796 23.625 12.6562C23.625 13.4329 24.2546 14.0625 25.0312 14.0625ZM31.5 12.6562C31.5 13.4329 30.8704 14.0625 30.0938 14.0625C29.3171 14.0625 28.6875 13.4329 28.6875 12.6562C28.6875 11.8796 29.3171 11.25 30.0938 11.25C30.8704 11.25 31.5 11.8796 31.5 12.6562ZM28.9688 15.1875C28.9688 14.4108 28.3392 13.7812 27.5625 13.7812C26.7858 13.7812 26.1562 14.4108 26.1562 15.1875C26.1562 15.9642 26.7858 16.5938 27.5625 16.5938C28.3392 16.5938 28.9688 15.9642 28.9688 15.1875Z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                    @* <a asp-controller="Product" asp-action="ProductSearchMin" class="feature-item">
+                                        <label class="feature-label controller-green">
+                                            您的 Xbox 控制器
+                                        </label>
+                                    </a> *@
+                                    <a href="#" class="feature-item" style="pointer-events: none; cursor: default;">
+                                        <label class="feature-label controller-green">
+                                            您的 Xbox 控制器
+                                        </label>
+                                    </a>
+                                </div>
+                                <div class="all-feature">
+                                    <div class="feature-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" fill="none"
+                                             class="_1LWvkVSCiVeG4Yf5uxtQ28">
+                                            <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M4.5 8.77962V8.17604C4.5 7.98797 4.59324 7.8129 4.75606 7.71875C5.29052 7.40971 6.58276 6.75 7.875 6.75C9.5625 6.75 9.5625 7.3125 9.5625 7.3125V7.79346C9.92732 7.74841 10.3079 7.7053 10.7038 7.66469L10.7001 7.66881C10.4768 7.91891 10.3639 8.22982 10.4289 8.58762L11.114 12.3555C11.3614 13.7163 10.9231 15.1154 9.99052 16.155C8.88458 17.3878 7.44481 19.1078 6.50883 20.6678C5.85918 21.7505 5.21964 23.4605 4.67636 25.1549C4.13086 26.8562 3.67463 28.5672 3.3961 29.6673C3.27268 30.1547 2.76181 30.4366 2.2902 30.2794L2.14425 30.2308C1.59878 29.9208 1.15999 29.4611 0.929107 28.8508C0.480791 27.6656 0 25.7647 0 23.0625C0 18 2.8125 9.5625 3.9375 9C4.07055 8.93348 4.25867 8.85908 4.5 8.77962ZM5.625 11.25C5.625 10.9393 5.87684 10.6875 6.1875 10.6875H7.3125C7.62316 10.6875 7.875 10.9393 7.875 11.25V12.142C7.875 12.2912 7.81574 12.4343 7.71025 12.5398L7.14775 13.1023C6.92808 13.3219 6.57192 13.3219 6.35225 13.1023L5.78975 12.5398C5.68426 12.4343 5.625 12.2912 5.625 12.142V11.25ZM5.625 16.3125C5.625 16.6232 5.87684 16.875 6.1875 16.875H7.3125C7.62316 16.875 7.875 16.6232 7.875 16.3125V15.4205C7.875 15.2713 7.81574 15.1282 7.71025 15.0227L7.14775 14.4602C6.92808 14.2406 6.57192 14.2406 6.35225 14.4602L5.78975 15.0227C5.68426 15.1282 5.625 15.2713 5.625 15.4205V16.3125ZM9.84375 14.3438C9.84375 14.6544 9.59191 14.9062 9.28125 14.9062H8.38924C8.24006 14.9062 8.09699 14.847 7.9915 14.7415L7.429 14.179C7.20933 13.9593 7.20933 13.6032 7.429 13.3835L7.9915 12.821C8.09699 12.7155 8.24006 12.6562 8.38925 12.6562H9.28125C9.59191 12.6562 9.84375 12.9081 9.84375 13.2188V14.3438ZM4.21875 14.9062C3.90809 14.9062 3.65625 14.6544 3.65625 14.3438V13.2188C3.65625 12.9081 3.90809 12.6562 4.21875 12.6562H5.11076C5.25994 12.6562 5.40301 12.7155 5.5085 12.821L6.071 13.3835C6.29067 13.6032 6.29067 13.9593 6.071 14.179L5.5085 14.7415C5.40301 14.847 5.25994 14.9062 5.11076 14.9062H4.21875ZM9.0297 9.05937C9.30756 8.92044 9.64544 9.03307 9.78437 9.31093L10.0656 9.87343C10.2046 10.1513 10.0919 10.4892 9.81406 10.6281C9.5362 10.767 9.19832 10.6544 9.05939 10.3765L8.77814 9.81404C8.63921 9.53618 8.75183 9.1983 9.0297 9.05937Z">
+                                            </path>
+                                            <path fill="currentColor"
+                                                  d="M18 7.3125C15.7603 7.3125 13.748 7.4035 11.9892 7.54668C11.9209 7.57082 11.8551 7.59586 11.7919 7.62185C11.4768 7.75142 11.2526 7.89452 11.1197 8.04343C10.9961 8.18189 10.9523 8.32182 10.9824 8.48699L11.5138 11.4097L12.1573 13.5129C12.4103 14.3408 13.1744 14.9062 14.0401 14.9062H21.9642C22.8281 14.9062 23.591 14.3431 23.8456 13.5176L24.4729 11.483L25.0176 8.48699C25.0463 8.32909 25.0039 8.1935 24.8798 8.05684C24.7463 7.90988 24.5214 7.76808 24.2057 7.6392C24.1215 7.60486 24.0327 7.57213 23.9398 7.54094C22.1978 7.40107 20.2096 7.3125 18 7.3125Z">
+                                            </path>
+                                            <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M3.37124 30.6556L3.34019 30.6503C3.62833 30.4606 3.84996 30.1665 3.94139 29.8054C4.2185 28.7109 4.67149 27.0124 5.212 25.3266C5.75474 23.6339 6.37801 21.9791 6.99117 20.9572C7.89825 19.4454 9.30802 17.7581 10.4092 16.5306C11.085 15.7773 11.5326 14.8493 11.6859 13.8677C12.0647 14.8275 12.9948 15.4687 14.0401 15.4687H21.9642C23.0065 15.4687 23.9345 14.8312 24.3153 13.8755C24.4698 14.8543 24.9168 15.7794 25.5908 16.5306C26.692 17.7581 28.1017 19.4454 29.0088 20.9572C29.622 21.9791 30.2453 23.6339 30.788 25.3266C31.3285 27.0124 31.7815 28.7109 32.0586 29.8054C32.15 30.1664 32.3717 30.4606 32.6598 30.6503L32.6288 30.6556C31.6413 30.8202 30.6725 30.275 30.3007 29.3455L28.4111 24.6216C27.8986 23.3402 26.6576 22.5 25.2775 22.5H10.7225C9.34243 22.5 8.10142 23.3402 7.58888 24.6216L5.69928 29.3455C5.3275 30.275 4.35868 30.8202 3.37124 30.6556ZM25.875 19.125C25.875 20.3676 24.8676 21.375 23.625 21.375C22.3824 21.375 21.375 20.3676 21.375 19.125C21.375 17.8824 22.3824 16.875 23.625 16.875C24.8676 16.875 25.875 17.8824 25.875 19.125ZM12.375 21.375C13.6176 21.375 14.625 20.3676 14.625 19.125C14.625 17.8824 13.6176 16.875 12.375 16.875C11.1324 16.875 10.125 17.8824 10.125 19.125C10.125 20.3676 11.1324 21.375 12.375 21.375Z">
+                                            </path>
+                                            <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M33.7098 30.2794L33.8557 30.2308C34.4012 29.9208 34.84 29.4611 35.0709 28.8508C35.5192 27.6656 36 25.7647 36 23.0625C36 18 33.1875 9.5625 32.0625 9C31.9295 8.93348 31.7413 8.85908 31.5 8.77962V8.17604C31.5 7.98797 31.4068 7.8129 31.2439 7.71875C30.7095 7.40971 29.4172 6.75 28.125 6.75C26.4375 6.75 26.4375 7.3125 26.4375 7.3125V7.79346C26.0683 7.74787 25.683 7.70427 25.282 7.66324L25.2962 7.67864C25.52 7.92502 25.6356 8.23268 25.5711 8.58762L25.0274 11.5776L25.0319 11.579L25.0203 11.6166L24.886 12.3555C24.6386 13.7163 25.0769 15.1154 26.0095 16.155C27.1154 17.3878 28.5552 19.1078 29.4912 20.6678C30.1408 21.7505 30.7804 23.4605 31.3236 25.1549C31.8691 26.8562 32.3254 28.5672 32.6039 29.6673C32.7273 30.1547 33.2382 30.4366 33.7098 30.2794ZM26.2156 9.31093C26.3546 9.03307 26.6924 8.92044 26.9703 9.05937C27.2482 9.1983 27.3608 9.53618 27.2219 9.81404L26.9406 10.3765C26.8017 10.6544 26.4638 10.767 26.1859 10.6281C25.9081 10.4892 25.7954 10.1513 25.9344 9.87343L26.2156 9.31093ZM30.375 15.75C30.375 16.3713 29.8713 16.875 29.25 16.875C28.6287 16.875 28.125 16.3713 28.125 15.75C28.125 15.1287 28.6287 14.625 29.25 14.625C29.8713 14.625 30.375 15.1287 30.375 15.75ZM31.5 14.625C32.1213 14.625 32.625 14.1213 32.625 13.5C32.625 12.8787 32.1213 12.375 31.5 12.375C30.8787 12.375 30.375 12.8787 30.375 13.5C30.375 14.1213 30.8787 14.625 31.5 14.625ZM30.375 11.25C30.375 11.8713 29.8713 12.375 29.25 12.375C28.6287 12.375 28.125 11.8713 28.125 11.25C28.125 10.6287 28.6287 10.125 29.25 10.125C29.8713 10.125 30.375 10.6287 30.375 11.25ZM27 14.625C27.6213 14.625 28.125 14.1213 28.125 13.5C28.125 12.8787 27.6213 12.375 27 12.375C26.3787 12.375 25.875 12.8787 25.875 13.5C25.875 14.1213 26.3787 14.625 27 14.625Z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                    @* <a asp-controller="Product" asp-action="ProductSearchMin" class="feature-item">
+                                        <label class="feature-label controller-green">
+                                            您的 DualSense 控制器
+                                        </label>
+                                    </a> *@
+                                    <a href="#" class="feature-item" style="pointer-events: none; cursor: default;">
+                                        <label class="feature-label controller-green">
+                                            您的 DualSense 控制器
+                                        </label>
+                                    </a>
+                                </div>
+                                <div class="all-feature" id="controller-introduce">
+                                    <div class="feature-icon opacity_background_color">
+                                        <svg class="category_icon _3UK9OHyZ3r9rA55mgsnZPD" width="20" height="20" viewBox="6 6 20 20"
+                                             fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M16.9511 6.69098L16 3.76393L15.0489 6.69098L13.0283 12.9098H6.48944H3.41175L5.90165 14.7188L11.1917 18.5623L9.17109 24.7812L8.22003 27.7082L10.7099 25.8992L16 22.0557L21.2901 25.8992L23.78 27.7082L22.8289 24.7812L20.8083 18.5623L26.0984 14.7188L28.5882 12.9098H25.5106H18.9717L16.9511 6.69098Z"
+                                                  fill="white" stroke="#141E2B" stroke-width="2"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="feature-item">
+                                        <label class="controller-intro-text">
+                                            開發者推薦使用控制器遊玩此遊戲
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 分享崁入 -->
+@*                     <div class="share-import-report-area for-lower-500-none for-larger-500-block for-larger-910-none md-share-for-flex">
+                        <div id="add_to_wishlist_area" class="md-share">
+                            <button type="button" class="btn btn-secondary wish-list"
+                                    style="display: inline-block;">
+                                <span>分享</span>
+                            </button>
+                        </div>
+                        <div id="add_to_wishlist_area" class="md-import">
+                            <button type="button" class="btn btn-secondary wish-list"
+                                    style="display: inline-block;">
+                                <span>崁入</span>
+                            </button>
+                        </div>
+                        <div id="add_to_wishlist_area" class="md-report">
+                            <button type="button" class="btn btn-secondary wish-list"
+                                    style="display: inline-block;">
+                                <span><img src="~/img/Product/ProductPage/icon_report.svg" alt=""></span>
+                            </button>
+                        </div>
+                    </div> *@
+                    <!-- 第三方 -->
+                    <!-- <div class="DRM_notice">
+                        第三方 DRM: Denuvo
+                    </div> -->
+                    <!-- 已擁有此遊戲的好友 -->
+                    <div class="friend-who-have">
+                        <div class="friend-have-text">
+                            <span>@Model.CountFriends 位好友</span>
+                            <span>已擁有此遊戲</span>
+                        </div>
+                        <div class="friend-have-list">
+                   
+
+                            @foreach (var friend in Model.ProductPageFriendList)
+                            {
+                            <div class="friend">
+                                <a asp-controller="Member" asp-action="Index" asp-route-id="@friend.Id">
+                                        <img src="@friend.ImgUrl" alt="Friend Image" class="friend-img @(friend.Online == 1 ? "online-border-green" : "offline-border-gray")">
+                                </a>
+                            
+                                <div class="popover">
+                                    <div class="popover-content">
+                                        <div class="popover-header">
+                                                <img src="@friend.ImgUrl" alt="Friend Image" class="popover-img @(friend.Online == 1 ? "online-border-green" : "offline-border-gray")">
+                                            <div class="friend-info">
+                                                <p class="friend-name">
+                                                    <span>@friend.FriendName</span>
+                                                </p>
+                                                    @if (@friend.Online==1)
+                                                    {
+                                                        <p class="online-status @(friend.Online == 1 ? "online_status_color" : "offline_status_color")">線上</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="online-status @(friend.Online == 1 ? "online_status_color" : "offline_status_color")">離線</p>
+                                                    }
+                                                    
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            }
+                           
+                        </div>
+                    </div>
+                </div>
+                <!-- 語言 -->
+                <div class="block responsive_apppage_details_right lg-language">
+                    <div class="responsive_block_header responsive_apppage_details_left create-bottom-border">
+                        語言
+                    </div>
+
+                    <div class="language-spread-btn for-larger-500-none">
+                        <div class="language-text">
+                            <button class="btn btn-primary language-text-btn" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseWidthExample"
+                                    aria-expanded="false" aria-controls="collapseWidthExample">
+                                繁體中文和其它 11 種語言
+                                <div class="language-plus">
+                                    +
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- 語言表格 -->
+                    <div id="langauge_grid" style="min-height: 100%;">
+                        <!-- show要記得拿掉，之後用JS寫-->
+                        <div class="collapse show collapse-horizontal" id="collapseWidthExample">
+                            <div class="card card-body lg-pd-control" style="width: 100%;">
+                                <div class="container language-grid">
+                                    <div class="row">
+                                        <div class="col-3 grid-w33"></div>
+                                        <div class="col-3 grid-w22">介面</div>
+                                        <div class="col-3 grid-w22">完整語音</div>
+                                        <div class="col-3 grid-w22">字幕</div>
+                                    </div>
+                                    @foreach (var language in @Model.ProductPageLanguageList)
+                                    {
+                                        <div class="row">
+                                            <div class="col-3 grid-w33">@language.Name</div>
+                                            <div class="col-3 grid-w22">
+                                                @if (language.InterfaceSupport)
+                                                {
+                                                    <span>✓</span>
+                                                }
+                                            </div>
+                                            <div class="col-3 grid-w22">
+                                                @if (language.FullVoiceSupport)
+                                                {
+                                                    <span>✓</span>
+                                                }
+                                            </div>
+                                            <div class="col-3 grid-w22">
+                                                @if (language.SubtitlesSupport)
+                                                {
+                                                    <span>✓</span>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                               
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- lg分享崁入 -->
+                <div class="share-import-report-area for-lower-500-none">
+                    <div id="add_to_wishlist_area" class="md-share">
+                        <button type="button" class="btn btn-secondary wish-list"
+                                style="display: inline-block;">
+                            <span>分享</span>
+                        </button>
+                    </div>
+                    <div id="add_to_wishlist_area" class="md-import">
+                        <button type="button" class="btn btn-secondary wish-list"
+                                style="display: inline-block;">
+                            <span>崁入</span>
+                        </button>
+                    </div>
+                    <div id="add_to_wishlist_area" class="md-report">
+                        <button type="button" class="btn btn-secondary wish-list"
+                                style="display: inline-block;">
+                            <span><img src="~/img/Product/ProductPage/icon_report.svg" alt=""></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- md購買選擇 -->
+            <!-- lg d-none -->
+            <div class="for-larger-500-block for-lower-500-none md-purchase_options_content for-larger-910-none @(Model.IsOriginalPrice ? "" : "d-none")">
+                <div class="game_area_purchase_game_wrapper">
+                    <div class="game_area_purchase_game" id="game_area_purchase_section_add_to_cart_1053450">
+
+                        <div class="purchase-top">
+                            <div class="purchase-title">
+                                <h1>購買 @Model.Name</h1>
+                            </div>
+                            <div class="game_area_purchase_platform">
+                                <span class="platform_img win"><img src="~/img/Product/ProductPage/icon_platform_win.png" alt=""></span>
+                            </div>
+                        </div>
+                        <div class="game_purchase_action">
+                            <div class="game_purchase_action_bg">
+                                <div class="game_purchase_price price">
+                                    @Model.FormattedPrice
+                                </div>
+                                <div class="btn_addtocart">
+                                    @if (@Model.IsInComingSoonList)
+                                    {
+                                        <button type="submit" class="btn btn-primary" disabled>
+                                            <span>即將發行</span>
+                                        </button>
+
+
+                                    }
+                                    else if (@Model.IsInCartList)
+                                    {
+                                        <form asp-action="DirectToShoppingCart" method="post" class="">
+                                            <input type="hidden" name="productId" value="@Model.ProductId" />
+                                            <button type="submit" class="btn btn-primary">
+                                                <span>於購物車內</span>
+                                            </button>
+                                        </form>
+                                    }
+                                    else if (@Model.IsInCollectionList)
+                                    {
+
+
+                                        <form asp-action="DirectToCollection" method="post" class="">
+                                            <input type="hidden" name="productId" value="@Model.ProductId" />
+                                            <button type="submit" class="btn btn-primary">
+                                                <span>於收藏庫內</span>
+                                            </button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#shopping_Modal-@Model.ProductId">
+                                            <span>加入購物車</span>
+                                        </button>
+
+                                    }
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- md折扣後購買選擇 -->
+            <div class="for-larger-500-block for-lower-500-none md-purchase_options_content for-larger-910-none @(Model.IsFreeGame ? "d-none" : (Model.IsDiscountGame ? "" : "d-none"))">
+                <div class="game_area_purchase_game_wrapper">
+                    <div class="game_area_purchase_game" id="game_area_purchase_section_add_to_cart_1053450">
+
+                        <div class="purchase-top">
+                            <div class="purchase-title">
+                                <h1>購買 @Model.Name</h1>
+                            </div>
+                            <div class="game_area_purchase_platform">
+                                <span class="platform_img win"><img src="~/img/Product/ProductPage/icon_platform_win.png" alt=""></span>
+                            </div>
+                        </div>
+                        <div class="game_purchase_action">
+                            <div class="game_purchase_action_bg">
+                                <div>
+                                    <span class="game-card-price-discount">@Model.FormattedDiscount</span>
+                                </div>
+
+                                <div class="game_purchase_price price discount_bgc">
+                                    <div class="original_price">
+                                        <span>@Model.FormattedPrice</span>
+                                    </div>
+                                    <div class="discount_price">
+                                        <span>@Model.FormattedSalesPrice</span>
+                                    </div>
+
+                                </div>
+                                <div class="btn_addtocart">
+                                    @if (@Model.IsInComingSoonList)
+                                    {
+                                        <button type="submit" class="btn btn-primary" disabled>
+                                            <span>即將發行</span>
+                                        </button>
+
+
+                                    }
+                                    else if (@Model.IsInCartList)
+                                    {
+                                        <form asp-action="DirectToShoppingCart" method="post" class="">
+                                            <input type="hidden" name="productId" value="@Model.ProductId" />
+                                            <button type="submit" class="btn btn-primary">
+                                                <span>於購物車內</span>
+                                            </button>
+                                        </form>
+                                    }
+                                    else if (@Model.IsInCollectionList)
+                                    {
+
+
+                                        <form asp-action="DirectToCollection" method="post" class="">
+                                            <input type="hidden" name="productId" value="@Model.ProductId" />
+                                            <button type="submit" class="btn btn-primary">
+                                                <span>於收藏庫內</span>
+                                            </button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#shopping_Modal-@Model.ProductId">
+                                            <span>加入購物車</span>
+                                        </button>
+
+                                    }
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- md免費遊玩購買選擇 -->
+            <div class="for-larger-500-block for-lower-500-none md-purchase_options_content for-larger-910-none @(Model.IsFreeGame ? "" : "d-none")">
+                <div class="game_area_purchase_game_wrapper">
+                    <div class="game_area_purchase_game" id="game_area_purchase_section_add_to_cart_1053450">
+
+                        <div class="purchase-top">
+                            <div class="purchase-title">
+                                <h1>購買 @Model.Name</h1>
+                            </div>
+                            <div class="game_area_purchase_platform">
+                                <span class="platform_img win"><img src="~/img/Product/ProductPage/icon_platform_win.png" alt=""></span>
+                            </div>
+                        </div>
+                        <div class="game_purchase_action">
+                            <div class="game_purchase_action_bg">
+                                <div class="game_purchase_price price">
+                                    免費遊玩
+                                </div>
+                                <div class="btn_addtocart">
+                                    @if (@Model.IsInComingSoonList)
+                                    {
+                                        <button type="submit" class="btn btn-primary" disabled>
+                                            <span>即將發行</span>
+                                        </button>
+                                    }
+                                    else if (@Model.IsInCollectionList)
+                                    {
+                                        <form asp-action="DirectToCollection" method="post" class="">
+                                            <input type="hidden" name="productId" value="@Model.ProductId" />
+                                            <button type="submit" class="btn btn-primary">
+                                                <span>於收藏庫內</span>
+                                            </button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <form asp-action="AddToCollection" method="post" class="">
+                                            <input type="hidden" name="productId" value="@Model.ProductId" />
+                                            <button type="submit" class="btn btn-primary">
+                                                <span>新增至收藏庫</span>
+                                            </button>
+                                        </form>
+                                    }
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Left Column -->
+            <div class="leftcol game_description_column lg-leftcol">
+                <!-- lg購買選擇 -->
+                <div class="for-larger-910-block for-lower-500-none md-purchase_options_content @(Model.IsOriginalPrice ? "" : "d-none")">
+                    <div class="game_area_purchase_game_wrapper">
+                        <div class="game_area_purchase_game"
+                             id="game_area_purchase_section_add_to_cart_1053450">
+
+                            <div class="purchase-top">
+                                <div class="purchase-title">
+                                    <h1>購買 @Model.Name</h1>
+                                </div>
+                                <div class="game_area_purchase_platform">
+                                    <span class="platform_img win">
+                                        <img src="~/img/Product/ProductPage/icon_platform_win.png"
+                                             alt="">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="game_purchase_action">
+                                <div class="game_purchase_action_bg">
+                                    <div class="game_purchase_price price">
+                                        @Model.FormattedPrice
+                                    </div>
+                                    <div class="btn_addtocart">
+                                        @if (@Model.IsInComingSoonList)
+                                            {
+                                            <button type="submit" class="btn btn-primary" disabled>
+                                                <span>即將發行</span>
+                                            </button>
+
+
+                                            }
+                                        else if (@Model.IsInCartList)
+                                        {
+                                            <form asp-action="DirectToShoppingCart" method="post" class="">
+                                                <input type="hidden" name="productId" value="@Model.ProductId" />
+                                                <button type="submit" class="btn btn-primary">
+                                                    <span>於購物車內</span>
+                                                </button>
+                                            </form>
+                                        }
+                                        else if ( @Model.IsInCollectionList)
+                                        {
+
+                                   
+                                        <form asp-action="DirectToCollection" method="post" class="">
+                                            <input type="hidden" name="productId" value="@Model.ProductId" />
+                                            <button type="submit" class="btn btn-primary">
+                                                <span>於收藏庫內</span>
+                                            </button>
+                                        </form>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#shopping_Modal-@Model.ProductId">
+                                                <span>加入購物車</span>
+                                            </button>
+
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- lg折扣後購買選擇 -->
+                <div class="for-larger-910-block for-lower-500-none md-purchase_options_content @(Model.IsFreeGame ? "d-none" : (Model.IsDiscountGame ? "" : "d-none"))">
+                    <div class="game_area_purchase_game_wrapper">
+                        <div class="game_area_purchase_game"
+                             id="game_area_purchase_section_add_to_cart_1053450">
+
+                            <div class="purchase-top">
+                                <div class="purchase-title">
+                                    <h1>購買 @Model.Name</h1>
+                                </div>
+                                <div class="game_area_purchase_platform">
+                                    <span class="platform_img win">
+                                        <img src="~/img/Product/ProductPage/icon_platform_win.png"
+                                             alt="">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="game_purchase_action">
+                                <div class="game_purchase_action_bg">
+                                    <div>
+                                        <span class="game-card-price-discount">@Model.FormattedDiscount</span>
+                                    </div>
+
+                                    <div class="game_purchase_price price discount_bgc">
+                                        <div class="original_price">
+                                            <span>@Model.FormattedPrice</span>
+                                        </div>
+                                        <div class="discount_price">
+                                            <span>@Model.FormattedSalesPrice</span>
+                                        </div>
+
+                                    </div>
+                                    
+                                    <div class="btn_addtocart">
+
+                                        @if (@Model.IsInComingSoonList)
+                                        {
+                                            <button type="submit" class="btn btn-primary" disabled>
+                                                <span>即將發行</span>
+                                            </button>
+
+
+                                        }
+                                        else if (@Model.IsInCartList)
+                                        {
+                                            <form asp-action="DirectToShoppingCart" method="post" class="">
+                                                <input type="hidden" name="productId" value="@Model.ProductId" />
+                                                <button type="submit" class="btn btn-primary">
+                                                    <span>於購物車內</span>
+                                                </button>
+                                            </form>
+                                        }
+                                        else if (@Model.IsInCollectionList)
+                                        {
+
+
+                                            <form asp-action="DirectToCollection" method="post" class="">
+                                                <input type="hidden" name="productId" value="@Model.ProductId" />
+                                                <button type="submit" class="btn btn-primary">
+                                                    <span>於收藏庫內</span>
+                                                </button>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#shopping_Modal-@Model.ProductId">
+                                                <span>加入購物車</span>
+                                            </button>
+
+                                        }
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- lg免費遊玩購買選擇 -->
+                <div class="for-larger-910-block for-lower-500-none md-purchase_options_content @(Model.IsFreeGame ? "" : "d-none")">
+                    <div class="game_area_purchase_game_wrapper">
+                        <div class="game_area_purchase_game"
+                             id="game_area_purchase_section_add_to_cart_1053450">
+
+                            <div class="purchase-top">
+                                <div class="purchase-title">
+                                    <h1>購買 @Model.Name</h1>
+                                </div>
+                                <div class="game_area_purchase_platform">
+                                    <span class="platform_img win">
+                                        <img src="~/img/Product/ProductPage/icon_platform_win.png"
+                                             alt="">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="game_purchase_action">
+                                <div class="game_purchase_action_bg">
+                                    <div class="game_purchase_price price">
+                                        免費遊玩
+                                    </div>
+                                    <div class="btn_addtocart">
+                                        @if (@Model.IsInComingSoonList)
+                                        {
+                                            <button type="submit" class="btn btn-primary" disabled>
+                                                <span>即將發行</span>
+                                            </button>
+                                        }
+                                        else if (@Model.IsInCollectionList)
+                                        {
+                                            <form asp-action="DirectToCollection" method="post" class="">
+                                                <input type="hidden" name="productId" value="@Model.ProductId" />
+                                                <button type="submit" class="btn btn-primary">
+                                                    <span>於收藏庫內</span>
+                                                </button>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <form asp-action="AddToCollection" method="post" class="">
+                                                <input type="hidden" name="productId" value="@Model.ProductId" />
+                                                <button type="submit" class="btn btn-primary">
+                                                    <span>新增至收藏庫</span>
+                                                </button>
+                                            </form>
+                                        }
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 近期活動 -->
+                @if (Model.IsEventExist)
+                {
+                <div class="events">
+                    <div class="description-title create-bottom-border">
+                        <div class="responsive_block_header responsive_apppage_details_left ">
+                            近期活動和公告
+                        </div>
+                        <div class="view-all-btn">
+                            <a>檢視全部</a>
+                        </div>
+                    </div>
+                    <div class="announce-card-list">
+                        <div class="row">
+                            @foreach (var eachEvent in Model.ProductPageEventList)
+                            {
+                                <div class="col-6">
+                                    <div class="each-card">
+                                        <div class="card text-bg-dark">
+                                            <img src="@eachEvent.ImgUrl" class="card-img" alt="...">
+                                            <div class="card-img-overlay">
+                                                <h5 class="card-title">新聞</h5>
+                                                <p class="card-text">
+                                                    @eachEvent.Content
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">@eachEvent.Title</h5>
+                                            <p class="card-text md-announce-text">
+                                                <small class="text-body-secondary for-lower-500-none for-larger-500-block">
+                                                    @eachEvent.AnnounceText
+                                                </small>
+                                                <small class="text-body-secondary ">
+                                                    @eachEvent.FormattedAnnounceTime
+                                                </small>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+
+                          
+                        </div>
+                    </div>
+                </div>
+                }
+                <!-- 關於此遊戲 -->
+                @if (Model.IsAboutExist)
+                {
+                <div class="game-area-description">
+                    <div class="responsive_block_header responsive_apppage_details_left create-bottom-border">
+                        關於此遊戲
+                    </div>
+                    <div class="about-text">
+                        <p>
+                            @Model.ProductPageAbout.AboutMainTitle
+                        </p>
+                    </div>
+                    <div class="about-card-list">
+                        @foreach(var eachAbout in Model.ProductPageAbout.AboutCardList){
+                            <div class="card">
+                                <img src="@eachAbout.ImgUrl" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">@eachAbout.Title</h5>
+                                    <p class="card-text">
+                                        @eachAbout.Text
+                                    </p>
+                                </div>
+                            </div>
+                        }
+
+
+                    </div>
+                </div>
+                }
+                <!-- 系統需求 -->
+                @Html.Raw(Model.SystemRequirements)
+                
+                <!-- 更多相似的產品 -->
+                <div class="more-similar-products">
+                    <div class="more-similar-products-title">
+                        <div class="responsive_block_header responsive_apppage_details_left create-bottom-border">
+                            更多相似產品
+                        </div>
+                        <div class="view-more-product-btn">
+                            @* <a asp-controller="Product" asp-action="ProductSearchMin">查看全部</a> *@
+                        <a href="@Url.Action("ProductSearchMin","Product",new {categoryId=Model.CategoryId})">查看全部</a>
+                        </div>
+                    </div>
+                    <div class="similar-products-container  md-similar-products-container">
+                        <div class="row similar-products-row">
+                            @foreach (var similarProduct in Model.SimilarProductList)
+                            {
+                                <a asp-controller="Product" asp-action="ProductPage" asp-route-id="@similarProduct.Id" class="similar-products">
+                                    <div class="card">
+                                        <img src="@similarProduct.ImgUrl" class="card-img-top">
+                                        <div class="card-body">
+                                            <h5 class="card-title">@similarProduct.Title</h5>
+                                            <p class="card-text">@similarProduct.FormattedPrice</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            }
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal1 -->
+
+@await Component.InvokeAsync("AddShoppingCartModal", new { currentProductId = Model.ProductId })
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+@section endJS {
+    <script src="~/js/Product/ProductPage.js" asp-append-version="true"></script>
+}
+
+<script>
+    $(document).ready(function () {
+        //願望清單
+        $('#wishlist-button').click(function () {
+            var productId = $(this).data('product-id');
+            var actionType = $(this).data('action-type');
+
+            $.ajax({
+                url: '@Url.Action("ModifyWishList", "Product")',
+                type: 'POST',
+                data: {
+                    wishListProductId: productId,
+                    actionType: actionType
+                },
+                success: function (response) {
+                    if (response.success === false && response.redirectUrl) {
+                        window.location.href = response.redirectUrl;
+                    } 
+                    else if (response.action === 'add') {
+                        $('#wishlist-button').html('<span class="for_checked_box checked"></span><span>於願望清單內</span>');
+                        $('#wishlist-button').data('action-type', 'remove');
+                    } 
+                    else if (response.action === 'remove') {
+                        $('#wishlist-button').html('<span>新增至您的願望清單</span>');
+                        $('#wishlist-button').data('action-type', 'add');
+                    }
+                    updateWishListCount();
+                },
+                error: function () {
+                    window.location.href = '@Url.Action("Login", "Authentication")';
+                }
+            });
+        });
+        function updateWishListCount() {
+            $.ajax({
+                url: '@Url.Action("GetWishListCount", "Product")',
+                type: 'GET',
+                success: function (data) {
+                    var elements = document.querySelectorAll('.update-wish-count');
+                    elements.forEach(function (element) {
+                        element.textContent = data.wishCount;
+                    });
+                },
+                error: function () {
+                    console.log('無法更新願望清單數量');
+                }
+            });
+        }
+    });
+
+    //好評
+    $(document).ready(function () {
+        $('#yes-button').click(function () {
+            var productId = $(this).data('product-id');
+            var actionType = $(this).data('action-type');
+            var badActionType = $('#no-button').data('action-type');
+
+            // 判斷否按鈕是否已經點選過
+            if (badActionType === 'remove') {
+                $('#no-button').trigger('click');
+            }
+
+            console.log(actionType);
+
+            $.ajax({
+                url: '@Url.Action("ModifyGoodComment", "Product")',
+                type: 'POST',
+                data: {
+                    commentProductId: productId,
+                    actionType: actionType
+                },
+                success: function (response) {
+                    if (response.success === false && response.redirectUrl) {
+                        window.location.href = response.redirectUrl;
+                    }
+                    else if (response.action === 'add') {
+                        $('#yes-button').html('<span class="for_checked_box checked"></span><span>是</span>');
+                        $('#yes-button').data('action-type', 'remove');
+                    }
+                    else if (response.action === 'remove') {
+                        $('#yes-button').html(' <span class="comments-pic"><img src="/img/Product/ProductPage/Good.png" alt=""></span><span>是</span>');
+                        $('#yes-button').data('action-type', 'add');
+                    }
+                    // 更新評論區
+                    updateComments(productId);
+                },
+                error: function () {
+                    window.location.href = '@Url.Action("Login", "Authentication")';
+                }
+            });
+        });
+    });
+
+    //差評
+    $(document).ready(function () {
+        $('#no-button').click(function () {
+            var productId = $(this).data('product-id');
+            var actionType = $(this).data('action-type');
+            var goodActionType = $('#yes-button').data('action-type');
+
+            // 判斷否按鈕是否已經點選過
+            if (goodActionType === 'remove') {
+                $('#yes-button').trigger('click');
+            }
+            console.log(actionType);
+
+            $.ajax({
+                url: '@Url.Action("ModifyBadComment", "Product")',
+                type: 'POST',
+                data: {
+                    commentProductId: productId,
+                    actionType: actionType
+                },
+                success: function (response) {
+                    if (response.success === false && response.redirectUrl) {
+                        window.location.href = response.redirectUrl;
+                    }
+                    else if (response.action === 'add') {
+                        $('#no-button').html('<span class="for_checked_box checked"></span><span>否</span>');
+                        $('#no-button').data('action-type', 'remove');
+                    }
+                    else if (response.action === 'remove') {
+                        $('#no-button').html(' <span class="comments-pic flipped-image"><img src="/img/Product/ProductPage/Good.png" alt=""></span><span>否</span>');
+                        $('#no-button').data('action-type', 'add');
+                    }
+                    // 更新評論區
+                    updateComments(productId);
+                },
+                error: function () {
+                    window.location.href = '@Url.Action("Login", "Authentication")';
+                }
+            });
+        });
+    });
+
+    // 更新評論
+    function updateComments(productId) {
+        $.ajax({
+            url: '@Url.Action("UpdateComments", "Product")',
+            type: 'GET',
+            data: { productId: productId },
+            success: function (response) {
+                // 更新評論顯示
+                $('#pc-comment-description').html(response.commentsResult);
+                $('#pc-comment-description').removeClass().addClass('grid_content grid_date ' + response.commentsClass);
+                // $('#mobile-comment-description').html(response.commentsResult);
+                $('#mobile-comment-description').attr('placeholder', response.commentsResult);
+                $('#mobile-comment-description').removeClass().addClass('form-control ' + response.commentsClass);
+            }
+        });
+    }
+</script>

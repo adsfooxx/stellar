@@ -1,0 +1,250 @@
+﻿@model Web.ViewModels.Member.WishListViewModel
+
+@using Web.ViewModels.Member;
+
+@using Web.Services.Member;
+
+
+
+@section topCSS {
+    <link href="~/css/Partial/AddShoppingCartModal.css" rel="stylesheet" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Member/wishlist/wishlist.css" asp-append-version="true">
+    <link href="~/css/Partial/StoreNavbar.css" rel="stylesheet" asp-append-version="true" />
+}
+
+
+
+<div class="wishlist_card">
+    @if (!string.IsNullOrEmpty(Model.NoResultMessage))
+    {
+        <p>@Model.NoResultMessage</p>
+    }
+
+    @foreach (var card in Model.WishListItem)
+    {
+        <div class="card mt-3">
+            <div class="row g-0 card_content">
+                <div class="col-md-4 card_pic_container">
+                    <a href="@card.DirectUrl" class="card-title"><img href="@card.DirectUrl" src="@(card.ImgUrl)" class="img-fluid rounded-start" alt="..."></a>
+                </div>
+                <div class="col-8 col-md-8">
+                    <div class="card-body">
+                        <div class="title_part">
+                            <a href="@card.DirectUrl" class="card-title">@card.Name</a>
+                        </div>
+                        <div class="content_part">
+                            <p class="card-text">
+
+                                整體評論:
+
+                                @if (card.Comment.goodComments == 0 && card.Comment.badComments == 0)
+                                {
+                                    <span class="card-text-space">
+                                        <a href="">
+                                            無使用者評論
+                                        </a>
+                                    </span>
+                                }
+                                else if (card.Comment.percentageDifference < 0.1)
+                                {
+                                    <span class="card-text-space">
+                                        <a href="">
+                                            褒貶不一
+                                        </a>
+                                    </span>
+                                }
+                                else if (card.Comment.goodComments > card.Comment.badComments)
+                                {
+                                    <span class="card-text-space">
+                                        <a href="">
+                                            大多好評
+                                        </a>
+                                    </span>
+                                }
+                                else if (card.Comment.goodComments < card.Comment.badComments)
+                                {
+                                    <span class="card-text-space">
+                                        <a href="">
+                                            大多負評
+                                        </a>
+                                    </span>
+                                }
+
+
+                            </p>
+                            <p class="card-text issued_date">
+                                發行日期: <span class="card-text-space">
+                                    @card.ReleaseDate
+                                </span>
+                            </p>
+                        </div>
+                        <div class="label_part">
+                            <ul>
+                                @foreach (var label in card.GameLabel)
+                                {
+                                    <li class="game_label"><a href="#">@label.tagName </a></li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="function_part">
+                            <div class="game_purchase_action">
+
+
+
+
+                                <div class="game_purchase_action_bg">
+                                    @if (card.DiscounAndSalesprice.DiscountFormat != "-1" && card.DiscounAndSalesprice.IsInDiscountTime == true)
+                                    {
+                                        <span class="game-card-price-discount">-@(card.DiscounAndSalesprice.DiscountFormat)%</span>
+                                    }
+
+                                    <div class="price_area">
+
+
+                                        @if (card.DiscounAndSalesprice.DiscountFormat != "-1" && card.DiscounAndSalesprice.IsInDiscountTime == true)
+                                        {
+                                            <div class="game-card-price-cut origin_price">
+                                                <span>NT$&nbsp;</span>
+                                                <span>@(card.DiscounAndSalesprice.OringinalPriceFormat)</span>
+                                            </div>
+                                        }
+
+                                        @if (card.DiscounAndSalesprice.OringinalPrice == 0)
+                                        {
+                                            <div class="game_purchase_price price discount_price">
+
+                                                <span>
+                                                    免費
+                                                </span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="game_purchase_price price discount_price">
+                                                <span>NT$&nbsp;</span>
+                                                <span>
+                                                    @(card.DiscounAndSalesprice.SalesPriceFormat)
+                                                </span>
+                                            </div>
+                                        }
+
+
+                                    </div>
+
+                                    <div class="btn_addtocart">
+
+                                        @if (card.DiscounAndSalesprice.OringinalPrice == 0)
+                                        {
+
+
+                                            <form asp-controller="Member" asp-action="AddToCollection" method="post" class="remove_btn_form">
+                                                <input type="hidden" name="productId" value="@card.ProductId" />
+                                                <button type="submit" class="btn btn-primary" id="btn_threetype">
+                                                    <span id="addtocart_text">加入收藏庫</span>
+                                                    <img src="~/img/Member/WishList/ico_cart.png" class="img-fluid rounded-start" id="addtocart_pic" alt="...">
+                                                </button>
+                                            </form>
+                                        }
+
+
+
+                                        else if (@card.ReleaseDate > DateOnly.FromDateTime(DateTime.Now))
+                                        {
+
+                                            <a class="" asp-area="" asp-controller="Member" asp-action="GoToCart">
+                                                <button type="button" class="btn btn-primary" id="btn_threetype" disabled>
+                                                    <span id="addtocart_text">即將發行</span>
+                                                    <img src="~/img/Member/WishList/ico_cart.png" class="img-fluid rounded-start" id="addtocart_pic" alt="...">
+                                                </button>
+                                            </a>
+
+                                        }
+
+                                        //新推出是ProductShelfTime < =currentday.AddDays(30)
+                                        @* else if (@card.IsInCartList)
+                                    {
+
+                                    <a class="" asp-area="" asp-controller="Member" asp-action="GoToCart">
+                                    <button type="button" class="btn btn-primary" id="btn_threetype">
+                                    <span id="addtocart_text">於購物車內</span>
+                                    <img src="~/img/Member/WishList/ico_cart.png" class="img-fluid rounded-start" id="addtocart_pic" alt="...">
+                                    </button>
+                                    </a>
+
+                                    } *@
+                                        else if (@card.IsInCartList)
+                                        {
+
+                                            <a class="" asp-area="" asp-controller="Member" asp-action="GoToCart">
+                                                <button type="button" class="btn btn-primary" id="btn_threetype">
+                                                    <span id="addtocart_text">於購物車內</span>
+                                                    <img src="~/img/Member/WishList/ico_cart.png" class="img-fluid rounded-start" id="addtocart_pic" alt="...">
+                                                </button>
+                                            </a>
+
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#shopping_Modal-@card.ProductId" id="btn_threetype">
+                                                <span id="addtocart_text">加入購物車</span>
+                                                <img src="~/img/Member/WishList/ico_cart.png" class="img-fluid rounded-start" id="addtocart_pic" alt="...">
+                                            </button>
+                                            @await Component.InvokeAsync("AddShoppingCartModal", new { currentProductId = card.ProductId })
+
+                                        }
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="remove_part">
+                            <span>
+                                新增於 @(card.AddDate)
+                                (
+                                <form asp-controller="Member" asp-action="RemoveFromWishList" method="post" class="remove_btn_form">
+                                    <input type="hidden" name="wishListItemId" value="@card.WishItemID" />
+                                    <button type="submit" class="btn">移除</button>
+                                </form>
+                                )
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        // 監聽搜尋框的 keydown 事件
+        $('#searchTerm').keydown(function (e) {
+            if (e.keyCode === 13) { // 檢查是否按下了 Enter 鍵（鍵碼 13）
+                e.preventDefault(); // 阻止預設的表單提交行為
+                var searchTerm = $('#searchTerm').val();
+
+                $.ajax({
+                    url: url,
+                    method: 'GET',
+                    data: { searchTerm: searchTerm },
+                    success: function (data) {
+                        // 僅更新 wishlist_card 區域，確保其他部分不被覆蓋
+                        $('.wishlist_card').html(data);
+                    },
+                    error: function () {
+                        alert('搜尋失敗，請稍後再試');
+                    }
+                });
+
+            }
+        });
+    });
+</script>
+

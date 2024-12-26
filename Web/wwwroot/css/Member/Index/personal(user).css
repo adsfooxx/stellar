@@ -1,0 +1,365 @@
+main * {
+    color: #CCC;
+}
+
+.container-lg {
+    max-width: 1000px;
+}
+
+.pic img {
+    width: 100%;
+    height: 100%;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.userHead {
+    order: 0;
+}
+
+.userAll {
+    margin-top: 20px;
+    display: grid;
+}
+
+.userName .pic img {
+    width: 16px;
+    height: 11px;
+}
+
+.name p {
+    margin-bottom: 0;
+}
+
+.userName {
+    grid-area: A;
+    margin-bottom: 3px;
+}
+
+    .userName .name {
+        display: flex;
+    }
+
+
+
+
+.name .pic {
+    grid-area: B;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.userAll .userpic img {
+    width: 166px;
+    height: 166px;
+    object-fit:cover;
+}
+
+.userTag {
+    grid-area: D;
+}
+
+.userMore {
+    grid-area: C;
+}
+
+.fs-7 {
+    font-size: 10px;
+}
+
+.onlion span {
+    color: aqua;
+}
+
+.supBox > .bg-b {
+    height: 40px;
+}
+
+.supBox {
+    justify-content: space-between;
+}
+
+.mainBoxTitle {
+    height: fit-content;
+    display: flex;
+    justify-content: space-between;
+    background-color: #CCC2;
+}
+
+.mainStyle {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.gameList {
+    background-color: #0002;
+}
+
+.card-e {
+    padding-left: 10px;
+    padding-right: 15px;
+    padding-bottom: 5px;
+    background-color: #0004;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+    .card-e .pic {
+        width: 155px;
+        height: 75px;
+    }
+
+.txt {
+    margin-top: 10px;
+    flex-grow: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+}
+
+    .txt .gameMore {
+        width: 100%;
+        display: flex;
+        flex-direction: row-reverse;
+    }
+
+.gameMore p {
+    display: block;
+}
+
+.gameListFooter {
+    justify-content: flex-end;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+    .gameListFooter a {
+        text-decoration: none;
+    }
+
+    .gameListFooter span {
+        color: #AAA;
+    }
+
+.msgBox {
+    background-color: #0002;
+}
+
+    .msgBox .pic {
+        width: 40px;
+        height: 40px;
+    }
+
+
+.msgPush {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 5px;
+    display: flex;
+    background-color: #0002;
+    align-items: center;
+}
+
+.msgTxt {
+    width:100%;
+    height: 2em;
+    margin-left: 10px;
+    flex-grow: 1;
+    background-color: #233;
+    border: 1px solid #777;
+}
+
+
+
+.userEditBtn {
+    /* border: 1px solid aqua; */
+    display:block;
+    width: 150px;
+    border-radius: 5px;
+    padding: 4px;
+    background-color: #334;
+}
+
+    .userEditBtn:hover {
+        color: #EEE;
+        /* border: 2px solid #FFF6 ; */
+        box-shadow: 0 0 5px #FFF6;
+    }
+    .userEditBtn[disabled]:hover {
+        color: #CCC;
+        /* border: 2px solid #FFF6 ; */
+
+        box-shadow: none;
+    }
+
+.msgList {
+    /* margin-top: 5px;
+    margin-bottom: 5px; */
+    display: flex;
+    flex-wrap: wrap;
+    /* background-color: #0002; */
+    align-items: center;
+}
+
+.listCard:hover {
+    background-color: #FFF4;
+}
+
+    .listCard:hover .gbgBtn {
+        display: block;
+    }
+
+.gbgBtn {
+    background-color: #fff3;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    display: none;
+}
+
+    .gbgBtn img {
+        width: 100%;
+    }
+
+.listCard {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+}
+
+.msgContain {
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 10px;
+}
+
+    .msgContain span, .msgContain p {
+        font-size: 12px;
+    }
+
+.sup_click_box {
+    display: flex;
+    align-items: center;
+}
+
+/* 調整寬度 */
+.col-6-e {
+    width: 49%;
+}
+
+.commentTime {
+    color: #899;
+}
+
+
+
+/* 留言按鈕 */
+.input_button_container {
+    display: none;
+    position: relative;
+}
+
+#commid_Show_Button {
+    display: none;
+    margin-left: 5px; /* 按钮和输入框之间的间距 */
+}
+
+#commid_input:focus + #commid_Show_Button {
+    display: none;
+}
+
+
+
+
+@media (min-width: 576px) {
+    .col-sm-4-e {
+        width: 32%;
+    }
+}
+
+@media (min-width: 768px) {
+    .col-md-3-e {
+        width: 24%;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-lg-12 {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+}
+
+/* user版面變化  >700 */
+@media (min-width: 701px) {
+    .userAll {
+        grid-template: 80px 120px/ 200px 1fr 200px;
+        grid-template-areas:
+            "B A C"
+            "B D C";
+        height: 200px;
+    }
+}
+
+/* <700 */
+@media (max-width: 700px) {
+
+    .userAll {
+        grid-template: 80px 170px 80px/repeat(2, 1fr);
+        grid-template-areas:
+            "A A"
+            "B C"
+            "D D"
+    }
+}
+
+
+
+
+
+/* >LG 大版面變化 */
+@media (min-width: 992px) {
+
+    .supBox {
+        order: 2;
+        background-color: #0116;
+    }
+
+    .bg-b {
+        background-color: #0000;
+    }
+
+
+    .mainBox {
+        order: 1;
+    }
+
+    .supBox {
+        align-content: flex-start;
+    }
+}
+
+/* <LG 大版面變化 */
+@media (max-width: 991px) {
+    .supBox {
+        order: 1;
+    }
+
+    .bg-b {
+        background-color: #011;
+    }
+
+    .mainBox {
+        order: 2;
+    }
+}
